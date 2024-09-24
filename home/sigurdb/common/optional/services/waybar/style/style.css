@@ -1,0 +1,303 @@
+@import "solarized.css";
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+window#waybar {
+    background-color: @base03;
+    border-bottom: 3px solid @base02;
+    color: @base1;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/*
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: @base1;
+}
+*/
+
+window#waybar.termite {
+    background-color: @base01;
+}
+
+window#waybar.chromium {
+    background-color: @base03;
+    border: none;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: @base1;
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each workspace name */
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover {
+    background: @base02;
+    box-shadow: inset 0 -3px @base3;
+}
+
+#workspaces button.focused {
+    background-color: @base01;
+    box-shadow: inset 0 -3px @base3;
+    color: @base03;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+}
+
+#mode {
+    background-color: @red;
+    color: @base3;
+    border-bottom: 3px solid @base3;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#mpd {
+    padding: 0 10px;
+    /* color: @base1; */
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+#clock {
+    /* background-color: @base00; */
+}
+
+#battery {
+   /* background-color: @base3;
+    color: @base03; */
+}
+
+#battery.charging, #battery.plugged {
+    color: @base3;
+    background-color: @green;
+}
+
+@keyframes blink {
+    to {
+        background-color: @base3;
+        color: @base03;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: @red;
+    color: @base3;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: @base03;
+}
+
+#cpu {
+    /* background-color: @green;
+    color: @base03; */
+}
+
+#memory {
+    /* background-color: @violet; */
+}
+
+#disk {
+    background-color: @orange;
+}
+
+#backlight {
+    /* background-color: @base1; */
+}
+
+#network {
+    /* background-color: @blue; */
+}
+
+#network.disconnected {
+    background-color: @red;
+}
+
+#pulseaudio {
+    background-color: @base03;
+    color: @base1;
+}
+
+#pulseaudio.muted {
+    background-color: @base00;
+    color: @base03;
+}
+
+#custom-media {
+    background-color: @cyan;
+    color: @green;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    background-color: @cyan;
+}
+
+#custom-media.custom-vlc {
+    background-color: @yellow;
+}
+
+#temperature {
+    /* background-color: @yellow; */
+}
+
+#temperature.critical {
+    background-color: @red;
+}
+
+#tray {
+    background-color: @base03;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @red;
+}
+
+#idle_inhibitor {
+    background-color: @base03;
+}
+
+#idle_inhibitor.activated {
+    background-color: @orange;
+    color: @base03;
+}
+
+#mpd {
+    background-color: @cyan;
+}
+
+#mpd.disconnected {
+    background-color: @red;
+    color: @base3;
+}
+
+#mpd.stopped {
+    background-color: @base03;
+}
+
+#mpd.paused {
+    background-color: @base1;
+}
+
+#language {
+    /*
+    background: @cyan;
+    color: @base03;
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+    */
+}
+
+#keyboard-state {
+    background: @cyan;
+    color: @base03;
+    padding: 0 0px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: @yellow;
+}
+#bluetooth {
+    color: @blue;
+}
+#bluetooth.disabled {
+    color: @red;
+}
+#bluetooth.off {
+	/*
+    background: @red;
+    */
+}
+#bluetooth.on {
+	/*
+    background: @blue;
+    */
+}
+/* Orange text during work duration */
+#custom-waybar-pomodoro.work {
+  color: #cb4b16;
+}
+
+/* Blue text during break duration */
+#custom-waybar-pomodoro.break {
+  color: #268bd2;
+}
+
+/* Red blinking text during negative countdown */
+#custom-waybar-pomodoro.negative {
+  color: #dc322f;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+

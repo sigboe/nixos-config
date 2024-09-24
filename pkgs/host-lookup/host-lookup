@@ -1,0 +1,703 @@
+#! /usr/bin/env perl
+#
+# cssh wrapper to autogenerate clusters from cmdb web services
+#
+
+use strict;
+use warnings;
+use JSON;
+use LWP::UserAgent;
+use URI::Escape;
+use Data::Dumper;
+use Pod::Usage;
+use List::MoreUtils qw(part);
+use Text::CSV;
+use JSON;
+
+my $debug      = 0;
+my $wsurl      = 'https://api2.i.bitbit.net';
+my $wstoken    = 'eyJhbGciOiJFUzUxMiIsImtpZCI6IllzUkhVV09reElqa29sVGZNck92SFBSNWhpSW1DLWZDbDJBZS0xTjhheEkiLCJ0eXAiOiJKV1QifQ.eyJhcHAiOiJob3N0X2xvb2t1cCIsImV4cCI6MTkzNDg3MDE3NiwiaWF0IjoxNjE5NTEwMTc2LCJpZGVudGl0eSI6ImxhcnNvQHJlZHBpbGwtbGlucHJvLmNvbSIsImp0aSI6IjBjMWI4N2U1LWE3MmUtMTFlYi1hNmFjLTBhNTgwYTgxMDRjNCIsIm5iZiI6MTYxOTUxMDE3Niwicm9sZXMiOlsiY21kYiIsImNtZGItYXNzZXQiXX0.AQt6SXDVLU6wNa29DHPgAAExKiTp9C_2XVENO37d4UK4tzUaavpXcDqBPaXF6UZaERm2JP8M3u3xHQzTzvGcnOxsACRHYc999U_mlQMnkrxL520kdqhhAHKptsf0_3DijH__2IiKejeMkDbMUZU-kPiyIN1mZDk3F0rfC-jfvNiYBmgd';
+my $cmdburl    = "${wsurl}/cmdb-asset/v1.0/asset/query_by_%s?%s=%s&type=json";
+my $puppeturls = [ "https://puppetdb-proxy-services.apps.bitbit.net" ];
+my $restrict   = [];
+my $allteams   = [ "ms0", "ms1", "ms2", "ms3", "ms4", "ms5", "msa", "msw" ];
+my $cmdb_restrict = {
+                     'asset_type' => [ "server", "pc" ],
+                    };
+my $passopts   = [];
+my $aas_hosts  = [ 'db-%s-%d.mysql-aas.h.bitbit.net', 'db-%s-%d.pgsql-aas.h.bitbit.net', 'el-%s-%d.elastic-aas.h.bitbit.net', 'fe-%s-%d.frontend-aas.h.bitbit.net' ];
+
+sub is_team {
+    my $string = shift || return 0;
+    if ($string =~ /^(ms|co).$/i) {
+        return 1;
+    }
+    return 0;
+}
+
+sub get_toplevel_fact_name {
+    my $factstring = shift // return '';
+
+    my @s = split (/\./, $factstring);
+    return $s[0];
+}
+
+sub puppetdb_dig {
+    my $hashref = shift // {};
+    my $target  = shift // return $hashref;
+
+    my @path = split (/\./, $target);
+    shift @path; # get rid of first element, since we've already dug that far
+
+    foreach my $next (@path) {
+        if (defined $hashref and ref ($hashref) eq 'HASH') {
+            if (defined $hashref->{$next}) {
+                $hashref = $hashref->{$next};
+            }
+            else {
+                $hashref = undef;
+            }
+        }
+        elsif (defined $hashref and ref ($hashref) eq 'ARRAY') {
+            if (defined $hashref->[$next]) {
+                $hashref = $hashref->[$next];
+            }
+            else {
+                $hashref = undef;
+            }
+        }
+        else {
+            $hashref = undef;
+        }
+    }
+    return $hashref;
+}
+
+sub get_facts_from_puppet {
+    my $hosts   = shift || return {};
+    my $facts   = shift || return $hosts;
+    my %tlfacts = ();
+    my $ua      = new LWP::UserAgent;
+    my $i       = -1;
+    my $maxnum  = 10;
+
+    # Get toplevel facts. E.g. if the user requests "os.name", we need to fetch
+    # the "os" fact.
+    foreach my $f (@$facts) {
+        my $fullname = get_toplevel_fact_name ($f);
+        $tlfacts{$fullname} //= ();
+        push @{$tlfacts{$fullname}}, $f;
+    }
+
+    foreach my $aref (part { ++$i / $maxnum } keys %$hosts) {
+        my $req;
+        my $res;
+        my @qarr;
+
+        push (@qarr, '["and"');
+        if (@$aref > 1) {
+            push (@qarr, '["or", [' . join ('], [', map { '"=", "certname", "' . lc $_ . '"' } @$aref) . ']]');
+        } else {
+            push (@qarr, '[' . join ('], [', map { '"=", "certname", "' . lc $_ . '"' } @$aref) . ']');
+        }
+        if (keys (%tlfacts) > 1) {
+            push (@qarr, '["or", [' . join ('], [', map { '"=", "name", "' . lc $_ . '"' } keys (%tlfacts)) . ']]]');
+        } else {
+            push (@qarr, '[' . join ('], [', map { '"=", "name", "' . lc $_ . '"' } keys (%tlfacts)) . ']]');
+        }
+
+        foreach my $puppeturl (@$puppeturls) {
+            my $url = $puppeturl . "/v3/facts?query=" . uri_escape (join(', ', @qarr));
+            my $cont;
+            print "get_facts_from_puppet (...): Fetching url \"$url\"...\n" if $debug;
+            $req = HTTP::Request->new (GET => $url);
+            $res = $ua->request ($req);
+            if (!$res->is_success) {
+                print "Error: Failed to get puppet facts. Returned page:\n", $res->error_as_HTML, "\n";
+                return {};
+            } else {
+                $cont = decode_json ($res->content);
+                print "Debug: get_facts_from_puppet (...): ...got ", scalar (@$cont), " facts matching the given criteria\n" if $debug;
+            }
+            foreach my $fact (@$cont) {
+                foreach my $realfact (@{$tlfacts{$fact->{'name'}}}) {
+                    my $val = $fact->{'value'} // '';
+                    if ($fact->{'name'} ne $realfact) {
+                        print "Debug: Drilling down from \"", $fact->{'name'}, "\" to \"$realfact\".\n" if $debug;
+                        my $facthash = $fact->{'value'};
+
+                        if (ref ($facthash) ne "HASH") {
+                            $facthash =~ s/=>/:/g;
+                            $facthash = eval {
+                                decode_json ($facthash) || undef;
+                            };
+                        }
+                        if (defined $facthash) {
+                            $val = puppetdb_dig ($facthash, $realfact);
+                        }
+                    }
+
+                    if (ref ($val) eq 'HASH') {
+                        $hosts->{'_'}->{$fact->{'certname'}}->{$realfact} = encode_json ($val);
+                    }
+                    else {
+                        $hosts->{'_'}->{$fact->{'certname'}}->{$realfact} = $val;
+                    }
+                }
+            }
+        }
+    }
+    return $hosts;
+}
+
+sub get_hosts_from_puppet {
+    my $restr = shift || return {};
+    my $ua    = new LWP::UserAgent;
+    my $ret   = [];
+    my $req;
+    my $res;
+    my @qarr;
+
+    foreach my $key (@$restr) {
+        if ($key =~ /^([^=<>]+)([~=<>])(.*)$/) {
+            if ($2 eq "~") {
+                push @qarr, qq(["$2", ["fact", "$1"], "(?i)$3"]);
+            } elsif ($2 eq "=") {
+                push @qarr, qq(["~", ["fact", "$1"], "(?i)^$3\$"]);
+            } else {
+                push @qarr, qq(["$2", ["fact", "$1"], "$3"]);
+            }
+        } else {
+            die "Error: Could not understand restriction \"$key\"."
+        }
+    }
+
+    foreach my $puppeturl (@$puppeturls) {
+        my $url = $puppeturl . "/v2/nodes?query=" . uri_escape ('["and", ' . join(', ', @qarr) . ']');
+        my $cont;
+        print "get_hosts_from_puppet (...): Fetching url \"$url\"...\n" if $debug;
+        $req = HTTP::Request->new (GET => $url);
+        $res = $ua->request ($req);
+        if (!$res->is_success) {
+            print "Error: Failed to get puppet facts. Returned page:\n", $res->error_as_HTML, "\n";
+            return {};
+        } else {
+            $cont = decode_json ($res->content);
+            print "Debug: get_hosts_from_puppet (...): ...got ", scalar (@$cont), " nodes matching the given criteria\n" if $debug;
+        }
+        push @$ret, @{decode_json ($res->content)};
+    }
+
+    # Make sure certname always exists
+    foreach my $entry (@$ret) {
+        if (!defined $entry->{'certname'}) {
+            $entry->{'certname'} = $entry->{'name'};
+        }
+    }
+    return $ret;
+}
+
+sub get_json_from_cmdb {
+    my $type  = shift || return {};
+    my $which = shift || return {};
+    my $url   = sprintf ($cmdburl, $type, $type, $which);
+    my $ua    = new LWP::UserAgent;
+    my $ret   = {};
+    my $req;
+    my $res;
+
+    print "get_json_from_cmdb ($type, $which): Fetching url \"$url\"...\n" if $debug;
+    $ua->default_header ( Accept => "application/json" );
+    $ua->default_header ( Authorization => "Bearer ${wstoken}" );
+    $ua->default_header ( 'User-Agent' => "host-lookup" );
+    $req = HTTP::Request->new (GET => $url);
+    $res = $ua->request ($req);
+    if (!$res->is_success) {
+        return {};
+    }
+    return decode_json ($res->content);
+}
+
+sub filter_cmdb_hosts {
+    my $json  = shift;
+    my $ret   = {};
+    my $done  = {};
+
+    if (defined $json and defined $json->{'result'}) {
+        foreach my $hostarr (keys %{$json->{'result'}}) {
+            foreach my $host (@{$json->{'result'}->{$hostarr}}) {
+                next if ($done->{$host->{'name'}});
+                $done->{$host->{'name'}} = 1;
+
+                my $allok = (defined $host->{'status'} and
+                             ($host->{'status'} eq "production" or
+                              $host->{'status'} eq "implementation"));
+
+                foreach my $param (keys %$cmdb_restrict) {
+                    next if (exists $host->{$param} &&
+                             ref $host->{$param} eq '' &&
+                             ref $cmdb_restrict->{$param} eq '' &&
+                             lc $host->{$param} eq lc $cmdb_restrict->{$param});
+                    next if (exists $host->{$param} &&
+                             ref $host->{$param} eq '' &&
+                             ref $cmdb_restrict->{$param} eq 'ARRAY' &&
+                             grep lc $host->{$param} eq lc $_, @{$cmdb_restrict->{$param}});
+                    next if (exists $host->{$param} &&
+                             ref $host->{$param} eq 'ARRAY' &&
+                             grep { lc $_ eq lc $cmdb_restrict->{$param} } @{$host->{$param}});
+                    printf(STDERR "Removing %s, %s does not match: '%s' != '%s'\n",
+                           $host->{'name'}, $param, $host->{$param}, (ref $cmdb_restrict->{$param} eq 'ARRAY' ? join ('|', @{$cmdb_restrict->{$param}}) : $cmdb_restrict->{$param}))
+                      if $debug;
+                    $allok = 0;
+                    last;
+                }
+                $ret->{$host->{'name'}} = $host if $allok;
+            }
+        }
+    }
+    return $ret;
+}
+
+# Flatten a (possibly deep) array
+sub flatten { map { ref $_ eq 'ARRAY' ? flatten(@$_) : $_ } @_ }
+
+
+# $hosts is a cmdb dump:
+# $VAR1 = {
+#   'ece092-osl3.api.c.bitbit.net' => {
+#     'status' => 'production',
+#     'project_team' => [ 'MS4' ],
+#     'hostgroups' => [ 'api', 'api-ece5', 'api-prod' ],
+#     'project_handle' => 'api',
+#     …
+#   },
+#   …
+# }
+sub get_ansible_groups {
+    my $hosts = shift // return {};
+    my $keys  = [ 'project_handle', 'hostgroups', 'project_team' ];
+    my $vars  = [ 'project_primary', 'project_secondary', 'project_team', 'project_handle', 'hostgroups', 'environment', 'role', 'customer_name' ];
+    my $ret   = {};
+
+    foreach my $host (keys %$hosts) {
+
+        # host keys to create groups from
+        foreach my $k (@$keys) {
+            if (defined $hosts->{$host}->{$k}) {
+                if (ref $hosts->{$host}->{$k} eq 'ARRAY') {
+                    # CMDB currently (2022-12-25) returns an array of arrays for
+                    # project_team, project_primary etc.  We flatten only project_team
+                    # here since it is needed for workpass structure.  (Even when CMDB is
+                    # fixed, the flattening is not doing any harm.)
+                    my @flat = flatten ($hosts->{$host}->{$k});
+                    $hosts->{$host}->{$k} = \@flat;
+                    foreach my $ele (@flat) {
+                        next unless defined $ele;
+                        $ele = lc $ele;
+                        if (!defined $ret->{$ele}) {
+                            $ret->{$ele} = { 'hosts' => [], 'vars' => {}};
+                        }
+                        push @{$ret->{$ele}->{'hosts'}}, $host;
+                    }
+                } elsif (ref $hosts->{$host}->{$k} eq 'HASH') {
+                    foreach my $ele (keys %{$hosts->{$host}->{$k}}) {
+                        next unless defined $ele;
+                        $ele = lc $ele;
+                        if (!defined $ret->{$ele}) {
+                            $ret->{$ele} = { 'hosts' => [], 'vars' => {}};
+                        }
+                        push @{$ret->{$ele}->{'hosts'}}, $host;
+                    }
+                } elsif (ref $hosts->{$host}->{$k} eq 'SCALAR') {
+                    $k = lc $k;
+                    if (!defined $ret->{$k}) {
+                        $ret->{$k} = { 'hosts' => [], 'vars' => {}};
+                    }
+                    push @{$ret->{$k}->{'hosts'}}, $host;
+                }
+            }
+        }
+
+        # host keys to duplicate to hostvars
+        $ret->{'_meta'}->{'hostvars'}->{$host} = {}; # must always be present, even if empty
+        foreach my $k (@$vars) {
+            if (defined $hosts->{$host}->{$k}) {
+                $ret->{'_meta'}->{'hostvars'}->{$host}->{$k} = $hosts->{$host}->{$k};
+            }
+        }
+    }
+
+    return $ret;
+}
+
+sub get_hosts {
+    my $type   = shift // return [];
+    my $query  = shift // return [];
+    my $json   = get_json_from_cmdb ($type, $query);
+
+    return filter_cmdb_hosts ($json);
+}
+
+my $hosts = {};
+my $ansible_mode = 0; # 0 = not ansible, 1 = list, 2 = host
+my $csv_output   = 0; # host-lookup only; output in csv format
+my $json_output  = 0; # host-lookup only; output in json format
+my @args = @ARGV;
+
+# default for ansible mode is all hosts
+if ($0 =~ 'hosts$' or $0 =~ 'hosts.pl$') {
+    if ($args[0] and $args[0] eq "--list") {
+        $ansible_mode = 1;
+        push @args, @$allteams;
+    } elsif ($args[0] and $args[0] eq "--host") {
+        # noop
+        $ansible_mode = 2;
+        print "{}\n";
+        exit 0;
+    } else {
+        # unrecognised ansible query
+        die "Error: Could not understand ansible dynamic host interface options: \"" . join (' ', @args) . "\"; aborting.";
+    }
+}
+
+while (my $arg = shift @args) {
+    last if ($arg eq "--");
+    if ($arg eq "-d" or $arg eq "--debug") {
+        $debug = 1;
+    } elsif ($arg eq "-h" or $arg eq "--help") {
+        pod2usage ({ -verbose => 2 });
+    } elsif ($0 =~ /lookup/ and $arg eq '-c' or $arg eq '--csv') {
+        $csv_output = 1;
+    } elsif ($0 =~ /lookup/ and $arg eq '-j' or $arg eq '--json') {
+        $json_output = 1;
+    } elsif ($0 =~ /lookup/ and ($arg eq '--nofilter' or $arg eq '--no-filter')) {
+        # Remove the asset_type restrictions
+        $cmdb_restrict = {};
+    } elsif (!%$hosts && $arg =~ /^(\S+)=(.*)$/) {
+        # CMDB restrictions must come before handle(s) or team(s)
+        $cmdb_restrict->{$1} = $2;
+    } elsif ($arg =~ /^(\S+)[~=<>](.*)$/) {
+        push @$restrict, $arg;
+    } elsif (lc $arg eq "ms" or lc $arg eq "co") {
+        foreach my $t (@$allteams) {
+            my $ret = get_hosts ('team', $t);
+            foreach my $h (keys %$ret) {
+                $hosts->{$h} = $ret->{$h};
+            }
+        }
+    } elsif ($arg !~ /^-/ and is_team ($arg)) {
+        my $ret;
+        $arg = lc $arg;
+        $ret = get_hosts ('team', $arg);
+        foreach my $h (keys %$ret) {
+            $hosts->{$h} = $ret->{$h};
+        }
+    } elsif ($arg =~ /^(\w{8})-\w{4}-\w{4}-\w{4}-\w{12}$/) {
+        my $first = $1;
+        my $hs = [];
+        foreach my $template (@$aas_hosts) {
+            foreach my $n (1 ... 3) {
+                push @$hs, sprintf ($template, $first, $n);
+            }
+        }
+        foreach my $h (@$hs) {
+            my @result = gethostbyname ($h);
+            if (@result) {
+                $hosts->{$h} = {};
+            }
+        }
+    } elsif ($arg !~ /^-/) {
+        my $ret;
+        $arg = lc $arg;
+        $ret = get_hosts ('handle', $arg);
+        $ret = get_hosts ('hostgroup', $arg) if (!%$ret);
+        foreach my $h (keys %$ret) {
+            $hosts->{$h} = $ret->{$h};
+        }
+    } else {
+        push @$passopts, $arg;
+    }
+}
+
+if (@$restrict) {
+    # Remove hosts which don't match filter
+    my %keep = map { $_->{'certname'} => 1; } @{get_hosts_from_puppet ($restrict)};
+    my $narr = [];
+    foreach my $h (keys %$hosts) {
+        if (defined $keep{$h}) {
+            print "Debug: host \"$h\" meets restrictions - keeping in list\n" if $debug;
+        } else {
+            delete $hosts->{$h};
+            print "Debug: host \"$h\" does not meet restrictions - removing from list\n" if $debug;
+        }
+    }
+}
+if (!keys %$hosts) {
+    pod2usage ({ -message => "Error: No remaining hosts in list.", -exitval => 2 });
+}
+
+if ($0 =~ /tmux-cssh/) {
+    my @cmd = ('tmux-cssh');
+    if (@$passopts) {
+        push (@cmd, @$passopts);
+    }
+    push (@cmd, keys %$hosts);
+    print "Executing: '", join ("' '", @cmd), "'\n" if $debug;
+    exec { $cmd[0] } @cmd;
+}
+elsif ($0 =~ /cssh/) {
+    my @cmd = ('cssh');
+    if (@$passopts) {
+        push (@cmd, @$passopts);
+    }
+    push (@cmd, keys %$hosts);
+    print "Executing: '", join ("' '", @cmd), "'\n" if $debug;
+    exec { $cmd[0] } @cmd;
+} elsif ($0 =~ /p?dsh/) {
+    my @cmd = ($&);
+    if (@$passopts) {
+        push (@cmd, @$passopts);
+    }
+    push (@cmd, $cmd[0] eq 'dsh' ? '-m' : '-w');
+    push (@cmd, join (',', keys %$hosts));
+    if (@args) {
+        # command to run through dsh
+        push (@cmd, join(' ', @args));
+        print "Executing: '", join ("' '", @cmd), "'\n" if $debug;
+        exec { $cmd[0] } @cmd;
+    }
+} elsif ($0 =~ /lookup/) {
+
+    if (@args) {
+        # warn if [=<>~] in fact list, since that's probably a typo
+        if (my @bad = grep /[=<>~]/, @args) {
+            warn ("Warning: Printing content of fact \"" . $bad[0] . "\", which is probably intended as a filter before the \"--\".");
+        }
+        # facts to list
+        $hosts = get_facts_from_puppet ($hosts, \@args);
+        if ($csv_output) {
+            my $csv = Text::CSV->new;
+            foreach my $host (sort keys %$hosts) {
+                next if $host eq "_";
+                my %facts = %{$hosts->{'_'}->{$host} // {}};
+                my @fields = @facts{@args};
+
+                print $host, ",";
+                $csv->print (\*STDOUT, \@fields);
+                print "\n";
+            }
+        }
+        elsif ($json_output) {
+            my $out  = {};
+            my $json = JSON->new;
+            $json->canonical (1); # sort output
+
+            foreach my $host (sort keys %$hosts) {
+                next if $host eq "_";
+                $out->{$host} = $hosts->{'_'}->{$host} // {};
+            }
+            print $json->pretty->encode ($out);
+        }
+        else {
+            if (@args > 1) {
+                foreach my $host (sort keys %$hosts) {
+                    next if $host eq "_";
+                    print $host, " ", join (' ', map { $_ . "=\"" . ($hosts->{'_'}->{$host}->{$_} // ''). "\"" } @args), "\n";
+                }
+            } else {
+                my $fact = lc shift @args;
+                my $longest = 0;
+                for my $host (keys %$hosts) {
+                    if ($longest < length $host) {
+                        $longest = length $host;
+                    }
+                }
+                for my $host (sort keys %$hosts) {
+                    next if $host eq "_";
+                    printf ("%-${longest}s %s\n", $host, $hosts->{'_'}->{$host}->{$fact} // '');
+                }
+            }
+        }
+    } else {
+        if ($json_output) {
+            my $out  = {};
+            my $json = JSON->new;
+            $json->canonical (1); # sort output
+
+            foreach my $host (sort keys %$hosts) {
+                next if $host eq "_";
+                $out->{$host} = $hosts->{'_'}->{$host} // {};
+            }
+            print $json->pretty->encode ($out);
+        }
+        else {
+            print "$_\n" foreach (sort keys %$hosts);
+        }
+    }
+} elsif ($ansible_mode) {
+    # dynamic ansible inventory
+    my $ansible_out = get_ansible_groups ($hosts);
+    print to_json ($ansible_out, { pretty => 1, utf8 => 1 });
+}
+
+__END__
+
+=head1 NAME
+
+host-lookup, wcssh, wdsh - CMDB list lookup with cssh/dsh wrap functionality
+
+=head1 SYNOPSIS
+
+  host-lookup [options] <selection> [-- <fact name> [...]]
+  wcssh [options] [cssh options] <selection>
+  wdsh  [options] [dsh options]  <selection> -- <command>
+  wpdsh [options] [pdsh options] <selection> -- <command>
+  hosts --list # ansible dynamic inventory mode
+
+B<selection> has the format:
+
+  [cmdb restrictions...] <team|handle|ba|hostgroup> [...] [fact restrictions...]
+
+=head1 DESCRIPTION
+
+This program looks up project handles, team names, or *aas UUIDs in CMDB host
+lists, limits said lists by values of puppet facts, and executes a given action
+on the resulting host lists.
+
+When run as 'host-lookup', the resulting action is to only list the host
+names on stdout. The values of any fact names given after a -- will also
+be listed.
+
+When run as 'wcssh', the resulting action is to execute cssh (cluster ssh)
+on the hosts in question.
+
+When run as 'wdsh' (Ubuntu) or 'wpdsh' (RedHat), the resulting action
+is to execute dsh (distributed shell) on the hosts in question, with a
+given command.
+
+When run as 'hosts' or 'hosts.pl', the script becomes suitable for use as an
+ansible dynamic inventory.
+
+=head2 HOST SELECTION
+
+One or more number of teams (e.g. "co3"), project handles (e.g. "hegnar",
+"tvnorge", "bitbit_web"), hostgroups (supplied in cmdb, e.g. "hm-frontend"),
+or BAs (only "co" is supported) can be listed. Listed items are case
+insensitive.
+
+=head2 CMDB RESTRICTIONS
+
+CMDB restrictions are on the form of B<parameter>=I<value>.  Useful
+parameters include "role", "environment", "project_primary" and
+"brand".  These restrictions are separated from the fact restrictions
+by appearing I<before> teams or handles.  (Note that "environment"
+matches on the CMDB value, not the Puppet environment.)
+
+=head2 FACT RESTRICTIONS
+
+Restrictions are on the form of B<factname>[=<>~]I<factvalue>. Operators <
+and > only work on integer or decimal facts. Operators = and ~ (regex matching)
+are case insensitive.
+
+Zero or more number of fact restrcitions can be listed.
+
+=head2 ANSIBLE DYNAMIC INVENTORY MODE
+
+When executed in ansible dynamic inventory mode, the following CMDB fields will
+become available as groups for use with the "hosts" setting:
+
+  hostgroups, project_handle, project_team
+
+In addition, the following fields will become available as hostvars:
+
+  hostgroups, project_handle, project_primary, project_secondary, project_team
+
+=head1 OPTIONS
+
+=over
+
+=item B<-h|--help> Show help.
+
+=item B<-d|--debug> Output debug information.
+
+=item B<-c|--csv> Output facts in csv format (host-lookup only)
+
+=item B<-j|--json> Output facts in json format (host-lookup only)
+
+=item B<--nofilter> Disable asset_type=server filter (host-lookup only)
+
+=back
+
+Any other options are passed through to the underlying cssh/dsh execution.
+
+=head1 EXAMPLES
+
+=over 3
+
+=item host-lookup hegnar
+
+=over 2
+
+List hostname of all nodes in the project with the handle "hegnar"
+
+=back
+
+=item host-lookup ms3
+
+=over 2
+
+List hostname of all nodes in projects owned by the team "ms3"
+
+=back
+
+=item host-lookup startsiden -- osfamily lsbdistrelease system_uptime.days
+
+=over 2
+
+List hostname of all nodes in project with the handle "startsiden", as well
+as the values of their 'osfamily' and 'lsbdistrelease' facts, and the 'days'
+key of the 'system_uptime' structured fact.
+
+=back
+
+=item wcssh hegnar hm
+
+=over 2
+
+Open terminals to all nodes on the two projects
+
+=back
+
+=item wcssh ms3 osfamily=redhat
+
+=over 2
+
+Open terminals to all ms3 nodes with a RedHat based distro
+
+=back
+
+=item wdsh -Mc ms3 lsbdistcodename=precise "boardproductname~ucs" -- sudo apt-get update
+
+=over 2
+
+Run C<sudo apt-get update> on all ms3 nodes with Ubuntu Precise installed on
+Cisco UCS blades. Also adds the dsh parameters "-Mc" to the dsh execution.
+
+=back
+
+=back
+
+=head1 AUTHOR
+
+2014-01 Jimmy Olsen <jo@redpill-linpro.com>
+
+=head1 LICENSE
+
+This program is free software; you may redistribute it and/or modify it as
+you wish.
+
+=cut
+
+# c-basic-offset: 4; tab-width: 4; indent-tabs-mode: nil
+# vi: set shiftwidth=4 tabstop=4 expandtab:
+# :indentSize=4:tabSize=4:noTabs=true:
