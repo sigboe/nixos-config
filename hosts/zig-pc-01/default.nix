@@ -23,6 +23,7 @@
 
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      ../common/optional/qemu-kvm.nix
 
       # Desktop
       ../common/optional/services/greetd
