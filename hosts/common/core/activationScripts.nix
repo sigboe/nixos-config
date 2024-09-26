@@ -5,7 +5,7 @@
       owner="$(stat -c '%U' $etcNixos)"
       hostName="${config.networking.hostName}"
       internalOutPath="${self.sourceInfo.outPath}"
-      PATH="/run/current-system/sw/bin" etcNixosOutPath="$(${pkgs.nix}/bin/nix flake metadata --json "$etcNixos" | ${pkgs.jq}/bin/jq -r .path)"
+      PATH="/run/current-system/sw/bin" etcNixosOutPath="$(sudo -u $owner ${pkgs.nix}/bin/nix flake metadata --json "$etcNixos" | ${pkgs.jq}/bin/jq -r .path)"
 
       if [ "$internalOutPath" == "$etcNixosOutPath" ] && \
       sudo -u $owner ${pkgs.git}/bin/git -C "$etcNixos" rev-parse --is-inside-work-tree
