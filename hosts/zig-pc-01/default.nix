@@ -71,8 +71,6 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.shells = with pkgs; [ zsh ];
-
   home-manager = {
     useGlobalPkgs = true;
   };

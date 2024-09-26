@@ -1,11 +1,19 @@
-{
-  inputs,
-  pkgs,
-  ...
+{ inputs
+, pkgs
+, ...
 }: {
-  environment.systemPackages = with pkgs; [
-    grml-zsh-config
-  ];
+  environment = {
+    shells = with pkgs; [ zsh ];
+    systemPackages = with pkgs; [ grml-zsh-config ];
+    shellAliases = {
+      # disable distro default aliases, because we set them our self
+      # at least for the time being
+      ls = null;
+      ll = null;
+      l = null;
+    };
+  };
+
   programs.zsh = {
     enable = true;
     interactiveShellInit = ''
@@ -27,13 +35,6 @@
     promptInit = ""; # otherwise it'll override the grml prompt
     syntaxHighlighting.enable = true;
     autosuggestions.enable = true;
-  };
-  environment.shellAliases = {
-    # disable distro default aliases, because we set them our self
-    # at least for the time being
-    ls = null;
-    ll = null;
-    l = null;
   };
   users.defaultUserShell = pkgs.zsh;
   users.users.root.shell = pkgs.zsh;
