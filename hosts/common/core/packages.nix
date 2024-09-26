@@ -49,6 +49,7 @@
     playerctl
     progress
     protontricks
+    prusa-slicer
     python311Packages.i3ipc
     qrencode
     qutebrowser
