@@ -8,27 +8,16 @@
 let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
-  # these are values we don't want to set if the environment is minimal. E.g. ISO or nixos-installer
-  # isMinimal is true in the nixos-installer/flake.nix
-  fullUserConfig = lib.optionalAttrs (!configVars.isMinimal) {
-    users.users.${configVars.username} = {
-      #hashedPasswordFile = sopsHashedPasswordFile;
-      packages = [ pkgs.home-manager ];
-    };
-
-    # Import this user's personal/home configurations
-    home-manager.users.${configVars.username} = import ../../../../home/${configVars.username}/${config.networking.hostName}.nix;
-  };
 in
 {
   config =
-    lib.recursiveUpdate fullUserConfig
       {
+        home-manager.users.${configVars.username} = import ../../../../home/${configVars.username}/${config.networking.hostName}.nix;
         users.users.${configVars.username} = {
           home = "/home/${configVars.username}";
           isNormalUser = true;
           description = "Sigurd Bøe";
-          initialHashedPassword = "$y$j9T$2GOTQNGE4LXrNUTqg5Cjt/$vvVeZL2xGlqGF4Oh2aoSFfW5G0TAXz4azWdMumuD5.7";
+          initialHashedPassword = "$y$j9T$cK3m55nJAjOdWpLWKJcns1$pnpTAtJ/nVh2p3uhuA3de2Q5K8Vo6FZPQIxLqhLaarB";
 
           extraGroups =
             [ "wheel" ]
