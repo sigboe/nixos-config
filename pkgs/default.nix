@@ -1,5 +1,5 @@
 # You can build these directly using 'nix build .#example'
-{pkgs ? import <nixpkgs> {}}: rec {
+pkgs: {
   #################### Packages with external source ####################
 
   bitwarden-rofi = pkgs.callPackage ./bitwarden-rofi {};

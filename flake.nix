@@ -98,16 +98,10 @@
       homeManagerModules = import ./modules/home-manager;
 
       ## Custom modifications/overrides to upstream packages.
-      overlays = import ./overlays { inherit inputs outputs; };
+      overlays = import ./overlays { inherit inputs; };
 
       # Custom packages to be shared or upstreamed.
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        import ./pkgs { inherit pkgs; }
-      );
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
       checks = forAllSystems (system: {
         pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
