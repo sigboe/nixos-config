@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, outputs, ... }: {
   environment.systemPackages = with pkgs; [
     SDL2
     acpi
@@ -84,6 +84,6 @@
     zathura
     zip
     zoxide
-    inputs.self.outputs.packages.x86_64-linux.host-lookup
+    outputs.packages.x86_64-linux.host-lookup
   ];
 }
