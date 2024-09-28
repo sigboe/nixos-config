@@ -15,9 +15,6 @@
 
     #################### Utilities ####################
 
-    # Access flake-based devShells with nix-shell seamlessly
-    flake-compat.url = "github:edolstra/flake-compat";
-
     # Declarative partitioning and formatting
     disko = {
       url = "github:nix-community/disko";
@@ -29,11 +26,6 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       #inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # optional dependency for Comma
