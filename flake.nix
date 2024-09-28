@@ -77,6 +77,12 @@
           self
           ;
       };
+      defaultModules = [
+        home-manager.nixosModules.home-manager
+        { home-manager.extraSpecialArgs = specialArgs; }
+        stylix.nixosModules.stylix
+        disko.nixosModules.disko
+      ];
     in
     {
       # Custom modules to enable special functionality for nixos or home-manager oriented configs.
@@ -95,35 +101,17 @@
         # Desktop
         zig-pc-01 = lib.nixosSystem {
           inherit specialArgs;
-          modules = [
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            stylix.nixosModules.stylix
-            disko.nixosModules.disko
-            ./hosts/zig-pc-01
-          ];
+          modules = [ ./hosts/zig-pc-01 ] ++ defaultModules;
         };
         # Laptop
         zig-pc-02 = lib.nixosSystem {
           inherit specialArgs;
-          modules = [
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            stylix.nixosModules.stylix
-            disko.nixosModules.disko
-            ./hosts/zig-pc-02
-          ];
+          modules = [ ./hosts/zig-pc-02 ] ++ defaultModules;
         };
         # test
         vm = lib.nixosSystem {
           inherit specialArgs;
-          modules = [
-            home-manager.nixosModules.home-manager
-            { home-manager.extraSpecialArgs = specialArgs; }
-            stylix.nixosModules.stylix
-            disko.nixosModules.disko
-            ./hosts/vm
-          ];
+          modules = [ ./hosts/vm ] ++ defaultModules;
         };
       };
     };
