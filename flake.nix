@@ -24,12 +24,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ## Secrets management. See ./docs/secretsmgmt.md
-    #sops-nix = {
-    #  url = "github:mic92/sops-nix";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
-
     # vim4LMFQR!
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -54,14 +48,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #################### Personal Repositories ####################
-
-    ## Private secrets repo.  See ./docs/secretsmgmt.md
-    ## Authenticate via ssh and use shallow clone
-    #nix-secrets = {
-    #  url = "git+ssh://git@gitlab.com/emergentmind/nix-secrets.git?ref=main&shallow=1";
-    #  flake = false;
-    #};
   };
 
   outputs =
@@ -103,50 +89,7 @@
       # Custom packages to be shared or upstreamed.
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
-      checks = forAllSystems (system: {
-        pre-commit-check = inputs.pre-commit-hooks.lib.${system}.run {
-          src = ./.;
-          hooks = {
-            alejandra.enable = true;
-          };
-        };
-      });
-
-      # ################### DevShell ####################
-      #
-      # Custom shell for bootstrapping on new hosts, modifying nix-config, and secrets management
-
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = pkgs.mkShell {
-            NIX_CONFIG = "extra-experimental-features = nix-command flakes repl-flake";
-
-            inherit (self.checks.${system}.pre-commit-check) shellHook;
-            buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
-
-            nativeBuildInputs = builtins.attrValues {
-              inherit
-                (pkgs)
-                nix
-                home-manager
-                git
-                just
-                age
-                ssh-to-age
-                sops
-                ;
-            };
-          };
-        }
-      );
-
       #################### NixOS Configurations ####################
-      #
-      # Building configurations available through `just rebuild` or `nixos-rebuild --flake .#hostname`
 
       nixosConfigurations = {
         # Desktop

@@ -1,4 +1,4 @@
-{ inputs
+{ outputs
 , pkgs
 , ...
 }: {
@@ -10,8 +10,8 @@
         autotiling
         bemenu
         bemoji
-        inputs.self.outputs.packages.x86_64-linux.bitwarden-rofi
-        inputs.self.outputs.packages.x86_64-linux.bose-connect-app-linux
+        outputs.packages.x86_64-linux.bitwarden-rofi
+        outputs.packages.x86_64-linux.bose-connect-app-linux
         blueberry
         brightnessctl
         dmenu

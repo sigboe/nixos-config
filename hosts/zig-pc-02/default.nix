@@ -49,6 +49,13 @@
     driSupport32Bit = true;
   };
 
+  # webcam
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep"; #Alder Lake
+  };
+
   # Enable networking
   networking = {
     hostName = "zig-pc-01"; # Define your hostname.
