@@ -3,10 +3,7 @@
 #  Desktop
 #
 ###############################################################
-{ inputs
-, pkgs
-, ...
-}: {
+{ pkgs, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -61,15 +58,20 @@
     };
   };
 
-  # Ignore accidental powerkey press
-  services.logind = {
-    powerKey = "ignore";
-    powerKeyLongPress = "poweroff";
-  };
-
-  services.gnome.gnome-keyring.enable = true;
-
   security.polkit.enable = true;
+
+  services = {
+    # Ignore accidental powerkey press
+    logind = {
+      powerKey = "ignore";
+      powerKeyLongPress = "poweroff";
+    };
+
+    gnome.gnome-keyring.enable = true;
+
+    qemuGuest.enable = true;
+    spice-vdagentd.enable = true;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
