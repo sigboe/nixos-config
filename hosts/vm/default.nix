@@ -49,12 +49,21 @@
       "/etc/NetworkManager/system-connections"
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       "/etc/wireguard"
+      "/etc/nixos"
     ];
     files = [
+      "/etc/shadow"
       "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
   };
+  security.sudo.extraConfig = ''
+    Defaults        lecture = never
+  '';
 
   # Enable bluetooth
   boot.initrd.kernelModules = [ "btintel" ];
