@@ -77,10 +77,6 @@
       ];
     in
     {
-      # Custom modules to enable special functionality for nixos or home-manager oriented configs.
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
-
       ## Custom modifications/overrides to upstream packages.
       overlays = import ./overlays { inherit inputs; };
 

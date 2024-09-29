@@ -1,6 +1,3 @@
-{ outputs
-, configLib
-, ...
-}: {
-  imports = (configLib.scanPaths ./.) ++ (builtins.attrValues outputs.homeManagerModules);
+{ configLib, ... }: {
+  imports = configLib.scanPaths ./.;
 }
