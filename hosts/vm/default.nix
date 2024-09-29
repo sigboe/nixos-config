@@ -9,7 +9,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Disks
-      ./luks-btrfs-subvolumes.nix
+      (import ../common/disks/luks-btrfs-impermanence.nix { device = "/dev/vda"; })
 
       #################### Hardware Modules ####################
       #inputs.hardware.nixosModules.common-cpu-intel
@@ -35,6 +35,26 @@
       #################### Users to Create ####################
       ../common/users/sigurdb
     ];
+
+  #Impermanence
+  fileSystems."/persist".neededForBoot = true;
+  environment.persistence."/persist" = {
+    enable = true;
+    hideMounts = true;
+    directories = [
+      "/var/log"
+      "/var/lib/bluetooth"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/etc/NetworkManager/system-connections"
+      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
+      "/etc/wireguard"
+    ];
+    files = [
+      "/etc/machine-id"
+      { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
+    ];
+  };
 
   # Enable bluetooth
   boot.initrd.kernelModules = [ "btintel" ];

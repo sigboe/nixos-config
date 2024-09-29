@@ -1,8 +1,8 @@
-{
+{ device ? throw "example /dev/nvme0n1", ... }: {
   disko.devices = {
     disk.main = {
+      inherit device;
       type = "disk";
-      device = "/dev/vda";
       content = {
         type = "gpt";
         partitions = {

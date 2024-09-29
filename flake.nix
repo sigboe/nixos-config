@@ -6,8 +6,8 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
-
     hardware.url = "github:nixos/nixos-hardware";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,11 +21,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Impermanence (nuke root on every boot)
+    impermanence.url = "github:nix-community/impermanence";
+
     # vim4LMFQR!
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-      #inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # optional dependency for Comma
@@ -48,6 +50,7 @@
     , nixpkgs
     , home-manager
     , stylix
+    , impermanence
     , ...
     } @ inputs:
     let
@@ -74,6 +77,7 @@
         { home-manager.extraSpecialArgs = specialArgs; }
         stylix.nixosModules.stylix
         disko.nixosModules.disko
+        impermanence.nixosModules.impermanence
       ];
     in
     {
