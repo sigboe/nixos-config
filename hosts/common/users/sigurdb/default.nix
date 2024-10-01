@@ -10,14 +10,19 @@ let
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in
 {
+
   config =
       {
+        sops.secrets.sigurdb-password.neededForUsers = true;
+
         home-manager.users.${configVars.username} = import ../../../../home/${configVars.username}/${config.networking.hostName}.nix;
+
+        users.mutableUsers = false;
         users.users.${configVars.username} = {
           home = "/home/${configVars.username}";
           isNormalUser = true;
           description = "Sigurd Bøe";
-          initialHashedPassword = "$y$j9T$cK3m55nJAjOdWpLWKJcns1$pnpTAtJ/nVh2p3uhuA3de2Q5K8Vo6FZPQIxLqhLaarB";
+          hashedPasswordFile = config.sops.secrets.sigurdb-password.path;
 
           extraGroups =
             [ "wheel" ]

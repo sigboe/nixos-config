@@ -24,6 +24,17 @@
     # Impermanence (nuke root on every boot)
     impermanence.url = "github:nix-community/impermanence";
 
+    # Secrets management. See ./docs/secretsmgmt.md
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    # Authenticate via ssh and use shallow clone
+    nix-secrets = {
+      url = "git+ssh://git@gitlab.redpill-linpro.com/sigurdb/nix-secrets.git?ref=main&shallow=1";
+      flake = false;
+    };
+
     # vim4LMFQR!
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -51,6 +62,7 @@
     , home-manager
     , stylix
     , impermanence
+    , sops-nix
     , ...
     } @ inputs:
     let
@@ -78,6 +90,7 @@
         stylix.nixosModules.stylix
         disko.nixosModules.disko
         impermanence.nixosModules.impermanence
+        sops-nix.nixosModules.sops
       ];
     in
     {

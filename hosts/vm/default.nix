@@ -9,7 +9,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Disks
-      (import ../common/disks/luks-btrfs-impermanence.nix { device = "/dev/vda"; })
+      (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/vda"; })
 
       #################### Hardware Modules ####################
       #inputs.hardware.nixosModules.common-cpu-intel
@@ -46,6 +46,7 @@
       "/var/lib/bluetooth"
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
+      "/var/lib/sops-nix"
       "/etc/NetworkManager/system-connections"
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       "/etc/wireguard"

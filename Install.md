@@ -9,6 +9,15 @@ sudo nixos-generate-config --root /mnt --no-filesystems --show-hardware-config >
 sudo nixos-install --max-jobs 16 --flake github:sigboe/nixos-config#vm --root /mnt
 ```
 
+nixos-anywhere
+
+```
+nix run --extra-experimental-features 'nix-command flakes' "github:nix-community/nixos-anywhere" -- \
+  --flake "github:sigboe/nixos-config#vm" \
+  --disk-encryption-keys /tmp/secret.key <(sops --decrypt --extract '["luks-password"]' path/to/secrets.yaml) \
+  nixos@192.168.122.176
+```
+
 The following doesn't work, but maybe I should open an issue on disko and ask why
 ```
 sudo nix --experimental-features "nix-command flakes" run 'github:nix-community/disko#disko-install' -- --write-efi-boot-entries --flake 'github:sigboe/nixos-conf#vm' --disk main /dev/vda --mode format
