@@ -28,11 +28,6 @@
         "flakes"
       ];
       warn-dirty = false;
-
-      trusted-users = [
-        "root"
-        "@wheel"
-      ];
     };
 
     # Garbage Collection
