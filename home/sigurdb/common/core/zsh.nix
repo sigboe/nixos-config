@@ -1,5 +1,6 @@
 {
   programs.zsh = {
+    enable = true;
     shellGlobalAliases = {
       "..." = "../..";
       "..4" = "../../..";
