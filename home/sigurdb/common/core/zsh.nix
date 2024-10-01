@@ -36,9 +36,6 @@
     };
     dotDir = ".config/zsh/zshrc";
     initExtraBeforeCompInit = ''
-      compdef kssh=ssh
-      compdef vimscp=scp
-      compdef _eza ls
     '';
     initExtra = ''
         setopt complete_aliases
@@ -125,6 +122,9 @@
 
       export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
+      compdef kssh=ssh
+      compdef vimscp=scp
+      compdef _eza ls
     '';
   };
   programs = {
