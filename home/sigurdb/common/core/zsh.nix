@@ -128,10 +128,20 @@
     '';
   };
   programs = {
-    zoxide.enableZshIntegration = true;
-    kitty.shellIntegration.enableZshIntegration = true;
-    nix-index.enableZshIntegration = true;
+    zoxide = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+    kitty = {
+      enable = true;
+      shellIntegration.enableZshIntegration = true;
+    };
+    nix-index = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     tealdeer = {
+      enable = true;
       settings = {
         auto_update = true;
       };
