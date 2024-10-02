@@ -38,78 +38,76 @@
     initExtraBeforeCompInit = ''
     '';
     initExtra = ''
-        setopt complete_aliases
+      setopt complete_aliases
 
-        if [[ -d "''${HOME}/.local/share/work-password-store" ]]; then
-            compdef _pass workpass
-            zstyle ':completion::complete:workpass::' prefix "''${HOME}/.local/share/work-password-store"
-            function workpass() {
-                PASSWORD_STORE_DIR=~/.local/share/work-password-store  "''${HOME}/.local/share/work-password-store/bin/pass" git pull --rebase > /dev/null;
-                PASSWORD_STORE_DIR=~/.local/share/work-password-store "''${HOME}/.local/share/work-password-store/bin/pass" "$@"
-         }
-        fi
-
-        function vimscp {
-            # put all arguments in array
-            args=( "''${@}" )
-
-            # convert arguments to vim url
-            for ((i = 1; i <= $#args; i++)); do
-                # only if they contain :
-                if [[ "''${args[i]}" == *":"* ]]; then
-                    address="''${args[i]%:*}"
-                    file="''${args[i]##*:}"
-                    args[i]="scp://''${address}/''${file}"
-        fi
-        done
-        vim - o ''${args}
-      }
-
-      if [[ -x "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon" ]]; then
-          eval "$(${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --components=gpg,pkcs11,secrets,ssh)"
-          export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+      if [[ -d "''${HOME}/.local/share/work-password-store" ]]; then
+        compdef _pass workpass
+        zstyle ':completion::complete:workpass::' prefix "''${HOME}/.local/share/work-password-store"
+        function workpass() {
+          PASSWORD_STORE_DIR=~/.local/share/work-password-store  "''${HOME}/.local/share/work-password-store/bin/pass" git pull --rebase > /dev/null;
+          PASSWORD_STORE_DIR=~/.local/share/work-password-store "''${HOME}/.local/share/work-password-store/bin/pass" "$@"
+       }
       fi
 
+      function vimscp {
+        # put all arguments in array
+        args=( "''${@}" )
+
+        # convert arguments to vim url
+        for ((i = 1; i <= $#args; i++)); do
+          # only if they contain :
+          if [[ "''${args[i]}" == *":"* ]]; then
+            address="''${args[i]%:*}"
+            file="''${args[i]##*:}"
+            args[i]="scp://''${address}/''${file}"
+        fi
+        done
+        ${pkgs.neovim}/bin/nvim - o ''${args}
+      }
+
+      eval "$(${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --components=gpg,pkcs11,secrets,ssh)"
+      export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
+      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
       ranger() {
-          temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
-          command ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
-          if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
-              builtin cd -- "$chosen_dir"
-          fi
-          command rm -f -- "$temp_file"
+        temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+        ${pkgs.ranger}/bin/ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
+        if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+          builtin cd -- "$chosen_dir"
+        fi
+        command rm -f -- "$temp_file"
       }
  
-       _tldr_complete() {
-           local word="$1"
-           local cmpl=""
-           if [ "$word" = "-" ]; then
-               cmpl=$(echo $'\n-v\n-h\n-u\n-c\n-p\n-r' | sort)
-           elif [ "$word" = "--" ]; then
-               cmpl=$(echo $'--version\n--help\n--update\n--clear-cache\n--platform\n--render' | sort)
-           else
-               if [ -d "$HOME/.tldrc/tldr/pages" ]; then
-                   local platform="$(uname)"
-                   cmpl="$(_tldr_get_files common | sort | uniq)"
-                   if [ "$platform" = "Darwin" ]; then
-                       cmpl="''${cmpl}$(_tldr_get_files osx | sort | uniq)"
-                   elif [ "''$platform" = "Linux" ]; then
-                       cmpl="''${cmpl}$(_tldr_get_files linux | sort | uniq)"
-                   elif [ "''$platform" = "SunOS" ]; then
-                       cmpl="''${cmpl}$(_tldr_get_files sunos | sort | uniq)"
-                   fi
-               fi
-           fi
-         reply=( "''${(ps:\n:)cmpl}" )
-       }
+      _tldr_complete() {
+        local word="$1"
+        local cmpl=""
+        if [ "$word" = "-" ]; then
+          cmpl=$(echo $'\n-v\n-h\n-u\n-c\n-p\n-r' | sort)
+        elif [ "$word" = "--" ]; then
+          cmpl=$(echo $'--version\n--help\n--update\n--clear-cache\n--platform\n--render' | sort)
+        else
+          if [ -d "$HOME/.tldrc/tldr/pages" ]; then
+            local platform="$(uname)"
+            cmpl="$(_tldr_get_files common | sort | uniq)"
+            if [ "$platform" = "Darwin" ]; then
+              cmpl="''${cmpl}$(_tldr_get_files osx | sort | uniq)"
+            elif [ "''$platform" = "Linux" ]; then
+              cmpl="''${cmpl}$(_tldr_get_files linux | sort | uniq)"
+            elif [ "''$platform" = "SunOS" ]; then
+              cmpl="''${cmpl}$(_tldr_get_files sunos | sort | uniq)"
+            fi
+          fi
+        fi
+        reply=( "''${(ps:\n:)cmpl}" )
+      }
 
       compctl -K _tldr_complete tldr
 
-      nsupd() { nsupdate -k$HOME/.config/dns/$USER.user.private "$@"; }
+      nsupd() { ${pkgs.dnsutils}/bin/nsupdate -k$HOME/.config/dns/$USER.user.private "$@"; }
 
       if [[ -e ~/git/gh/amedia/k8s-objects/tools/run.sh ]]; then
-          source ~/git/gh/amedia/k8s-objects/tools/run.sh alias > /dev/null
+        source ~/git/gh/amedia/k8s-objects/tools/run.sh alias > /dev/null
       fi
-
 
       # Enable Ctrl-U to cut backwards
       bindkey \^U backward-kill-line
@@ -119,8 +117,6 @@
       zle -N edit-command-line
       bindkey '^xe' edit-command-line
       bindkey '^x^e' edit-command-line
-
-      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
       compdef kssh=ssh
       compdef vimscp=scp
