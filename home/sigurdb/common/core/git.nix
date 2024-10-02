@@ -12,7 +12,6 @@
     };
     gh = {
       enable = true;
-      gitCredentialHelper.enable = true;
     };
     gh-dash.enable = true;
   };
