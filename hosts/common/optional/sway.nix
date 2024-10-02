@@ -18,6 +18,7 @@
         dunst
         foot
         grim
+        imv
         j4-dmenu-desktop
         kitty
         libnotify

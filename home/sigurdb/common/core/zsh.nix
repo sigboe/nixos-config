@@ -143,6 +143,10 @@
         auto_update = true;
       };
     };
+    yazi = {
+      enable = true;
+      enableZshIntegration = true;
+    };
   };
   services.gpg-agent.enableZshIntegration = true;
 }
