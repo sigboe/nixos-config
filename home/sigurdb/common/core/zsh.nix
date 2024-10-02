@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
   programs.zsh = {
     enable = true;
     shellGlobalAliases = {
@@ -65,8 +65,8 @@
         vim - o ''${args}
       }
 
-      if [[ -x "/usr/bin/gnome-keyring-daemon" ]]; then
-          eval "$(/usr/bin/gnome-keyring-daemon --components=gpg,pkcs11,secrets,ssh)"
+      if [[ -x "${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon" ]]; then
+          eval "$(${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --components=gpg,pkcs11,secrets,ssh)"
           export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
       fi
 
