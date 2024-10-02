@@ -1,19 +1,9 @@
 {
-  inputs,
-  pkgs,
-  ...
-}: {
   programs.tmux = {
     enable = true;
     prefix = "C-a";
     mouse = true;
     historyLimit = 100000;
-    #     plugins = with pkgs; [
-    #       {
-    #         plugin = tmuxPlugins.catppuccin;
-    #         extraConfig = "";
-    #       }
-    #     ];
     extraConfig = ''
       # enable disable pane syncronize
       bind C-s set-window-option synchronize-panes

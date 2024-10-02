@@ -1,4 +1,4 @@
-{
+{ lib, ... }: {
   programs.ssh = {
     enable = true;
     controlMaster = "auto";
@@ -41,4 +41,7 @@
       };
     };
   };
+  home.activation.ensureControlmasterDir = lib.hm.dag.entryAfter [ "writeBoundry" ] ''
+    run mkdir -p $HOME/.ssh/controlmasters
+  '';
 }
