@@ -1,24 +1,23 @@
 # Install
-1. boot from iso
-2. connect to nettwork
-```
-git checkout flake
-cd into flake
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko hosts/vm/luks-btrfs-subvolumes.nix
-sudo nixos-generate-config --root /mnt --no-filesystems --show-hardware-config > hosts/vm/hardware-configuration.nix
-sudo nixos-install --max-jobs 16 --flake github:sigboe/nixos-config#vm --root /mnt
-```
 
-nixos-anywhere
+## nixos-anywhere
+
+1. Generate ssh host keys, add them to the sops repo as valid decryption keys
+  1. `mkdir /tmp/sshKeys`
+  2. `ssh-keygen -t rsa -b 4096 -f /tmp/sshKeys/ssh_host_rsa_key -N ''`
+  3. `ssh-keygen -t ed25519 -f /tmp/sshKeys/ssh_host_ed25519_key -N ''`
+  4. `ssh-to-age -private-key -i /tmp/sshKeys/ssh_host_ed25519_key`
+  5. add age key to nix-secrets/.sops.nix
+  6. `sops updateKeys`
+2. boot from iso
+3. connect to network
+4. set temporary password
+
 
 ```
 nix run --extra-experimental-features 'nix-command flakes' "github:nix-community/nixos-anywhere" -- \
   --flake "github:sigboe/nixos-config#vm" \
-  --disk-encryption-keys /tmp/secret.key <(sops --decrypt --extract '["luks-password"]' path/to/secrets.yaml) \
+  --disk-encryption-keys /tmp/secret.key <(sops --decrypt --extract '["luks-password"]' ~/git/nix-secrets/secrets.yaml) \
+  --copy-host-keys /tmp/sshKeys/ssh_host_*
   nixos@192.168.122.176
-```
-
-The following doesn't work, but maybe I should open an issue on disko and ask why
-```
-sudo nix --experimental-features "nix-command flakes" run 'github:nix-community/disko#disko-install' -- --write-efi-boot-entries --flake 'github:sigboe/nixos-conf#vm' --disk main /dev/vda --mode format
 ```

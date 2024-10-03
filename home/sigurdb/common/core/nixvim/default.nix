@@ -159,7 +159,11 @@
       which-key.enable = true;
       comment.enable = true;
       nix.enable = true;
-      indent-blankline.enable = true;
+      #indent-blankline.enable = true;
+      mini = {
+        enable = true;
+        modules.indentscope.symbol = "|";
+      };
       #lint = {
       #  enable = true;
       #  lintersByFt = {
