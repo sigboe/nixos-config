@@ -65,9 +65,7 @@
         ${pkgs.neovim}/bin/nvim - o ''${args}
       }
 
-      eval "$(${pkgs.gnome.gnome-keyring}/bin/gnome-keyring-daemon --components=gpg,pkcs11,secrets,ssh)"
-      export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
-      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
 
       ranger() {
         temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"

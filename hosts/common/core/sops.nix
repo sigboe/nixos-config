@@ -1,13 +1,13 @@
-{pkgs, inputs, config, configVars, ...}:
+{ pkgs, inputs, config, configVars, ... }:
 let
   secretsDirectory = builtins.toString inputs.nix-secrets;
   secretsFile = "${secretsDirectory}/secrets.yaml";
 
-  homeDirectory =
-    if pkgs.stdenv.isLinux
-    then "/home/${configVars.username}"
-    else "/Users/${configVars.username}";
-in 
+  #  homeDirectory =
+  #    if pkgs.stdenv.isLinux
+  #    then "/home/${configVars.username}"
+  #    else "/Users/${configVars.username}";
+in
 {
   sops = {
     defaultSopsFile = "${secretsFile}";
