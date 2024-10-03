@@ -162,7 +162,7 @@
       #indent-blankline.enable = true;
       mini = {
         enable = true;
-        modules.indentscope.symbol = "|";
+        modules.indentscope.symbol = "┃";
       };
       #lint = {
       #  enable = true;
