@@ -159,6 +159,7 @@
       which-key.enable = true;
       comment.enable = true;
       nix.enable = true;
+      indent-blankline.enable = true;
       #lint = {
       #  enable = true;
       #  lintersByFt = {
