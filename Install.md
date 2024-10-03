@@ -8,7 +8,8 @@
   3. `ssh-keygen -t ed25519 -f /tmp/sshKeys/etc/ssh/ssh_host_ed25519_key -N ''`
   4. `ssh-to-age -i /tmp/sshKeys/etc/ssh/ssh_host_ed25519_key.pub`
   5. add age key to nix-secrets/.sops.nix
-  6. `sops updateKeys` and push to git
+  6. `sops updateKeys secrets.yaml` and push to git
+  7. `nix flake update nix-secrets` git add, commmit, push
 2. boot from iso
 3. connect to network
 4. set temporary password
