@@ -1,15 +1,14 @@
-{ configVars
-, ...
-}: {
+{ configVars , ... }: {
   imports = [
     ./common/core
 
-    ./common/optional/nix-index-database.nix
     ./common/optional/dunst.nix
-    ./common/optional/kitty.nix
     ./common/optional/firefox.nix
-    ./common/optional/sway
+    ./common/optional/kitty.nix
+    ./common/optional/mpv.nix
+    ./common/optional/nix-index-database.nix
     ./common/optional/services/waybar
+    ./common/optional/sway
   ];
 
   home = {
@@ -17,6 +16,5 @@
     homeDirectory = "/home/${configVars.username}";
   };
 
-  programs.nix-index.enable = true;
   home.stateVersion = "24.05";
 }

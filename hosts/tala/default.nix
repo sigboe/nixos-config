@@ -3,16 +3,13 @@
 #  Laptop
 #
 ###############################################################
-{ inputs
-, pkgs
-, ...
-}: {
+{ inputs, pkgs, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Disks
-      ./luks-btrfs-subvolumes.nix
+      (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/nvme0n1"; })
 
       #################### Hardware Modules ####################
       inputs.hardware.nixosModules.common-cpu-intel
@@ -58,7 +55,7 @@
 
   # Enable networking
   networking = {
-    hostName = "zig-pc-01"; # Define your hostname.
+    hostName = "tala"; # Define your hostname.
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
@@ -68,15 +65,17 @@
     };
   };
 
-  # Ignore accidental powerkey press
-  services.logind = {
-    powerKey = "ignore";
-    powerKeyLongPress = "poweroff";
-  };
-
-  services.gnome.gnome-keyring.enable = true;
-
   security.polkit.enable = true;
+
+  services = {
+    # Ignore accidental powerkey press
+    logind = {
+      powerKey = "ignore";
+      powerKeyLongPress = "poweroff";
+    };
+
+    gnome.gnome-keyring.enable = true;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

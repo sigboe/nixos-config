@@ -109,9 +109,9 @@
           modules = [ ./hosts/zig-pc-01 ] ++ defaultModules;
         };
         # Laptop
-        zig-pc-02 = lib.nixosSystem {
+        tala = lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./hosts/zig-pc-02 ] ++ defaultModules;
+          modules = [ ./hosts/tala ] ++ defaultModules;
         };
         # test
         vm = lib.nixosSystem {

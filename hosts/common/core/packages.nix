@@ -70,6 +70,7 @@
     vim
     virt-manager
     vulkan-tools
+    wdisplays
     wget
     wine-staging
     winetricks

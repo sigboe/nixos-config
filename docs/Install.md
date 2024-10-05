@@ -2,6 +2,8 @@
 
 ## nixos-anywhere
 
+Tip!: you need sops, age and ssh-to-age to do these steps. `nix-shell -p sops age ssh-to-age` if they are not installed locally
+
 1. Generate ssh host keys, add them to the sops repo as valid decryption keys
   1. `mkdir -p /tmp/sshKeys/etc/ssh`
   2. `ssh-keygen -t rsa -b 4096 -f /tmp/sshKeys/etc/ssh/ssh_host_rsa_key -N ''`
