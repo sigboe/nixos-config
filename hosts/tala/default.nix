@@ -31,6 +31,7 @@
       ../common/optional/laptop.nix
       # services
       ../common/optional/services/yubikey.nix
+      ../common/optional/services/udisks.nix
 
       #################### Users to Create ####################
       ../common/users/sigurdb
