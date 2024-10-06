@@ -467,10 +467,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1727994934,
-        "narHash": "sha256-zAFZphXxVtONKPEYZXjfOdiLtGqgWhuOkC2rE4Bn04k=",
+        "lastModified": 1728244366,
+        "narHash": "sha256-zmHiLzyhhSi/L60h5+T8CepSOsrGintXyJGp8dssBpE=",
         "ref": "main",
-        "rev": "d9efabb6a7f26a739eae918c7368f21495f10ff1",
+        "rev": "4c16aef42d29c639678a682f7d99febe5c21ab33",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitlab.redpill-linpro.com/sigurdb/nix-secrets.git"
