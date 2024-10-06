@@ -48,11 +48,11 @@
   };
 
   # webcam
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    kernelModules = [ "v4l2loopback" ];
-    extraModulePackages = [ pkgs.linuxPackages_latest.v4l2loopback ];
-  };
+  #boot = {
+  #  kernelPackages = pkgs.linuxPackages_latest;
+  #  kernelModules = [ "v4l2loopback" ];
+  #  extraModulePackages = [ pkgs.linuxPackages_latest.v4l2loopback ];
+  #};
   hardware.ipu6 = {
     enable = true;
     platform = "ipu6ep"; #Alder Lake
