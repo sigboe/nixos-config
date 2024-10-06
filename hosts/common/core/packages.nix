@@ -65,7 +65,6 @@
     tigervnc
     tmux
     trash-cli
-    udiskie
     unzip
     vim
     virt-manager
