@@ -150,10 +150,10 @@
       };
     };
     # Yazi Zsh integration conflicts with zoxide. We just do it our self above.
-    #yazi = {
-    #  enable = true;
+    yazi = {
+      enable = true;
     #  enableZshIntegration = true;
-    #};
+    };
   };
   services.gpg-agent.enableZshIntegration = true;
 }
