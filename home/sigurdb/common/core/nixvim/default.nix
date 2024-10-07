@@ -116,40 +116,36 @@
     # ========= UI Plugins =========
     #
 
-    # Display colors for when # FFFFFF codes are detected in buffer text.
-    plugins.nvim-colorizer = {
-      enable = true;
-      fileTypes = [ "*" ];
-    };
-
-    plugins.lualine.enable = true;
-
-    #this is now defined elsewhere, enable it back if I delete the other file
-    #plugins.fidget = {
-    #  enable = true;
-    #};
-
-    # ========= Undo history ========
-    # TODO: nixvim: set up    alos, map to <leader>u
-    # plugins.undotree = {};
-
-    #
-    # ========= File Search =========
-    #
-    plugins.telescope = {
-      # https://github.com/nvim-telescope/telescope.nvim
-      enable = true;
-      extensions.fzy-native.enable = true;
-    };
-
-    # ========= File Nav ===========
-    # TODO: nixvim set this one up
-    # plugins.harpoon = {};
-
-    #
-    # ========== Dev Tools =========
-    #
     plugins = {
+      # Display colors for when # FFFFFF codes are detected in buffer text.
+      nvim-colorizer = {
+        enable = true;
+        fileTypes = [ "*" ];
+      };
+
+      lualine.enable = true;
+
+
+      # ========= Undo history ========
+      # TODO: nixvim: set up    alos, map to <leader>u
+      # undotree = {};
+
+      #
+      # ========= File Search =========
+      #
+      telescope = {
+        # https://github.com/nvim-telescope/telescope.nvim
+        enable = true;
+        extensions.fzy-native.enable = true;
+      };
+
+      # ========= File Nav ===========
+      # TODO: nixvim set this one up
+      # harpoon = {};
+
+      #
+      # ========== Dev Tools =========
+      #
       lazygit.enable = true;
       fugitive.enable = true;
       gitgutter.enable = true;
@@ -162,7 +158,11 @@
       #indent-blankline.enable = true;
       mini = {
         enable = true;
-        modules.indentscope.symbol = "│";
+        mockDevIcons = true;
+        modules = {
+          indentscope.symbol = "│";
+          icons = { };
+        };
       };
       #lint = {
       #  enable = true;
