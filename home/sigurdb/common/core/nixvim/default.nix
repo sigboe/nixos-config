@@ -176,17 +176,6 @@
     extraPlugins = builtins.attrValues {
       inherit
         (pkgs.vimPlugins)
-        # linting and fixing (config in extraConfigVim)
-
-        # https://github.com/dense-analysis/ale
-
-        # TODO: nixvim: revamp setup to lua
-
-        # there is also a lightline-ale  plugin/extension for lightline when you get around to it
-
-        # by default ALE completion is disabled. need to determine if it's worth enabling and ditching youcompleteme ... it likely is for simplicity!
-
-        #ale
         vim-illuminate# Highlight similar words as are under the cursor
         vim-numbertoggle# Use relative number on focused buffer only
         range-highlight-nvim# Highlight range as specified in commandline e.g. :10,15
@@ -194,14 +183,12 @@
         vim-rhubarb
         vim-twiggy# Fugitive plugin to add branch control
         vimwiki# Vim Wiki
-        YouCompleteMe# Code completion engine
+        #YouCompleteMe        # Code completion engine
         quick-scope
-        # TODO: nixvim: make sure this is working and not conflicting with YCM
 
-        # supertab # Use <tab> for insert completion needs - https://github.com/ervandew/supertab/
+        supertab# Use <tab> for insert completion needs - https://github.com/ervandew/supertab/
 
         # Keep vim-devicons as last entry
-
         vim-devicons
         ;
     };

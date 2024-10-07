@@ -1,19 +1,17 @@
-{pkgs, ...}: let
-  style = ./style;
+{ pkgs, ... }:
+let
   boseBattery = pkgs.writers.writeDash "bose-battery.sh" (builtins.readFile ./bose-battery.sh);
   volumePipewire = pkgs.writers.writeBash "volume-pipewire.sh" (builtins.readFile ./volume-pipewire.sh);
-in {
+in
+{
   programs.waybar = {
     enable = true;
-    #style = ''
-    #      @import "${style}/style.css";
-    #    '';
     settings = {
       mainBar = {
         height = 30;
         spacing = 4;
-        modules-left = ["sway/workspaces" "sway/mode"];
-        modules-center = ["sway/window"];
+        modules-left = [ "sway/workspaces" "sway/mode" ];
+        modules-center = [ "sway/window" ];
         modules-right = [
           "custom/audio_idle_inhibitor"
           "idle_inhibitor"
@@ -30,7 +28,7 @@ in {
         ];
 
         "sway/workspaces" = {
-          window-rewrite = {};
+          window-rewrite = { };
           warp-on-scroll = false;
           enable-bar-scroll = true;
           disable-scroll-wraparound = true;
@@ -78,13 +76,13 @@ in {
           format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
           unknown-tag = "N/A";
           interval = 2;
-          consume-icons = {on = " ";};
+          consume-icons = { on = " "; };
           random-icons = {
             off = "<span color='#f53c3c'></span> ";
             on = " ";
           };
-          repeat-icons = {on = " ";};
-          single-icons = {on = "1 ";};
+          repeat-icons = { on = " "; };
+          single-icons = { on = "1 "; };
           state-icons = {
             paused = "";
             playing = "";
@@ -99,7 +97,7 @@ in {
             deactivated = "";
           };
         };
-        tray = {spacing = 10;};
+        tray = { spacing = 10; };
         clock = {
           tooltip-format = "<tt>{calendar}</tt>";
           format = "{:%a %d %b %H:%M}";
@@ -129,15 +127,15 @@ in {
           format = "{usage}% ";
           tooltip = false;
         };
-        memory = {format = "{}% ";};
+        memory = { format = "{}% "; };
         temperature = {
           critical-threshold = 80;
           format = "{temperatureC}°C {icon}";
-          format-icons = ["" "" ""];
+          format-icons = [ "" "" "" ];
         };
         backlight = {
           format = "{percent}% {icon}";
-          format-icons = ["" "" "" "" "" "" "" "" ""];
+          format-icons = [ "" "" "" "" "" "" "" "" "" ];
         };
         battery = {
           states = {
@@ -148,9 +146,9 @@ in {
           format-charging = "{capacity}% ";
           format-plugged = "{capacity}% ";
           format-alt = "{time} {icon}";
-          format-icons = ["" "" "" "" ""];
+          format-icons = [ "" "" "" "" "" ];
         };
-        "battery#bat2" = {bat = "BAT2";};
+        "battery#bat2" = { bat = "BAT2"; };
         network = {
           format-wifi = "{essid} ({signalStrength}%) ";
           format-ethernet = "{ipaddr}/{cidr} ";
@@ -181,7 +179,7 @@ in {
             phone = "";
             portable = "";
             car = "";
-            default = ["" "" ""];
+            default = [ "" "" "" ];
           };
           on-click = "pavucontrol";
         };
