@@ -75,6 +75,14 @@
         fi
         command rm -f -- "$temp_file"
       }
+      function ya() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+        yazi "$@" --cwd-file="$tmp"
+        if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+          builtin cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      }
  
       _tldr_complete() {
         local word="$1"
@@ -141,10 +149,11 @@
         auto_update = true;
       };
     };
-    yazi = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+    # Yazi Zsh integration conflicts with zoxide. We just do it our self above.
+    #yazi = {
+    #  enable = true;
+    #  enableZshIntegration = true;
+    #};
   };
   services.gpg-agent.enableZshIntegration = true;
 }
