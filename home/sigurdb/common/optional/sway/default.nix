@@ -1,22 +1,20 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
+{ lib
+, config
+, pkgs
+, ...
+}:
+let
   swayPrintscreen = pkgs.writers.writeBash "sway-printscreen.sh" (builtins.readFile ./sway-printscreen.sh);
   dmenuworkpass = pkgs.writeScriptBin "dmenuworkpass.sh" (builtins.readFile ./dmenuworkpass.sh);
-  # bwmenu = pkgs.writeScriptBin "bwmenu.sh" (builtins.readFile ./bwmenu.sh);
-  yubikey-oath-dmenu = pkgs.writers.writePython3 "yubikey-oath-dmenu.py" {
-    libraries = [pkgs.python311Packages.click pkgs.yubikey-manager];
-    flakeIgnore = ["E501" "E265" "E302" "E251" "W503"];
-  } (builtins.readFile ./yubikey-oath-dmenu.py);
-  # autotiling = pkgs.writers.writePython3 "autotiling.py" {
-  #   libraries = [pkgs.python311Packages.i3ipc];
-  #   flakeIgnore = ["E501" "E265" "W503" "F841"];
-  # } (builtins.readFile ./autotiling.py);
+  yubikey-oath-dmenu = pkgs.writers.writePython3 "yubikey-oath-dmenu.py"
+    {
+      libraries = [ pkgs.python311Packages.click pkgs.yubikey-manager ];
+      flakeIgnore = [ "E501" "E265" "E302" "E251" "W503" ];
+    }
+    (builtins.readFile ./yubikey-oath-dmenu.py);
   powerMenu = "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown";
-in {
+in
+{
   wayland.windowManager.sway = {
     enable = true;
     config = {
@@ -28,9 +26,10 @@ in {
       terminal = "${pkgs.kitty}/bin/kitty -o allow_remote_control=yes -o enable_layouts=tall";
       menu = ''${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.bemenu}/bin/bemenu ${config.home.sessionVariables.BEMENU_OPTS}' --term="kitty"'';
       defaultWorkspace = "workspace number 1";
-      keybindings = let
-        inherit (config.wayland.windowManager.sway.config) modifier;
-      in
+      keybindings =
+        let
+          inherit (config.wayland.windowManager.sway.config) modifier;
+        in
         lib.mkOptionDefault {
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Shift+c" = "reload";
@@ -85,6 +84,7 @@ in {
           "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMicMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           ## Brightness control
           "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set +5%";
           "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set 5%-";
@@ -132,21 +132,21 @@ in {
         };
       };
       startup = [
-        {command = "--no-startup-id systemctl --user start waybar";}
+        { command = "--no-startup-id systemctl --user start waybar"; }
         {
           #command = "--no-startup-id ${autotiling}";
           command = "--no-startup-id autotiling";
           always = true;
         }
-        {command = "--no-startup-id nm-applet --indicator";}
-        {command = "--no-startup-id udiskie -ans &";}
-        {command = "--no-startup-id wl-paste -t text --watch clipman store --no-persist";}
-        {command = "--no-startup-id kanshi &";}
+        { command = "--no-startup-id nm-applet --indicator"; }
+        { command = "--no-startup-id udiskie -ans &"; }
+        { command = "--no-startup-id wl-paste -t text --watch clipman store --no-persist"; }
+        { command = "--no-startup-id kanshi &"; }
         {
           command = "--no-startup-id kanshictl reload";
           always = true;
         }
-        {command = "--no-startup-id sway-audio-idle-inhibit";}
+        { command = "--no-startup-id sway-audio-idle-inhibit"; }
         # auto lockscreen
         {
           command = ''
@@ -156,8 +156,8 @@ in {
               before-sleep 'swaylock'
           '';
         }
-        {command = "swaymsg rename workspace 1 '1 '";}
-        {command = "swaymsg rename workspace 2 '2 '";}
+        { command = "swaymsg rename workspace 1 '1 '"; }
+        { command = "swaymsg rename workspace 2 '2 '"; }
         # workspace names
       ];
       input = {
@@ -180,35 +180,35 @@ in {
         border = 1;
         commands = [
           {
-            criteria = {class = ".*";};
+            criteria = { class = ".*"; };
             command = "border pixel 1";
           }
           {
-            criteria = {app_id = "yad";};
+            criteria = { app_id = "yad"; };
             command = "floating enable, border pixel 0";
           }
           {
-            criteria = {app_id = "firefox";};
+            criteria = { app_id = "firefox"; };
             command = "border pixel 0";
           }
           {
-            criteria = {title = "Firefox — Sharing Indicator";};
+            criteria = { title = "Firefox — Sharing Indicator"; };
             command = "floating enable, nofocus";
           }
           {
-            criteria = {app_id = "chromium-browser";};
+            criteria = { app_id = "chromium-browser"; };
             command = "border pixel 0";
           }
           {
-            criteria = {window_role = "floating";};
+            criteria = { window_role = "floating"; };
             command = "floating enable";
           }
           {
-            criteria = {instance = "Navigator";};
+            criteria = { instance = "Navigator"; };
             command = "floating disable";
           }
           {
-            criteria = {app_id = "gamescope";};
+            criteria = { app_id = "gamescope"; };
             command = "floating enable";
           }
           {
@@ -220,7 +220,7 @@ in {
           }
         ];
       };
-      bars = [];
+      bars = [ ];
     };
     extraConfig = ''
       # laptop lid
