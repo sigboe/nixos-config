@@ -158,12 +158,11 @@
       #indent-blankline.enable = true;
       mini = {
         enable = true;
-        mockDevIcons = true;
         modules = {
           indentscope.symbol = "│";
-          icons = { };
         };
       };
+      web-devicons.enable = true;
       #lint = {
       #  enable = true;
       #  lintersByFt = {
