@@ -59,6 +59,7 @@
     screen
     shellcheck
     shfmt
+    signal-desktop
     sqlite
     sshfs
     stow
