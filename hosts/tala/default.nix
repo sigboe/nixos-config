@@ -3,7 +3,7 @@
 #  Laptop
 #
 ###############################################################
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, config, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -41,8 +41,19 @@
 
   # Enable bluetooth
   boot = {
-    initrd.kernelModules = [ "btintel" ];
-    initrd.availableKernelModules = [ "tpm_tis" ];
+    initrd = {
+      kernelModules = [ "btintel" ];
+      availableKernelModules = [ "tpm_tis" ];
+      systemd = {
+        # these two are added as a workaround
+        # see https://discourse.nixos.org/t/tpm2-luks-unlock-not-working/52342/3
+        additionalUpstreamUnits = [ "systemd-tpm2-setup-early.service" ];
+        storePaths = [
+          "${config.boot.initrd.systemd.package}/lib/systemd/systemd-tpm2-setup"
+          "${config.boot.initrd.systemd.package}/lib/systemd/system-generators/systemd-tpm2-generator"
+        ];
+      };
+    };
     bootspec.enable = true;
   };
 
