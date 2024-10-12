@@ -45,13 +45,8 @@
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
       systemd = {
-        # these two are added as a workaround
-        # see https://discourse.nixos.org/t/tpm2-luks-unlock-not-working/52342/3
-        additionalUpstreamUnits = [ "systemd-tpm2-setup-early.service" ];
-        storePaths = [
-          "${config.boot.initrd.systemd.package}/lib/systemd/systemd-tpm2-setup"
-          "${config.boot.initrd.systemd.package}/lib/systemd/system-generators/systemd-tpm2-generator"
-        ];
+        enable = true;
+        enableTpm2 = true;
       };
     };
     bootspec.enable = true;
@@ -84,7 +79,10 @@
     };
   };
 
-  security.polkit.enable = true;
+  security = {
+    polkit.enable = true;
+    tpm2.enable = true;
+  };
 
   services = {
     # Ignore accidental powerkey press
