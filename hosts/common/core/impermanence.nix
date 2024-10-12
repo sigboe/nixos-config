@@ -12,6 +12,7 @@
       "/etc/NetworkManager/system-connections"
       "/etc/wireguard"
       "/etc/nixos"
+      "/etc/secureboot"
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
     ];
     files = [

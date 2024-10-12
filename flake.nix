@@ -21,6 +21,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TPM chip
+    lanzaboote.url = "github:nix-community/lanzaboote";
+
     # Impermanence (nuke root on every boot)
     impermanence.url = "github:nix-community/impermanence";
 
@@ -63,6 +66,7 @@
     , stylix
     , impermanence
     , sops-nix
+    , lanzaboote
     , ...
     } @ inputs:
     let
@@ -91,6 +95,7 @@
         disko.nixosModules.disko
         impermanence.nixosModules.impermanence
         sops-nix.nixosModules.sops
+        lanzaboote.nixosModules.lanzaboote
       ];
     in
     {

@@ -20,6 +20,7 @@
 
       #################### Host-specific Optional Configs ####################
 
+      ../optional/systemd-boot.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
 
