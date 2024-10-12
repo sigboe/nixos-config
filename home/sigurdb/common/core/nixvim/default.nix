@@ -231,6 +231,15 @@
           noremap = true;
         };
       }
+      {
+        # clear search highlighting
+        mode = [ "i" "v" ];
+        key = "<space><space>";
+        action = "<Esc>";
+        options = {
+          noremap = true;
+        };
+      }
 
       # ======== Movement ========
       {

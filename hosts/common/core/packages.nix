@@ -13,6 +13,7 @@
     chromium
     comma
     cups
+    exiftool
     eza
     fd
     firefox

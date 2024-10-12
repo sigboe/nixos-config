@@ -1,7 +1,6 @@
 {
   lib,
   stdenv,
-  #fetchzip,
   fetchFromGitHub,
   cmake,
   pkg-config,
@@ -12,10 +11,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "bose-connect-app-linux";
   version = "2024-04-09";
 
-  #src = fetchzip {
-  #  url = "https://github.com/airvzxf/bose-connect-app-linux/archive/2cf59f5d2ba11bbfc4736de0c56601329f003737.zip";
-  #  sha256 = "sha256-sBAfLd1u3+YpFPbiI587tIHq/mUX0Mk9NMQtRsgk25Q=";
-  #};
   src = fetchFromGitHub {
     owner = "airvzxf";
     repo = "bose-connect-app-linux";
