@@ -42,6 +42,7 @@
   # Enable bluetooth
   boot = {
     initrd.kernelModules = [ "btintel" ];
+    initrd.availableKernelModules = [ "tpm_tis" ];
     bootspec.enable = true;
   };
 
