@@ -174,7 +174,7 @@ in
       };
       focus = {
         followMouse = true;
-        mouseWarping = true;
+        mouseWarping = "container";
       };
       window = {
         border = 1;
