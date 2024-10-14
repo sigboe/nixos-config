@@ -200,7 +200,7 @@ in
 #mode {
   background-color: @base08;
   color: @base00;
-  border: 3px;
+  border-radius: 3px;
 }
     '';
   };
