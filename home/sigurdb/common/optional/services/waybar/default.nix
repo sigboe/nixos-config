@@ -68,7 +68,7 @@ in
           };
         };
         "sway/mode" = {
-          format = "<span style='italic'>{}</span>";
+          format = "<span style='italic'> {} </span>";
         };
         mpd = {
           format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
@@ -196,12 +196,25 @@ in
         };
       };
     };
-    style =''
-#mode {
-  background-color: @base08;
-  color: @base00;
-  border-radius: 3px;
-}
+    style = ''
+      #mode {
+        background-color: @base08;
+        color: @base00;
+        border-radius: 3px;
+      }
+      #battery.critical:not(.charging) {
+          background-color: @base08;
+          color: @base00;
+          animation-name: blink;
+          animation-duration: 1s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+      }
+      #battery.charging, #battery.plugged {
+        color: @base00;
+        background-color: @base0C;
+      }
     '';
   };
 }
