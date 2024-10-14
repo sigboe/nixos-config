@@ -68,7 +68,7 @@ in
           };
         };
         "sway/mode" = {
-          format = "<span style='italic'>{}</span>";
+          format = "<span style='background-color:red;font-style:italic'>{}</span>";
         };
         mpd = {
           format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
