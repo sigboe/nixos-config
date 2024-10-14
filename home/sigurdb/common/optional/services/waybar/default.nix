@@ -68,7 +68,7 @@ in
           };
         };
         "sway/mode" = {
-          format = "<span style='red'>{}</span>";
+          format = "<span style='italic'>{}</span>";
         };
         mpd = {
           format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
@@ -196,5 +196,12 @@ in
         };
       };
     };
+    style =''
+#mode {
+  background-color: @base08;
+  color: @base00;
+  border-bottom: 3px solid @base00;
+}
+    '';
   };
 }
