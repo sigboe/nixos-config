@@ -9,7 +9,7 @@
 , bullet
 , minizip
 , pkg-config
-, imgui
+, imgui_cmake
 , openal
 , cxxopts
 , stb
@@ -30,10 +30,10 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   # Build dependencies
-  nativeBuildInputs = [ cmake cxxopts stb utf8cpp dr_libs imgui bgfx_cmake minizip pkg-config ];
+  nativeBuildInputs = [ cmake cxxopts stb utf8cpp dr_libs imgui_cmake bgfx_cmake minizip pkg-config ];
 
   # Runtime dependencies
-  buildInputs = [ spdlog entt SDL2 glm bgfx bullet minizip imgui openal ];
+  buildInputs = [ spdlog entt SDL2 glm bgfx bullet minizip imgui_cmake openal ];
 
   cmakeFlags = [
     "-DCMAKE_INSTALL_PREFIX=/"
