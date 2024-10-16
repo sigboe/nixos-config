@@ -197,19 +197,21 @@ in
       };
     };
     style = ''
+      * {
+        border-radius: 3px;
+      }
       #mode {
         background-color: @base08;
         color: @base00;
-        border-radius: 3px;
       }
       #battery.critical:not(.charging) {
-          background-color: @base08;
-          color: @base00;
-          animation-name: blink;
-          animation-duration: 1s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
+        background-color: @base08;
+        color: @base00;
+        animation-name: blink;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
       }
       #battery.charging, #battery.plugged {
         color: @base00;
