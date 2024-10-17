@@ -26,6 +26,7 @@
     github-cli
     gnutls
     go
+    handbrake
     home-manager
     htop
     imagemagick

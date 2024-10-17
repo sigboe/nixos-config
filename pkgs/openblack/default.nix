@@ -25,6 +25,7 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "openblack";
     repo = "openblack";
+    fetchSubmodules = true;
     rev = "f393be3de149c7b38c3047ed9adec4e53efc85dd";
     sha256 = "sha256-JHKZccznq2k5+tVdaOXv6Wum/wwvcjBKfU9xzVuFJaU=";
   };
@@ -41,7 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
     "-DStb_INCLUDE_DIR=/include/stb"
     "-DDRLIBS_INCLUDE_DIRS=/include/dr_libs"
-    "-DCMAKE_SYSTEM_PREFIX_PATH=/"
   ];
 
   configurePhase = ''

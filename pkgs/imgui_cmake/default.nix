@@ -16,8 +16,8 @@ stdenv.mkDerivation rec {
       name = "vcpkg";
       owner = "microsoft";
       repo = "vcpkg";
-      rev = "16601c6e7ee15aeccac771185916cd6f6fe1ba50";
-      sha256 = "sha256-x9GNh7EcDdXGZNBSEXXqbflfs4/o+Glnn5wW1k6JCcs=";
+      rev = "f7a371bbd9945c9059875492ba018ec12cb925c2";
+      sha256 = "sha256-kJXqPWjycd4lGMbmlN7ykbeOTmfoQTvOgEXBu+fLZWU=";
     })
   ];
   sourceRoot = pname;
@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     cp -a backends $out/include/imgui/
     cp -a misc $out/include/imgui/
     cp ../vcpkg/ports/imgui/CMakeLists.txt $out/include/imgui
-    cp ../vcpkg/ports/imgui/imgui-config.cmake.in $out/include/imgui/imgui-config.cmake
+    cp ../vcpkg/ports/imgui/imgui-config.cmake.in $out/include/imgui
   '';
 
   meta = with lib; {
