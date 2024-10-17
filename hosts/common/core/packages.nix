@@ -38,6 +38,7 @@
     libxml2
     lutris
     mangohud
+    mediainfo
     mpd
     mpv
     ncdu
