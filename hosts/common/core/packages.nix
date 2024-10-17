@@ -16,6 +16,7 @@
     exiftool
     eza
     fd
+    ffmpeg
     firefox
     freetype
     furmark
