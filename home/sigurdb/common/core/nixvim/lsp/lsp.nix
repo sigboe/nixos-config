@@ -17,7 +17,7 @@
             enable = true;
           };
           nixd = {
-            enable = false;
+            enable = true;
           };
           marksman = {
             enable = true;
