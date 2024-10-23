@@ -18,6 +18,9 @@
           };
           nixd = {
             enable = true;
+            extraOptions = {
+              nixpkgs = { expr = "imoort <nixpkgs> { }"; };
+            };
           };
           marksman = {
             enable = true;
