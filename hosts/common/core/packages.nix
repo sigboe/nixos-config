@@ -23,6 +23,7 @@
     fzf
     gamescope
     gcc
+    gdu
     git
     github-cli
     gnutls
@@ -43,8 +44,9 @@
     mpd
     mpv
     ncdu
-    nodejs_22
     networkmanagerapplet
+    nixd
+    nodejs_22
     openldap
     p7zip
     pass
@@ -93,4 +95,5 @@
     zoxide
     outputs.packages.x86_64-linux.host-lookup
   ];
+
 }

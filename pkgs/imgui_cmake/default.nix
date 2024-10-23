@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchFromGitHub, fetchurl }:
+{ stdenv, lib, fetchFromGitHub, cmake }:
 
 stdenv.mkDerivation rec {
   pname = "imgui_cmake";
@@ -22,17 +22,26 @@ stdenv.mkDerivation rec {
   ];
   sourceRoot = pname;
 
+  nativeBuildInputs = [ cmake ];
+
   dontBuild = true;
 
-  installPhase = ''
-    mkdir -p $out/include/imgui
+  cmakeFlags = [
+    "-DCMAKE_INSTALL_PREFIX=${placeholder "out"}"
+    "-DBUILD_SHARED_LIBS=ON"
+  ];
 
-    cp *.h $out/include/imgui
-    cp *.cpp $out/include/imgui
-    cp -a backends $out/include/imgui/
-    cp -a misc $out/include/imgui/
-    cp ../vcpkg/ports/imgui/CMakeLists.txt $out/include/imgui
-    cp ../vcpkg/ports/imgui/imgui-config.cmake.in $out/include/imgui
+  patchPhase = ''
+    cp ../vcpkg/ports/imgui/CMakeLists.txt .
+    cp ../vcpkg/ports/imgui/imgui-config.cmake.in .
+  '';
+
+  configurePhase = ''
+    cmake -S. -B cmake-build-shared $cmakeflags
+  '';
+
+  installPhase = ''
+    cmake --build cmake-build-shared
   '';
 
   meta = with lib; {

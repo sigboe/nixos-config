@@ -32,6 +32,7 @@ in
               "git"
               "networkmanager"
               "corectrl"
+              "dialout"
             ];
 
           # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
