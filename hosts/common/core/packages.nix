@@ -1,4 +1,4 @@
-{ pkgs, outputs, ... }: {
+{ pkgs, outputs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     SDL2
     acpi
@@ -45,7 +45,6 @@
     mpv
     ncdu
     networkmanagerapplet
-    nixd
     nodejs_22
     openldap
     p7zip
@@ -94,6 +93,7 @@
     zip
     zoxide
     outputs.packages.x86_64-linux.host-lookup
+    inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.nixd
   ];
 
 }
