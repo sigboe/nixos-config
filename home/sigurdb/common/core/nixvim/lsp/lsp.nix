@@ -14,7 +14,7 @@
             enable = true;
           };
           nil_ls = {
-            enable = true;
+            enable = false;
           };
           nixd = {
             enable = true;
