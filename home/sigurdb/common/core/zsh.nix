@@ -65,8 +65,6 @@
         ${pkgs.neovim}/bin/nvim - o ''${args}
       }
 
-      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/keyring/ssh"
-
       ranger() {
         temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
         ${pkgs.ranger}/bin/ranger --choosedir="$temp_file" -- "''${@:-$PWD}"
