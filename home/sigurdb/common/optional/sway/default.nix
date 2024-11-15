@@ -56,26 +56,6 @@ in
           "${modifier}+Shift+8" = "move container to workspace number 8";
           "${modifier}+Shift+9" = "move container to workspace number 9";
           "${modifier}+Shift+0" = "move container to workspace number 0";
-          # Move your focus around
-          "${modifier}+${left}" = "focus left";
-          "${modifier}+${down}" = "focus down";
-          "${modifier}+${up}" = "focus up";
-          "${modifier}+${right}" = "focus right";
-          # Or use "${modifier}+[up|down|left|right]
-          "${modifier}+Left" = "focus left";
-          "${modifier}+Down" = "focus down";
-          "${modifier}+Up" = "focus up";
-          "${modifier}+Right" = "focus right";
-          # Move the focused window with the same, but add Shift
-          "${modifier}+Shift+${left}" = "move left";
-          "${modifier}+Shift+${down}" = "move down";
-          "${modifier}+Shift+${up}" = "move up";
-          "${modifier}+Shift+${right}" = "move right";
-          # Ditto, with arrow keys
-          "${modifier}+Shift+Left" = "move left";
-          "${modifier}+Shift+Down" = "move down";
-          "${modifier}+Shift+Up" = "move up";
-          "${modifier}+Shift+Right" = "move right";
           # move workspaces
           "${modifier}+Control+Shift+${right}" = "move workspace to output right";
           "${modifier}+Control+Shift+${left}" = "move workspace to output left";
