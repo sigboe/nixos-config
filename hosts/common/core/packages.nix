@@ -36,7 +36,7 @@
     kanshi
     kitty
     lazygit
-    libgpgerror
+    libgpg-error
     libxml2
     lutris
     mangohud

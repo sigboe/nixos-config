@@ -20,7 +20,6 @@
 
   programs.nixvim = {
     enable = true;
-    package = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.neovim-unwrapped;
     defaultEditor = true;
     enableMan = true; # install man pages for nixvim options
 

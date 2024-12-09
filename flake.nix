@@ -4,12 +4,12 @@
   inputs = {
     #################### Official NixOS and HM Package Sources ####################
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
     hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -40,8 +40,8 @@
 
     # vim4LMFQR!
     nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      url = "github:nix-community/nixvim/nixos-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # optional dependency for Comma
@@ -52,8 +52,7 @@
 
     # style system and user packages atuomatically
     stylix = {
-      url = "github:danth/stylix/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:danth/stylix/release-24.11";
     };
 
   };

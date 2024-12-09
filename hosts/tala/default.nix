@@ -46,24 +46,20 @@
       availableKernelModules = [ "tpm_tis" ];
       systemd = {
         enable = true;
-        enableTpm2 = true;
+        tpm2.enable = true;
       };
     };
     bootspec.enable = true;
   };
 
   # Enable hardware acceleration
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;
 
-  # webcam
-  hardware.ipu6 = {
-    enable = true;
-    platform = "ipu6ep"; #Alder Lake
-  };
+  ## webcam
+  #hardware.ipu6 = {
+  #  enable = true;
+  #  platform = "ipu6ep"; #Alder Lake
+  #};
 
   # Enable networking
   networking = {
