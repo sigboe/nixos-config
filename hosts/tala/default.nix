@@ -3,7 +3,7 @@
 #  Laptop
 #
 ###############################################################
-{ inputs, pkgs, config, ... }: {
+{ inputs, pkgs, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -25,7 +25,7 @@
       ../common/optional/steam.nix
 
       # Desktop
-      ../common/optional/services/greetd
+      ../common/optional/services/regreet
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
       # Laptop

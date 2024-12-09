@@ -34,7 +34,7 @@
     };
     # Authenticate via ssh and use shallow clone
     nix-secrets = {
-      url = "git+ssh://git@gitlab.redpill-linpro.com/sigurdb/nix-secrets.git?ref=main&shallow=1";
+      url = "git+ssh://git@gitlab.com/sigboe/nix-secrets.git?ref=main&shallow=1";
       flake = false;
     };
 
