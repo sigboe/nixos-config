@@ -22,6 +22,7 @@
       "/etc/ssh/ssh_host_rsa_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
       { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
+      "/var/cache/regreet/cache.toml"
     ];
   };
   security.sudo.extraConfig = ''
