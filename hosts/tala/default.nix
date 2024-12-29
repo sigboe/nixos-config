@@ -41,6 +41,7 @@
 
   # Enable bluetooth
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
