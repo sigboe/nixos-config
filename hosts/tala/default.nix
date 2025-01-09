@@ -3,7 +3,7 @@
 #  Laptop
 #
 ###############################################################
-{ inputs, pkgs, ... }: {
+{ inputs, pkgs, config, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -41,7 +41,20 @@
 
   # Enable bluetooth
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages =
+      (pkgs.linuxPackagesFor
+        (pkgs.linux_6_12.override {
+          argsOverride = rec {
+            src = pkgs.fetchurl {
+              url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+              sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
+            };
+            version = "6.12.1";
+            modDirVersion = "6.12.1";
+          };
+        })).extend (_: _: {
+        ipu6-drivers = config.boot.kernelPackages.callPackage ../../pkgs/ipudrivers { };
+      });
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
@@ -56,11 +69,11 @@
   # Enable hardware acceleration
   hardware.graphics.enable = true;
 
-  ## webcam
-  #hardware.ipu6 = {
-  #  enable = true;
-  #  platform = "ipu6ep"; #Alder Lake
-  #};
+  # webcam
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep"; #Alder Lake
+  };
 
   # Enable networking
   networking = {
