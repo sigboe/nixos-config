@@ -42,7 +42,7 @@
   # Enable bluetooth
   boot = {
     kernelPackages =
-      (pkgs.linuxPackagesFor
+      pkgs.linuxPackagesFor
         (pkgs.linux_6_12.override {
           argsOverride = rec {
             src = pkgs.fetchurl {
@@ -52,9 +52,7 @@
             version = "6.12.1";
             modDirVersion = "6.12.1";
           };
-        })).extend (_: _: {
-        ipu6-drivers = config.boot.kernelPackages.callPackage ../../pkgs/ipudrivers { };
-      });
+        });
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
