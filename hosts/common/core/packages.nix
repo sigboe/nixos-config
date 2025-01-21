@@ -24,6 +24,7 @@
     gamescope
     gcc
     gdu
+    ghostty
     git
     github-cli
     gnutls

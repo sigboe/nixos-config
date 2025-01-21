@@ -41,18 +41,18 @@
 
   # Enable bluetooth
   boot = {
-    kernelPackages =
-      pkgs.linuxPackagesFor
-        (pkgs.linux_6_12.override {
-          argsOverride = rec {
-            src = pkgs.fetchurl {
-              url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
-              sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
-            };
-            version = "6.12.1";
-            modDirVersion = "6.12.1";
-          };
-        });
+    #kernelPackages =
+    #  pkgs.linuxPackagesFor
+    #    (pkgs.linux_6_12.override {
+    #      argsOverride = rec {
+    #        src = pkgs.fetchurl {
+    #          url = "mirror://kernel/linux/kernel/v6.x/linux-${version}.tar.xz";
+    #          sha256 = "sha256-AZOx2G3TcuyJG655n22iDe7xb8GZ8wCApOqd6M7wxhk=";
+    #        };
+    #        version = "6.12.1";
+    #        modDirVersion = "6.12.1";
+    #      };
+    #    });
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
@@ -67,11 +67,11 @@
   # Enable hardware acceleration
   hardware.graphics.enable = true;
 
-  # webcam
-  hardware.ipu6 = {
-    enable = true;
-    platform = "ipu6ep"; #Alder Lake
-  };
+  ## webcam
+  #hardware.ipu6 = {
+  #  enable = true;
+  #  platform = "ipu6ep"; #Alder Lake
+  #};
 
   # Enable networking
   networking = {
@@ -79,7 +79,9 @@
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
-      #allowedTCPPorts = [22];
+      allowedTCPPorts = [
+        12315 # Grayjay Desktop
+      ];
       allowedUDPPorts = [
         5182 # Wireguard
       ];

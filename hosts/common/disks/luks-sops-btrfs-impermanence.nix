@@ -7,7 +7,7 @@
         type = "gpt";
         partitions = {
           ESP = {
-            size = "512M";
+            size = "2G";
             type = "EF00";
             content = {
               type = "filesystem";
@@ -46,7 +46,7 @@
                   };
                   "/swap" = {
                     mountpoint = "/.swapvol";
-                    swap.swapfile.size = "20M";
+                    swap.swapfile.size = "16G";
                   };
                 };
               };
@@ -57,7 +57,7 @@
     };
     nodev."/" = {
       fsType = "tmpfs";
-      mountOptions = [ "size=3G" "defaults" "mode=755" ];
+      mountOptions = [ "size=12G" "defaults" "mode=755" ];
     };
   };
 }

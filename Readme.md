@@ -31,7 +31,7 @@
   - Neovim, via nixvim, with treesitter, lsp and completion, etc
   - nix-index-database, and Comma (Run programs without installing using executable name not package name)
   - Stylix applies Catppuccin Mocha everywhere* (most places)
-  - gtkgreet (will be replaced by regreet with stylix support)
+  - greetd as the display manager, with regreet for the authentication UI
   - custom packages
   - Activation Scripts:
     - Git commit (not push) after every successful rebuild switch (not during boot) with a useful comment
