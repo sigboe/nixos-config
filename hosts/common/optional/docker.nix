@@ -15,7 +15,7 @@
   };
 
   # Enable the ability to run arm docker images
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
 
   # Useful other development tools
   environment.systemPackages = with pkgs; [
