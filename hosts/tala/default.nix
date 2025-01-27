@@ -34,6 +34,7 @@
       ../common/optional/services/yubikey.nix
       ../common/optional/services/udisks.nix
       ../common/optional/services/fwupd.nix
+      ../common/optional/docker.nix
 
       #################### Users to Create ####################
       ../common/users/sigurdb
