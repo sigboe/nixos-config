@@ -20,16 +20,14 @@
 
       #################### Host-specific Optional Configs ####################
 
-      ../optional/systemd-boot.nix
+      ../common/optional/systemd-boot.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
 
       # Desktop
-      ../common/optional/services/greetd
+      ../common/optional/services/regreet
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
-      # Laptop
-      #../common/optional/laptop.nix
       # services
       ../common/optional/services/yubikey.nix
 
@@ -38,14 +36,20 @@
     ];
 
   # Enable bluetooth
-  boot.initrd.kernelModules = [ "btintel" ];
+  boot = {
+    initrd = {
+      kernelModules = [ "btintel" ];
+      availableKernelModules = [ "tpm_tis" ];
+      systemd = {
+        enable = true;
+        tpm2.enable = true;
+      };
+    };
+    bootspec.enable = true;
+  };
 
   # Enable hardware acceleration
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  hardware.graphics.enable = true;
 
   # Enable networking
   networking = {
@@ -53,13 +57,20 @@
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
-      #allowedTCPPorts = [22];
-      #allowedUDPPorts = [ ... ];
+      allowedTCPPorts = [
+        12315 # Grayjay Desktop
+      ];
+      allowedUDPPorts = [
+        5182 # Wireguard
+      ];
       #enable = false;
     };
   };
 
-  security.polkit.enable = true;
+  security = {
+    polkit.enable = true;
+    tpm2.enable = true;
+  };
 
   services = {
     # Ignore accidental powerkey press

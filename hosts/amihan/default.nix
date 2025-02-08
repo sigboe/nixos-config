@@ -1,6 +1,6 @@
 #############################################################
 #
-#  Desktop
+#  Laptop
 #
 ###############################################################
 { inputs, pkgs, ... }: {
@@ -8,33 +8,34 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # Disks
+      (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/nvme0n1"; })
 
       #################### Hardware Modules ####################
-      inputs.hardware.nixosModules.common-cpu-amd
-      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-cpu-intel
       inputs.hardware.nixosModules.common-pc-ssd
+
       #################### Required Configs ####################
       ../common/core
 
       #################### Host-specific Optional Configs ####################
 
-      ../common/optional/systemd-boot.nix
+      ../common/optional/impermanence.nix
+      ../common/optional/lanzaboote.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
-      ../common/optional/qemu-kvm.nix
 
       # Desktop
-      ../common/optional/services/regreet
-      ../common/optional/sway.nix
+      ../common/optional/cosmic.nix
+      ../common/optional/flatpak.nix
       ../common/optional/services/pipewire.nix
+      # Laptop
+      ../common/optional/laptop.nix
       # services
-      ../common/optional/services/yubikey.nix
-      ../common/optional/services/udisks.nix
       ../common/optional/services/fwupd.nix
-      ../common/optional/docker.nix
 
       #################### Users to Create ####################
-      ../common/users/sigurdb
+      ../common/users/maggie
     ];
 
   # Enable bluetooth
@@ -53,15 +54,14 @@
   # Enable hardware acceleration
   hardware.graphics.enable = true;
 
+
   # Enable networking
   networking = {
-    hostName = "zig-pc-01"; # Define your hostname.
+    hostName = "amihan"; # Define your hostname.
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
-      allowedTCPPorts = [
-        12315 # Grayjay Desktop
-      ];
+      allowedTCPPorts = [ ];
       allowedUDPPorts = [
         5182 # Wireguard
       ];
@@ -121,5 +121,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 }

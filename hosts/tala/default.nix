@@ -20,6 +20,7 @@
 
       #################### Host-specific Optional Configs ####################
 
+      ../common/optional/impermanence.nix
       ../common/optional/lanzaboote.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix

@@ -55,6 +55,12 @@
       url = "github:danth/stylix/release-24.11";
     };
 
+    # Cosmic Desktop
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -66,6 +72,7 @@
     , impermanence
     , sops-nix
     , lanzaboote
+    , nixos-cosmic
     , ...
     } @ inputs:
     let
@@ -95,6 +102,13 @@
         impermanence.nixosModules.impermanence
         sops-nix.nixosModules.sops
         lanzaboote.nixosModules.lanzaboote
+        {
+          nix.settings = {
+            substituters = [ "https://cosmic.cachix.org/" ];
+            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+          };
+        }
+        nixos-cosmic.nixosModules.default
       ];
     in
     {
@@ -117,11 +131,16 @@
           inherit specialArgs;
           modules = [ ./hosts/tala ] ++ defaultModules;
         };
-        # test
-        vm = lib.nixosSystem {
+        # Laptop
+        amihan = lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./hosts/vm ] ++ defaultModules;
+          modules = [ ./hosts/amihan ] ++ defaultModules;
         };
+        ## test
+        #vm = lib.nixosSystem {
+        #  inherit specialArgs;
+        #  modules = [ ./hosts/vm ] ++ defaultModules;
+        #};
       };
     };
 }
