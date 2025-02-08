@@ -4,7 +4,10 @@
   inputs = {
     #################### Official NixOS and HM Package Sources ####################
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-24.11";
+      follows = "nixos-cosmic/nixpkgs-stable";
+    };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
     hardware.url = "github:nixos/nixos-hardware";
 
@@ -117,6 +120,7 @@
 
       # Custom packages to be shared or upstreamed.
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      defaultPackage = { x86_64-linux = self.packages."x86_64-linux"."bose-connect-app-linux"; };
 
       #################### NixOS Configurations ####################
 
@@ -136,11 +140,11 @@
           inherit specialArgs;
           modules = [ ./hosts/amihan ] ++ defaultModules;
         };
-        ## test
-        #vm = lib.nixosSystem {
-        #  inherit specialArgs;
-        #  modules = [ ./hosts/vm ] ++ defaultModules;
-        #};
+        # test
+        vm = lib.nixosSystem {
+          inherit specialArgs;
+          modules = [ ./hosts/vm ] ++ defaultModules;
+        };
       };
     };
 }
