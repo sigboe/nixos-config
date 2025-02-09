@@ -4,6 +4,7 @@
     ../common/core
     ../common/optional/firefox.nix
     ../common/optional/kitty.nix
+    ../common/optional/ghostty.nix
     ../common/optional/nix-index-database.nix
 
 
