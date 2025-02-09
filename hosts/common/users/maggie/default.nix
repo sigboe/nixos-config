@@ -36,7 +36,7 @@ in
         ];
 
       # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
-      #openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
+      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
 
       shell = pkgs.zsh; # default shell
     };

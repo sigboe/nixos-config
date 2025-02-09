@@ -3,7 +3,7 @@
 #  VM
 #
 ###############################################################
-{ pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -23,6 +23,7 @@
       ../common/optional/systemd-boot.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit inputs; })
 
       # Desktop
       ../common/optional/services/regreet

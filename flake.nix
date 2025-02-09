@@ -120,7 +120,6 @@
 
       # Custom packages to be shared or upstreamed.
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      defaultPackage = { x86_64-linux = self.packages."x86_64-linux"."bose-connect-app-linux"; };
 
       #################### NixOS Configurations ####################
 

@@ -21,9 +21,11 @@
       #################### Host-specific Optional Configs ####################
 
       ../common/optional/impermanence.nix
-      ../common/optional/lanzaboote.nix
+      #../common/optional/lanzaboote.nix
+      ../common/optional/systemd-boot.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      (import ../common/optional/sops.nix { secretsFilename = "maggie-secrets"; inherit inputs; })
 
       # Desktop
       ../common/optional/cosmic.nix

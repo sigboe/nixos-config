@@ -22,6 +22,7 @@
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
       ../common/optional/qemu-kvm.nix
+      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit inputs; })
 
       # Desktop
       ../common/optional/services/regreet

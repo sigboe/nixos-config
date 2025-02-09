@@ -1,7 +1,7 @@
-{ pkgs, inputs, config, configVars, ... }:
+{ secretsFilename ? throw "example sigurdb-secrets", inputs, ... }:
 let
   secretsDirectory = builtins.toString inputs.nix-secrets;
-  secretsFile = "${secretsDirectory}/secrets.yaml";
+  secretsFile = "${secretsDirectory}/${secretsFilename}.yaml";
 
   #  homeDirectory =
   #    if pkgs.stdenv.isLinux

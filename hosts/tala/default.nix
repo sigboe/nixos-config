@@ -3,7 +3,7 @@
 #  Laptop
 #
 ###############################################################
-{ inputs, pkgs, config, ... }: {
+{ inputs, pkgs, ... }: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -20,10 +20,12 @@
 
       #################### Host-specific Optional Configs ####################
 
+      ../common/optional/activationScripts.nix
       ../common/optional/impermanence.nix
       ../common/optional/lanzaboote.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit inputs; })
 
       # Desktop
       ../common/optional/services/regreet
