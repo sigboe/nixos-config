@@ -3,7 +3,6 @@
     enable = true;
     settings = {
       enable_audio_bell = false;
-      cursor_opacity = "0.7";
       symbol_map =
         let
           mappings = [

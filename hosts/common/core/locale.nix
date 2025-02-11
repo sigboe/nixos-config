@@ -5,7 +5,7 @@
   # Select internationalisation properties.
   i18n = {
     supportedLocales = [ "all" ];
-    defaultLocale = "nb_NO.utf-8";
+    defaultLocale = "nb_NO.utf8";
     extraLocaleSettings = {
       LANG = "en_US.utf8";
       LC_CTYPE = config.i18n.defaultLocale;
