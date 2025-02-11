@@ -178,7 +178,7 @@ in
         };
         "type:keyboard" = {
           xkb_layout = "no";
-          xkb_options = "ctrl:nocaps";
+          xkb_options = "ctrl:nocaps,lv3:ralt_switch";
         };
       };
       focus = {
