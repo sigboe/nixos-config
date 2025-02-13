@@ -38,6 +38,7 @@
     kitty
     lazygit
     libgpg-error
+    libreoffice
     libxml2
     lutris
     mangohud
