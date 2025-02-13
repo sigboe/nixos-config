@@ -43,7 +43,6 @@
       ../common/users/sigurdb
     ];
 
-  # Enable bluetooth
   boot = {
     #kernelPackages =
     #  pkgs.linuxPackagesFor
@@ -57,6 +56,7 @@
     #        modDirVersion = "6.12.1";
     #      };
     #    });
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
