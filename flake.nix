@@ -6,7 +6,7 @@
 
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-24.11";
-      #follows = "nixos-cosmic/nixpkgs-stable";
+      follows = "nixos-cosmic/nixpkgs-stable";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
     hardware.url = "github:nixos/nixos-hardware";
@@ -58,10 +58,10 @@
       url = "github:danth/stylix/release-24.11";
     };
 
-    ## Cosmic Desktop
-    #nixos-cosmic = {
-    #  url = "github:lilyinstarlight/nixos-cosmic";
-    #};
+    # Cosmic Desktop
+    nixos-cosmic = {
+      url = "github:lilyinstarlight/nixos-cosmic";
+    };
 
   };
 
