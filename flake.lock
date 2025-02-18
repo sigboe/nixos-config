@@ -650,15 +650,17 @@
         "nixpkgs-stable": "nixpkgs-stable_2"
       },
       "locked": {
-        "lastModified": 1739415434,
-        "narHash": "sha256-ToTH8JnLcpclRT4jLrlSHhD7CfNmtGnVLZno60ziglc=",
-        "path": "/nix/store/0cq5v3pqgcvz89zga79g0gfw48zjkbf3-source",
-        "rev": "b5ee5262ada13884a6b56ea93eec8ea6f12e3624",
-        "type": "path"
+        "lastModified": 1739909000,
+        "narHash": "sha256-DsepQ7ApA4li8td4QFTmX2qs4gvCLfoN7Mlaifmji7Y=",
+        "owner": "lilyinstarlight",
+        "repo": "nixos-cosmic",
+        "rev": "5516035bb36dbb19f2bbe7b9cea6922db395e100",
+        "type": "github"
       },
       "original": {
-        "id": "nixos-cosmic",
-        "type": "indirect"
+        "owner": "lilyinstarlight",
+        "repo": "nixos-cosmic",
+        "type": "github"
       }
     },
     "nixpkgs": {
@@ -742,22 +744,6 @@
       }
     },
     "nixpkgs_3": {
-      "locked": {
-        "lastModified": 1739758141,
-        "narHash": "sha256-uq6A2L7o1/tR6VfmYhZWoVAwb3gTy7j4Jx30MIrH0rE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c618e28f70257593de75a7044438efc1c1fc0791",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-24.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
       "locked": {
         "lastModified": 1737569578,
         "narHash": "sha256-6qY0pk2QmUtBT9Mywdvif0i/CLVgpCjMUn6g9vB+f3M=",
@@ -862,7 +848,10 @@
         "nix-index-database": "nix-index-database",
         "nix-secrets": "nix-secrets",
         "nixos-cosmic": "nixos-cosmic",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": [
+          "nixos-cosmic",
+          "nixpkgs-stable"
+        ],
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "sops-nix": "sops-nix",
@@ -922,7 +911,7 @@
         "git-hooks": "git-hooks_2",
         "gnome-shell": "gnome-shell",
         "home-manager": "home-manager_3",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "systems": "systems_2",
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",

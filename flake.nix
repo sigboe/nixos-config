@@ -70,6 +70,7 @@
     , disko
     , nixpkgs
     , home-manager
+    , nix-index-database
     , stylix
     , impermanence
     , sops-nix
@@ -99,6 +100,7 @@
       defaultModules = [
         home-manager.nixosModules.home-manager
         { home-manager.extraSpecialArgs = specialArgs; }
+        nix-index-database.nixosModules.nix-index
         stylix.nixosModules.stylix
         disko.nixosModules.disko
         impermanence.nixosModules.impermanence
