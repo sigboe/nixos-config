@@ -31,6 +31,7 @@
       ../common/optional/services/regreet
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
+      ../common/optional/3dprint.nix
       # Laptop
       ../common/optional/laptop.nix
       # services

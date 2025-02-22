@@ -111,6 +111,16 @@
           };
         }
         nixos-cosmic.nixosModules.default
+        {
+          nixpkgs.overlays = [
+            (self: super: {
+              unstable = import inputs.nixpkgs-unstable {
+                # Make sure to pass the system so that packages are built for your architecture.
+                system = super.stdenv.hostPlatform.system;
+              };
+            })
+          ];
+        }
       ];
     in
     {

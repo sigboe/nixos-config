@@ -56,7 +56,6 @@
     playerctl
     progress
     protontricks
-    prusa-slicer
     psmisc
     python311Packages.i3ipc
     qrencode
