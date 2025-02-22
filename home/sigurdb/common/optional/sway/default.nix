@@ -44,7 +44,7 @@ in
           "${modifier}+7" = "workspace number 7";
           "${modifier}+8" = "workspace number 8";
           "${modifier}+9" = "workspace number 9";
-          "${modifier}+0" = "workspace number 0";
+          "${modifier}+0" = "workspace number 10";
           # Move focused container to workspace
           "${modifier}+Shift+1" = "move container to workspace number 1";
           "${modifier}+Shift+2" = "move container to workspace number 2";
@@ -55,7 +55,7 @@ in
           "${modifier}+Shift+7" = "move container to workspace number 7";
           "${modifier}+Shift+8" = "move container to workspace number 8";
           "${modifier}+Shift+9" = "move container to workspace number 9";
-          "${modifier}+Shift+0" = "move container to workspace number 0";
+          "${modifier}+Shift+0" = "move container to workspace number 10";
           # move workspaces
           "${modifier}+Control+Shift+${right}" = "move workspace to output right";
           "${modifier}+Control+Shift+${left}" = "move workspace to output left";
