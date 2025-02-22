@@ -94,7 +94,7 @@
     zip
     zoxide
     outputs.packages.x86_64-linux.host-lookup
-    inputs.nixpkgs-unstable.legacyPackages.x86_64-linux.nixd
+    unstable.nixd
   ];
 
 }
