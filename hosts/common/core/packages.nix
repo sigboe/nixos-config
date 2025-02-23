@@ -47,7 +47,6 @@
     mpv
     ncdu
     networkmanagerapplet
-    nodejs_22
     openldap
     p7zip
     pass
