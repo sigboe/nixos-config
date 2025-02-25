@@ -42,8 +42,8 @@
 
 ## TODO
 
-- Fix overlays
-- Look into bootstrapping without sops workaround
+- ~~Fix overlays~~
+- ~~Look into bootstrapping without sops workaround~~ (untested solution in place)
 
 ## Hosts
 
