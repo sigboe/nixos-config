@@ -92,7 +92,7 @@
     zathura
     zip
     zoxide
-    outputs.packages.x86_64-linux.host-lookup
+    host-lookup
     unstable.nixd
   ];
 
