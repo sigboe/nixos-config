@@ -10,8 +10,8 @@
         autotiling
         bemenu
         bemoji
-        outputs.packages.x86_64-linux.bitwarden-rofi
-        outputs.packages.x86_64-linux.bose-connect-app-linux
+        bitwarden-rofi
+        bose-connect-app-linux
         blueberry
         brightnessctl
         dmenu
