@@ -28,6 +28,7 @@
         "flakes"
       ];
       warn-dirty = false;
+      download-attempts = 268435456; # 256MiB (4x default)
     };
 
     # Garbage Collection

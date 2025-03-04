@@ -49,6 +49,11 @@
        }
       fi
 
+      function s, {
+        export NIX_INDEX_DATABASE="''${HOME}/.cache/nix-index/"
+        sudo env NIX_INDEX_DATABASE="''${NIX_INDEX_DATABASE}" ${pkgs.zsh}/bin/zsh -c "${pkgs.comma}/bin/comma $(printf '%q ' "''${@}")"
+      }
+
       function vimscp {
         # put all arguments in array
         args=( "''${@}" )
@@ -150,7 +155,7 @@
     # Yazi Zsh integration conflicts with zoxide. We just do it our self above.
     yazi = {
       enable = true;
-    #  enableZshIntegration = true;
+      #  enableZshIntegration = true;
     };
   };
   services.gpg-agent.enableZshIntegration = true;
