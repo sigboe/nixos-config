@@ -4,13 +4,13 @@
 , buildDotnetModule
 }:
 
-buildDotnetModule {
-  pname = "TwilightBoxart.CLI";
+buildDotnetModule rec {
+  pname = "TwilightBoxart";
   version = "v0.8.2";
 
   src = fetchFromGitHub {
     owner = "MateusRodCosta";
-    repo = "TwilightBoxart";
+    repo = pname;
     rev = "528ae3188af24ecf7e8cfe0820afe4868850d205";
     sha256 = "sha256-z3DxP1zZxBfURmnSR+J4Vx1fGet+78/RpZb3qZPfi74=";
   };

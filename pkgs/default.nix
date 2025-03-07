@@ -15,5 +15,5 @@ in
   openblack = pkgs.callPackage ./openblack {
     inherit dr_libs bgfx bgfx_cmake imgui_cmake;
   };
-  TwilightBoxart.CLI = pkgs.callPackage ./TwilightBoxart.CLI { };
+  TwilightBoxart = pkgs.callPackage ./TwilightBoxart { };
 }

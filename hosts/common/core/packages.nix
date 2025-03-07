@@ -1,7 +1,7 @@
 { pkgs, outputs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     SDL2
-    TwilightBoxart.CLI
+    TwilightBoxart
     acpi
     alejandra
     ansible-language-server
