@@ -95,6 +95,7 @@
     zip
     zoxide
     unstable.nixd
+    inputs.zen-browser.packages."${system}".twilight
   ];
 
 }
