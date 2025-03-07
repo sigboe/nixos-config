@@ -1,6 +1,7 @@
 { pkgs, outputs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     SDL2
+    TwilightBoxart.CLI
     acpi
     alejandra
     ansible-language-server
@@ -31,6 +32,7 @@
     go
     handbrake
     home-manager
+    host-lookup
     htop
     imagemagick
     jq
@@ -92,7 +94,6 @@
     zathura
     zip
     zoxide
-    host-lookup
     unstable.nixd
   ];
 

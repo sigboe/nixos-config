@@ -51,7 +51,7 @@
 
       function s, {
         export NIX_INDEX_DATABASE="''${HOME}/.cache/nix-index/"
-        sudo env NIX_INDEX_DATABASE="''${NIX_INDEX_DATABASE}" ${pkgs.zsh}/bin/zsh -c "${pkgs.comma}/bin/comma $(printf '%q ' "''${@}")"
+        sudo env NIX_INDEX_DATABASE="''${NIX_INDEX_DATABASE}" sh -c "${pkgs.comma}/bin/comma $(printf '%q ' "''${@}")"
       }
 
       function vimscp {
