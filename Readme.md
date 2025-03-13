@@ -10,6 +10,7 @@
 
 - [Feature Highlights](#feature-highlights)
 - [TODO](#todo)
+- [Packages](#packages)
 - [Hosts](#hosts)
 - [Secrets Management](#secrets-management)
 - [Initial Install Notes](docs/Install.md)
@@ -39,6 +40,36 @@
   - Everything I did using ansible on my previous Arch install (Bluetooth, Avahi etc)
   - Laptop support using tlp, thermald and more
   - Steam with gamescope, proton-ge, remote play, font fixes, etc
+
+## Packages
+
+Not all packages in the pkgs directory are usable. Some may be unfinished, experiments or I forgot to delete them, some may be dependencies for packages that are not ready. Some may be internal tools not directly usable in other environments.
+
+Here are the packages that should be usable:
+
+- bitwarden-rofi
+  - *github.com:mattydebie/bitwarden-rofi*
+  - Use bitwarden through rofi or similar menu systems
+- bose-connect-app-linux
+  -  *github.com:airvzxf/bose-connect-app-linux*
+  - Unofficial bose connect alternative for Linux
+- TwilightBoxart
+  -  *github.com:MateusRodCosta/TwilightBoxart*
+  - A coverart downloader for TwilightMenu++ and some other frontends
+
+Running the applications without installing should be as easy as 
+
+```nix
+nix run "github:sigboe/nixos-config#bose-connect-app-linux" -- --help
+```
+
+TwilightBoxart requires a few more options, because the program doesn't have a license, it is technically unfree software. The environment variable needs to be set for nix run, even if you have enabled unfree packages in your config. And for nix run to respect environment variables you need the --impure flag
+
+```nix
+NIXPKGS_ALLOW_UNFREE=1 nix run --impure "github:sigboe/nixos-config#TwilightBoxart" 
+```
+
+To install the packages, you can either ingegrate them in tour nix config, or add my repo as an input, and use whatever method you want to install packages from outside nixpkgs (example overlays or referencing the package directly) For TwilightBoxart specifically, you also either need to enable unfree packages in your config, or add an exception for TwilightBoxart
 
 ## TODO
 
