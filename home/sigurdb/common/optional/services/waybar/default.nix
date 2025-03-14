@@ -56,7 +56,7 @@ in
             "dnd-inhibited-none" = " ";
           };
           "return-type" = "json";
-          "exec-if" = "${pkgs.procps}/bin/pgrep -xf swaync-client > /dev/null";
+          "exec-if" = "${pkgs.procps}/bin/pgrep -f swaync-client > /dev/null";
           exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
           "on-click" = "sleep 0.1 && swaync-client -t -sw";
           "on-click-right" = "sleep 0.1 && swaync-client -d -sw";
@@ -70,7 +70,7 @@ in
         "custom/audio_idle_inhibitor" = {
           format = "{icon}";
           exec = "${pkgs.sway-audio-idle-inhibit} --dry-print-both-waybar";
-          "exec-if" = "${pkgs.procps}/bin/pgrep -xf sway-audio-idle-inhibit > /dev/null";
+          "exec-if" = "${pkgs.procps}/bin/pgrep -f sway-audio-idle-inhibit > /dev/null";
           "return-type" = "json";
           "format-icons" = {
             output = "";
