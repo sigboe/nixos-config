@@ -23,8 +23,9 @@ in
           "backlight"
           "bluetooth"
           "battery"
-          "clock"
+          "custom/notification"
           "tray"
+          "clock"
         ];
 
         "sway/workspaces" = {
@@ -41,6 +42,26 @@ in
             default = "";
           };
         };
+        "custom/notification" = {
+          tooltip = false;
+          format = "{} {icon}";
+          "format-icons" = {
+            notification = "󱅫";
+            none = "";
+            "dnd-notification" = " ";
+            "dnd-none" = "󰂛";
+            "inhibited-notification" = " ";
+            "inhibited-none" = "";
+            "dnd-inhibited-notification" = " ";
+            "dnd-inhibited-none" = " ";
+          };
+          "return-type" = "json";
+          "exec-if" = "${pkgs.procps}/bin/pgrep -xf swaync-client > /dev/null";
+          exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+          "on-click" = "sleep 0.1 && swaync-client -t -sw";
+          "on-click-right" = "sleep 0.1 && swaync-client -d -sw";
+          escape = true;
+        };
         "custom/bose" = {
           exec = "${boseBattery}";
           interval = 5;
@@ -49,9 +70,9 @@ in
         "custom/audio_idle_inhibitor" = {
           format = "{icon}";
           exec = "${pkgs.sway-audio-idle-inhibit} --dry-print-both-waybar";
-          exec-if = "which sway-audio-idle-inhibit";
-          return-type = "json";
-          format-icons = {
+          "exec-if" = "${pkgs.procps}/bin/pgrep -xf sway-audio-idle-inhibit > /dev/null";
+          "return-type" = "json";
+          "format-icons" = {
             output = "";
             input = "";
             output-input = "  ";

@@ -155,7 +155,7 @@ in
           command = "--no-startup-id kanshictl reload";
           always = true;
         }
-        { command = "--no-startup-id sway-audio-idle-inhibit"; }
+        { command = "--no-startup-id ${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit"; }
         # auto lockscreen
         {
           command = ''

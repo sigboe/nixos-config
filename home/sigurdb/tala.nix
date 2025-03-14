@@ -10,7 +10,7 @@
 
     # Personal
     ./common/core
-    ./common/optional/dunst.nix
+    ./common/optional/swaync.nix
     ./common/optional/mpv.nix
     ./common/optional/services/waybar
     ./common/optional/sway
