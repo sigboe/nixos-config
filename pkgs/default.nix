@@ -16,4 +16,5 @@ in
     inherit dr_libs bgfx bgfx_cmake imgui_cmake;
   };
   TwilightBoxart = pkgs.callPackage ./TwilightBoxart { };
+  powerbar = pkgs.callPackage ./powerbar { };
 }

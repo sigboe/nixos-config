@@ -47,5 +47,4 @@
       StartLimitBurst = 9;
     };
   };
-  services.udev.extraRules = ''SUBSYSTEM=="power_supply", KERNEL=="BAT0", ENV{POWER_SUPPLY_ONLINE}=="[01]", ACTION=="change", RUN+="${pkgs.procps}/bin/pkill -SIGUSR2 waybar"'';
 }
