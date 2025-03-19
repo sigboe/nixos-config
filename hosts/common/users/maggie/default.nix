@@ -1,42 +1,37 @@
-{ pkgs
-, config
+{ config
 , lib
+, pkgs
 , ...
 }:
 let
+  inherit (config) hostSpec;
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
-  username = "maggie";
 in
 {
   config = {
-    sops.secrets = {
-      maggie-password.neededForUsers = true;
-      maggie-name.neededForUsers = true;
-    };
+    sops.secrets."${hostSpec.username}-password".neededForUsers = true;
 
-    home-manager.users.${username} = import ../../../../home/${username}/${config.networking.hostName}.nix;
+    home-manager.users.${hostSpec.username} = import ../../../../home/${hostSpec.username}/${hostSpec.hostName}.nix;
 
     users.mutableUsers = false;
-    users.users.${username} = {
-      home = "/home/${username}";
+    users.users.${hostSpec.username} = {
+      home = "/home/${hostSpec.username}";
       isNormalUser = true;
-      description = config.sops.secrets.maggie-name.key;
-      hashedPasswordFile = config.sops.secrets.maggie-password.path;
+      inherit (hostSpec) description openssh;
+      hashedPasswordFile = config.sops.secrets."${hostSpec.username}-password".path;
 
       extraGroups =
         [ "wheel" ]
         ++ ifTheyExist [
           "audio"
           "video"
+          "docker"
           "git"
           "networkmanager"
           "corectrl"
           "dialout"
         ];
-
-      # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
-      openssh.authorizedKeys.keys = lib.lists.forEach pubKeys (key: builtins.readFile key);
 
       shell = pkgs.zsh; # default shell
     };

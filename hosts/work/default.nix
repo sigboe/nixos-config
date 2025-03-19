@@ -1,11 +1,11 @@
 {
   inputs,
+  lib,
   outputs,
-  configLib,
   ...
 }: {
   imports =
-    (configLib.scanPaths ./.)
+    (lib.custom.scanPaths ./.)
     ++ [inputs.home-manager.nixosModules.home-manager]
     ++ (builtins.attrValues outputs.nixosModules);
 }

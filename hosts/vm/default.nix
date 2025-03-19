@@ -3,7 +3,11 @@
 #  VM
 #
 ###############################################################
-{ inputs, pkgs, ... }: {
+{ config
+, inputs
+, pkgs
+, ...
+}: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -36,6 +40,15 @@
       ../common/users/sigurdb
     ];
 
+  hostSpec = {
+    hostName = "vm";
+    inherit (inputs.nix-secrets.users.sigurdb)
+      username
+      description
+      openssh
+      ;
+  };
+
   # Enable bluetooth
   boot = {
     initrd = {
@@ -54,7 +67,7 @@
 
   # Enable networking
   networking = {
-    hostName = "vm"; # Define your hostname.
+    inherit (config.hostSpec) hostName;
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {

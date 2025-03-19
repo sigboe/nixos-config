@@ -1,5 +1,5 @@
-{ pkgs
-, configVars
+{ config
+, pkgs
 , ...
 }: {
   programs = {
@@ -33,9 +33,7 @@
     spice-protocol
   ];
 
-  users.users.${configVars.username} = {
-    extraGroups = [ "libvirtd" ];
-  };
+  users.users.${config.hostSpec.username}.extraGroups = [ "libvirtd" ];
 
   services.spice-vdagentd.enable = true;
 }

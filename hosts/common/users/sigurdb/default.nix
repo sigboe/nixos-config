@@ -1,28 +1,25 @@
-{ pkgs
-, config
+{ config
 , lib
-, configVars
+, pkgs
 , ...
 }:
 let
+  inherit (config) hostSpec;
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
   pubKeys = lib.filesystem.listFilesRecursive ./keys;
 in
 {
   config = {
-    sops.secrets = {
-      sigurdb-password.neededForUsers = true;
-      sigurdb-name.neededForUsers = true;
-    };
+    sops.secrets."${hostSpec.username}-password".neededForUsers = true;
 
-    home-manager.users.${configVars.username} = import ../../../../home/${configVars.username}/${config.networking.hostName}.nix;
+    home-manager.users.${hostSpec.username} = import ../../../../home/${hostSpec.username}/${hostSpec.hostName}.nix;
 
     users.mutableUsers = false;
-    users.users.${configVars.username} = {
-      home = "/home/${configVars.username}";
+    users.users.${hostSpec.username} = {
+      home = "/home/${hostSpec.username}";
       isNormalUser = true;
-      description = config.sops.secrets.sigurdb-name.key;
-      hashedPasswordFile = config.sops.secrets.sigurdb-password.path;
+      inherit (hostSpec) description;
+      hashedPasswordFile = config.sops.secrets."${hostSpec.username}-password".path;
 
       extraGroups =
         [ "wheel" ]

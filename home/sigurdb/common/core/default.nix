@@ -1,3 +1,3 @@
-{ configLib, ... }: {
-  imports = configLib.scanPaths ./.;
+{ lib, ... }: {
+  imports = lib.custom.scanPaths ./.;
 }

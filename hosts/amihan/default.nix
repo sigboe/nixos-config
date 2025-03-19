@@ -3,7 +3,11 @@
 #  Laptop
 #
 ###############################################################
-{ inputs, pkgs, ... }: {
+{ config
+, inputs
+, pkgs
+, ...
+}: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -40,6 +44,15 @@
       ../common/users/maggie
     ];
 
+  hostSpec = {
+    hostName = "amihan";
+    inherit (inputs.nix-secrets.users.maggie)
+      username
+      description
+      openssh
+      ;
+  };
+
   # Enable bluetooth
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -60,7 +73,7 @@
 
   # Enable networking
   networking = {
-    hostName = "amihan"; # Define your hostname.
+    inherit (config.hostSpec) hostName;
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {

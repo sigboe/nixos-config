@@ -3,7 +3,11 @@
 #  Laptop
 #
 ###############################################################
-{ inputs, pkgs, ... }: {
+{ config
+, inputs
+, pkgs
+, ...
+}: {
   imports =
     [
       # Include the results of the hardware scan.
@@ -43,6 +47,15 @@
       #################### Users to Create ####################
       ../common/users/sigurdb
     ];
+
+  hostSpec = {
+    hostName = "tala";
+    inherit (inputs.nix-secrets.users.sigurdb)
+      username
+      description
+      openssh
+      ;
+  };
 
   boot = {
     #kernelPackages =
@@ -94,7 +107,7 @@
 
   # Enable networking
   networking = {
-    hostName = "tala"; # Define your hostname.
+    inherit (config.hostSpec) hostName;
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {

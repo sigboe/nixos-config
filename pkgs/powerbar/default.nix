@@ -22,7 +22,8 @@ buildGoModule rec {
 
   postInstall = ''
     wrapProgram $out/bin/powerbar \
-      --set LD_LIBRARY_PATH ${libPath}
+      --set LD_LIBRARY_PATH ${libPath} \
+      --set DBUS_SYSTEM_BUS_ADDRESS "unix:path=/run/user/\$(id -u)/bus"
   '';
 
   meta = with lib; {

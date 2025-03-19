@@ -38,7 +38,6 @@
     # Authenticate via ssh and use shallow clone
     nix-secrets = {
       url = "git+ssh://git@gitlab.com/sigboe/nix-secrets.git?ref=main&shallow=1";
-      flake = false;
     };
 
     # vim4LMFQR!
@@ -85,15 +84,11 @@
         "x86_64-linux"
         #"aarch64-darwin"
       ];
-      inherit (nixpkgs) lib;
-      configVars = import ./vars { inherit inputs lib; };
-      configLib = import ./lib { inherit lib; };
+      lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
       specialArgs = {
         inherit
           inputs
           outputs
-          configVars
-          configLib
           nixpkgs
           self
           ;
@@ -101,6 +96,7 @@
       defaultModules = [
         home-manager.nixosModules.home-manager
         { home-manager.extraSpecialArgs = specialArgs; }
+        ./modules
         stylix.nixosModules.stylix
         disko.nixosModules.disko
         impermanence.nixosModules.impermanence
@@ -132,9 +128,9 @@
 
       nixosConfigurations = {
         # Desktop
-        zig-pc-01 = lib.nixosSystem {
+        lalahon = lib.nixosSystem {
           inherit specialArgs;
-          modules = [ ./hosts/zig-pc-01 ] ++ defaultModules;
+          modules = [ ./hosts/lalahon ] ++ defaultModules;
         };
         # Laptop
         tala = lib.nixosSystem {

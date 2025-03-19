@@ -10,10 +10,5 @@
     ./common/core
   ];
 
-  home = {
-    username = "maggie";
-    homeDirectory = "/home/maggie";
-  };
-
   home.stateVersion = "24.11";
 }

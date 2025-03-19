@@ -1,4 +1,4 @@
-{ configVars, ... }: {
+{ ... }: {
   imports = [
     # All users
     ../common/core
@@ -15,11 +15,6 @@
     ./common/optional/services/waybar
     ./common/optional/sway
   ];
-
-  home = {
-    username = configVars.username;
-    homeDirectory = "/home/${configVars.username}";
-  };
 
   home.stateVersion = "24.05";
 }

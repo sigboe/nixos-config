@@ -1,9 +1,9 @@
 {
   inputs,
-  configLib,
+  lib,
   ...
 }: {
   imports =
-    (configLib.scanPaths ./.)
+    (lib.custom.scanPaths ./.)
     ++ [inputs.home-manager.nixosModules.home-manager];
 }

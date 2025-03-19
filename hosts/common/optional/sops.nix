@@ -2,11 +2,6 @@
 let
   secretsDirectory = builtins.toString inputs.nix-secrets;
   secretsFile = "${secretsDirectory}/${secretsFilename}.yaml";
-
-  #  homeDirectory =
-  #    if pkgs.stdenv.isLinux
-  #    then "/home/${configVars.username}"
-  #    else "/Users/${configVars.username}";
 in
 {
   sops = {
