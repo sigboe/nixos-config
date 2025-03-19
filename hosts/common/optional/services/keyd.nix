@@ -4,9 +4,8 @@
     keyboards.default = {
       ids = [ "*" ];
       settings.main = {
-        capslock = "overload(ctrl, esc)";
+        capslock = "overload(control, esc)";
       };
     };
   };
-  users.groups.keyd = {};
 }
