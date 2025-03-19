@@ -37,7 +37,7 @@
       ../common/optional/services/yubikey.nix
 
       #################### Users to Create ####################
-      ../common/users/sigurdb
+      ../common/users
     ];
 
   hostSpec = {

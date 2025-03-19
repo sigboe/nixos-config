@@ -41,7 +41,7 @@
       ../common/optional/services/fwupd.nix
 
       #################### Users to Create ####################
-      ../common/users/maggie
+      ../common/users
     ];
 
   hostSpec = {

@@ -45,7 +45,7 @@
       ../common/optional/docker.nix
 
       #################### Users to Create ####################
-      ../common/users/sigurdb
+      ../common/users
     ];
 
   hostSpec = {
