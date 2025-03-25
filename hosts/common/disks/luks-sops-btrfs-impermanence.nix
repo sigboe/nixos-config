@@ -66,7 +66,7 @@
   };
   services.btrbk = {
     instances."home" = {
-      onCalendar = "hourly";
+      onCalendar = "daily";
       settings = {
         snapshot_preserve = "7d 4w 12m";
         snapshot_preserve_min = "7d";
