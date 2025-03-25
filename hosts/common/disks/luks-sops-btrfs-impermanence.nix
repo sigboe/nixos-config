@@ -73,11 +73,11 @@
         volume = {
           "/home" = {
             snapshot_dir = "/snapshots";
-            subvolume = "home";
+            subvolume = "/home";
           };
           "/persist" = {
             snapshot_dir = "/snapshots";
-            subvolume = "persist";
+            subvolume = "/persist";
             snapshot_create = "onchange";
           };
         };
