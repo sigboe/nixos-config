@@ -12,7 +12,7 @@
       G = "|rg";
     };
     shellAliases = {
-      tb = "ncat termbin.com 9999";
+      tb = "${pkgs.netcat}/bin/nc termbin.com 9999";
       whois = "ssh login-osl1.i.bitbit.net whois -h registrarwhois.norid.no";
       icat = "kitty +kitten icat";
       kssh = "kitty +kitten kssh";

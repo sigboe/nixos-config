@@ -64,24 +64,24 @@
       mountOptions = [ "size=12G" "defaults" "mode=755" ];
     };
   };
-  #  services.btrbk = {
-  #    instances."home" = {
-  #      onCalendar = "daily";
-  #      settings = {
-  #        snapshot_preserve = "7d 4w 12m";
-  #        snapshot_preserve_min = "7d";
-  #        volume = {
-  #          "/home" = {
-  #            snapshot_dir = "/snapshots";
-  #            subvolumes = "home";
-  #          };
-  #          "/persist" = {
-  #            snapshot_dir = "/snapshots";
-  #            subvolumes = "persist";
-  #            snapshot_create = "onchange";
-  #          };
-  #        };
-  #      };
-  #    };
-  #  };
+  services.btrbk = {
+    instances."home" = {
+      onCalendar = "daily";
+      settings = {
+        snapshot_preserve = "7d 4w 12m";
+        snapshot_preserve_min = "7d";
+        volume = {
+          "/home" = {
+            snapshot_dir = "/snapshots";
+            subvolume = "home";
+          };
+          "/persist" = {
+            snapshot_dir = "/snapshots";
+            subvolume = "persist";
+            snapshot_create = "onchange";
+          };
+        };
+      };
+    };
+  };
 }
