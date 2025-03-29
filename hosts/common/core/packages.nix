@@ -6,9 +6,6 @@
     alejandra
     ansible-language-server
     ansible-lint
-    base16-schemes
-    bat
-    bind
     bluez
     btop
     chromium
@@ -25,19 +22,16 @@
     gamescope
     gcc
     gdu
-    ghostty
     git
     github-cli
     gnutls
     go
     handbrake
-    home-manager
     host-lookup
     htop
     imagemagick
     jq
     kanshi
-    kitty
     lazygit
     libgpg-error
     libreoffice
@@ -69,7 +63,6 @@
     signal-desktop
     sqlite
     sshfs
-    stow
     tealdeer
     tigervnc
     tmux
@@ -77,15 +70,12 @@
     udiskie
     unzip
     vim
-    virt-manager
     vulkan-tools
     wdisplays
     wget
     wine-staging
     winetricks
     wireguard-tools
-    wl-clipboard
-    wtype
     xml2
     yad
     yamllint

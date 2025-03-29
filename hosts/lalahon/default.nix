@@ -22,7 +22,6 @@
 
       #################### Host-specific Optional Configs ####################
 
-      ../common/optional/systemd-boot.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
       ../common/optional/qemu-kvm.nix

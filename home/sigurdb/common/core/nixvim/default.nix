@@ -90,8 +90,10 @@
       foldenable = false; # don't fold by default
 
       # ================ Completion =======================
-      wildmode = "list:longest";
+      wildmode = "list:longest,full";
       wildmenu = true; # enable ctrl-n and ctrl-p to scroll thru matches
+      wildignorecase = true;
+      wildoptions = "pum";
 
       # stuff to ignore when tab completing
       wildignore = "*.o,*.obj,*~,vim/backups,sass-cache,DS_Store,vendor/rails/**,vendor/cache/**,*.gem,log/**,tmp/**,*.png,*.jpg,*.gif";

@@ -1,4 +1,5 @@
 { config
+, host
 , lib
 , pkgs
 , ...
@@ -22,7 +23,7 @@ in
 
       extraGroups =
         [ "wheel" ]
-        ++ ifTheyExist [
+          ++ ifTheyExist [
           "audio"
           "video"
           "docker"
@@ -34,5 +35,5 @@ in
 
       shell = pkgs.zsh; # default shell
     };
-  };
+  } // lib.optionalAttrs (!lib.hasSuffix "-bootstrap" host) { };
 }

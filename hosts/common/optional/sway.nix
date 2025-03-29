@@ -15,7 +15,6 @@
         blueberry
         brightnessctl
         dmenu
-        dunst
         foot
         grim
         imv

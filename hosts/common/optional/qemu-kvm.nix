@@ -26,11 +26,12 @@
   };
 
   environment.systemPackages = with pkgs; [
-    virtiofsd
-    virt-viewer
     spice
     spice-gtk
     spice-protocol
+    virt-manager
+    virt-viewer
+    virtiofsd
   ];
 
   users.users.${config.hostSpec.username}.extraGroups = [ "libvirtd" ];

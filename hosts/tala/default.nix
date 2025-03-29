@@ -26,7 +26,6 @@
 
       ../common/optional/activationScripts.nix
       ../common/optional/impermanence.nix
-      ../common/optional/lanzaboote.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit inputs; })
@@ -44,6 +43,7 @@
       ../common/optional/services/fwupd.nix
       ../common/optional/services/keyd.nix
       ../common/optional/docker.nix
+      ../common/optional/qemu-kvm.nix
 
       #################### Users to Create ####################
       ../common/users

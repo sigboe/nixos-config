@@ -85,37 +85,36 @@
         #"aarch64-darwin"
       ];
       lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });
-      specialArgs = {
-        inherit
-          inputs
-          outputs
-          nixpkgs
-          self
-          ;
-      };
-      defaultModules = [
-        home-manager.nixosModules.home-manager
-        { home-manager.extraSpecialArgs = specialArgs; }
-        ./modules
-        stylix.nixosModules.stylix
-        disko.nixosModules.disko
-        impermanence.nixosModules.impermanence
-        sops-nix.nixosModules.sops
-        lanzaboote.nixosModules.lanzaboote
-        {
-          nix.settings = {
-            substituters = [ "https://cosmic.cachix.org/" ];
-            trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-          };
-        }
-        nixos-cosmic.nixosModules.default
-        {
-          nixpkgs.overlays = [
-            outputs.overlays.unstable-packages
-            outputs.overlays.additions
+      mkHost = host: {
+        ${host} = lib.nixosSystem rec {
+          specialArgs = { inherit inputs outputs self host; };
+          modules = [
+            ./hosts/${lib.removeSuffix "-bootstrap" host}
+            ./modules
+            home-manager.nixosModules.home-manager
+            { home-manager.extraSpecialArgs = specialArgs; }
+            stylix.nixosModules.stylix
+            disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
+            sops-nix.nixosModules.sops
+            lanzaboote.nixosModules.lanzaboote
+            nixos-cosmic.nixosModules.default
+            {
+              nix.settings = {
+                substituters = [ "https://cosmic.cachix.org/" ];
+                trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+              };
+              nixpkgs.overlays = [
+                outputs.overlays.unstable-packages
+                outputs.overlays.additions
+              ];
+            }
           ];
-        }
-      ];
+        };
+      };
+      mkHostConfigs = hosts: lib.foldl (acc: set: acc // set) { } (lib.map mkHost (hosts ++ addSuffix "-bootstrap" hosts));
+      readHosts = folder: builtins.attrNames (lib.filterAttrs (name: type: name != "common") (lib.filterAttrs (name: type: type == "directory") (builtins.readDir "${folder}")));
+      addSuffix = suffix: arr: (map (x: "${x}${suffix}") arr);
     in
     {
       ## Custom modifications/overrides to upstream packages.
@@ -126,27 +125,6 @@
 
       #################### NixOS Configurations ####################
 
-      nixosConfigurations = {
-        # Desktop
-        lalahon = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/lalahon ] ++ defaultModules;
-        };
-        # Laptop
-        tala = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/tala ] ++ defaultModules;
-        };
-        # Laptop
-        amihan = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/amihan ] ++ defaultModules;
-        };
-        # test
-        vm = lib.nixosSystem {
-          inherit specialArgs;
-          modules = [ ./hosts/vm ] ++ defaultModules;
-        };
-      };
+      nixosConfigurations = mkHostConfigs (readHosts ./hosts);
     };
 }
