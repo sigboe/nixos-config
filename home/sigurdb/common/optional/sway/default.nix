@@ -24,7 +24,7 @@ in
       up = "k";
       right = "l";
       terminal = "${pkgs.kitty}/bin/kitty -o allow_remote_control=yes -o enable_layouts=tall";
-      menu = ''${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.bemenu}/bin/bemenu ${config.home.sessionVariables.BEMENU_OPTS}' --term="kitty"'';
+      menu = ''${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.bemenu}/bin/bemenu' --term="kitty"'';
       defaultWorkspace = "workspace number 1";
       keybindings =
         let
@@ -243,21 +243,10 @@ in
       daemonize = true;
     };
   };
-  programs.bemenu.settings = {
-    ignorecase = true;
-    fb = config.lib.stylix.colors.withHashtag.base00;
-    ff = config.lib.stylix.colors.withHashtag.base05;
-    nb = config.lib.stylix.colors.withHashtag.base00;
-    nf = config.lib.stylix.colors.withHashtag.base05;
-    tb = config.lib.stylix.colors.withHashtag.base00;
-    hb = config.lib.stylix.colors.withHashtag.base00;
-    tf = config.lib.stylix.colors.withHashtag.base08;
-    hf = config.lib.stylix.colors.withHashtag.base0A;
-    af = config.lib.stylix.colors.withHashtag.base05;
-    ab = config.lib.stylix.colors.withHashtag.base00;
-  };
-  # programs.bemenu.settings seams to not work so here is a workaround
-  home.sessionVariables = {
-    BEMENU_OPTS = ''--ignorecase --fb "${config.lib.stylix.colors.withHashtag.base00}" --ff "${config.lib.stylix.colors.withHashtag.base05}" --nb "${config.lib.stylix.colors.withHashtag.base00}" --nf "${config.lib.stylix.colors.withHashtag.base05}" --tb "${config.lib.stylix.colors.withHashtag.base00}" --hb "${config.lib.stylix.colors.withHashtag.base00}" --tf "${config.lib.stylix.colors.withHashtag.base08}" --hf "${config.lib.stylix.colors.withHashtag.base0A}" --af "${config.lib.stylix.colors.withHashtag.base05}" --ab "${config.lib.stylix.colors.withHashtag.base00}"'';
+  programs.bemenu = {
+    enable = true;
+    settings = {
+      ignorecase = true;
+    };
   };
 }
