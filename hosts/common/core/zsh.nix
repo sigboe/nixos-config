@@ -33,7 +33,12 @@
             source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
     '';
     promptInit = ""; # otherwise it'll override the grml prompt
-    syntaxHighlighting.enable = true;
+    syntaxHighlighting = {
+      enable = true;
+      styles = {
+        comment = "fg=8"; # color code for bright black, "bg=black,birght" shows black instead
+      };
+    };
     autosuggestions.enable = true;
   };
   users.defaultUserShell = pkgs.zsh;
