@@ -15,6 +15,9 @@ let
   powerMenu = "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown";
 in
 {
+  imports = [
+    ./polkit-gnome.nix
+  ];
   wayland.windowManager.sway = {
     enable = true;
     config = {

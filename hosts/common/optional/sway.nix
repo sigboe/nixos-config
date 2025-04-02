@@ -1,7 +1,4 @@
-{ outputs
-, pkgs
-, ...
-}: {
+{ pkgs, ... }: {
   programs = {
     sway = {
       enable = true;
