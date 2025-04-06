@@ -5,6 +5,7 @@
 ###############################################################
 { config
 , inputs
+, lib
 , pkgs
 , ...
 }: {
@@ -27,7 +28,7 @@
       ../common/optional/impermanence.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
-      (import ../common/optional/sops.nix { secretsFilename = "maggie-secrets"; inherit inputs; })
+      (import ../common/optional/sops.nix { secretsFilename = "maggie-secrets"; inherit config lib inputs; })
 
       # Desktop
       ../common/optional/cosmic.nix

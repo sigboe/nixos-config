@@ -5,6 +5,7 @@
 ###############################################################
 { config
 , inputs
+, lib
 , pkgs
 , ...
 }: {
@@ -17,7 +18,7 @@
       ../common/core
 
       #################### Host-specific Optional Configs ####################
-      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit inputs; })
+      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
       ../common/optional/laptop.nix #powersaving
       ../common/optional/docker.nix
       ../common/optional/qemu-kvm.nix

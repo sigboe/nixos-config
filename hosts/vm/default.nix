@@ -5,6 +5,7 @@
 ###############################################################
 { config
 , inputs
+, lib
 , pkgs
 , ...
 }: {
@@ -26,7 +27,7 @@
 
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
-      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit inputs; })
+      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
 
       # Desktop
       ../common/optional/services/regreet

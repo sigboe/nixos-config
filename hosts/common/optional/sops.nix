@@ -1,4 +1,4 @@
-{ secretsFilename ? throw "example sigurdb-secrets", inputs, ... }:
+{ secretsFilename ? throw "example sigurdb-secrets", config, lib, inputs, ... }:
 let
   secretsDirectory = builtins.toString inputs.nix-secrets;
   secretsFile = "${secretsDirectory}/${secretsFilename}.yaml";
@@ -9,18 +9,18 @@ in
     validateSopsFiles = false;
 
     age = {
-      sshKeyPaths = [
+      sshKeyPaths = lib.mkDefault [
         "/persist/etc/ssh/ssh_host_ed25519_key"
       ];
-      keyFile = "/persist/var/lib/sops-nix/key.txt";
-      generateKey = true;
+      keyFile = lib.mkDefault "/persist/var/lib/sops-nix/key.txt";
+      generateKey = lib.mkDefault true;
+    } // lib.optionalAttrs (config.environment.persistence == { }) {
+      sshKeyPaths = [
+        "/etc/ssh/ssh_host_ed25519_key"
+      ];
+      keyFile = "/var/lib/sops-nix/key.txt";
+      generateKey = lib.mkDefault true;
     };
 
-    # Secrets will be output to /run/secrets
-    # e.g. /run/secrets/luks-password
-    # secrets required for user creation are handled in in the user's .nix file
-    #secrets = {
-    #  luks-password = {};
-    #};
   };
 }
