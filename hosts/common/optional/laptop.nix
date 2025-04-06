@@ -1,4 +1,4 @@
-{
+{ pkgs, ... }: {
 
   services = {
     # Better scheduling for CPU cycles - thanks System76!!!
@@ -19,7 +19,7 @@
     power-profiles-daemon.enable = false;
 
     # Enable thermald (only necessary if on Intel CPUs)
-    thermald.enable = true;
+    thermald.enable = pkgs.stdenv.hostPlatform == "x86_64-linux";
 
   };
 

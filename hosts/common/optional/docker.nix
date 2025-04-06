@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   # Enable common container config files in /etc/containers
   virtualisation = {
@@ -16,7 +16,7 @@
   };
 
   # Enable the ability to run arm docker images
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" "armv7l-linux" ];
+  boot.binfmt.emulatedSystems = lib.optionals (pkgs.stdenv.hostPlatform == "x86_64-linux") [ "aarch64-linux" "armv7l-linux" ];
   # If you add to this list, or have used podman before setting this option, you might have to run
   # sudo podman run --rm --privileged multiarch/qemu-user-static --reset -p yes
 

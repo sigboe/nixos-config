@@ -9,7 +9,7 @@
   } // lib.optionalAttrs (!lib.hasSuffix "-bootstrap" host) {
     loader.systemd-boot.enable = lib.mkForce false;
     lanzaboote = {
-      enable = true;
+      enable = lib.mkDefault true;
       pkiBundle = "/etc/secureboot";
     };
   };

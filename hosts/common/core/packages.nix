@@ -1,7 +1,10 @@
-{ pkgs, outputs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+let
+  isX86_64 = pkgs.stdenv.hostPlatform == "x86_64-linux";
+in
+{
   environment.systemPackages = with pkgs; [
     SDL2
-    TwilightBoxart
     acpi
     alejandra
     ansible-language-server
@@ -19,7 +22,6 @@
     freetype
     furmark
     fzf
-    gamescope
     gcc
     gdu
     git
@@ -36,7 +38,6 @@
     libgpg-error
     libreoffice
     libxml2
-    lutris
     mangohud
     mediainfo
     mpd
@@ -50,7 +51,6 @@
     pciutils
     playerctl
     progress
-    protontricks
     psmisc
     python311Packages.i3ipc
     qrencode
@@ -69,12 +69,11 @@
     trash-cli
     udiskie
     unzip
+    usbutils
     vim
     vulkan-tools
     wdisplays
     wget
-    wine-staging
-    winetricks
     wireguard-tools
     xml2
     yad
@@ -85,7 +84,15 @@
     zip
     zoxide
     unstable.nixd
+  ] ++
+  (if isX86_64 then [
+    TwilightBoxart
+    gamescope
+    lutris
+    protontricks
+    wine-staging
+    winetricks
     inputs.zen-browser.packages."${system}".twilight
-  ];
+  ] else [ ]);
 
 }

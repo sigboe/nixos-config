@@ -82,6 +82,7 @@
       inherit (self) outputs;
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
+        "aarch64-linux"
         #"aarch64-darwin"
       ];
       lib = nixpkgs.lib.extend (self: super: { custom = import ./lib { inherit (nixpkgs) lib; }; });

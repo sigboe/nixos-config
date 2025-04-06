@@ -15,7 +15,7 @@
       tb = "${pkgs.netcat}/bin/nc termbin.com 9999";
       whois = "ssh login-osl1.i.bitbit.net whois -h registrarwhois.norid.no";
       icat = "kitty +kitten icat";
-      kssh = "kitty +kitten kssh";
+      kssh = "kitty +kitten ssh";
       vimdiff = "nvim";
       vim = "nvim";
       rm = "trash-put";
