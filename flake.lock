@@ -644,10 +644,10 @@
     },
     "nix-secrets": {
       "locked": {
-        "lastModified": 1743891078,
-        "narHash": "sha256-lFfL7v3GFr1MnTO9ka304FvtOCK3N36k7x/jpNsYPig=",
+        "lastModified": 1744041446,
+        "narHash": "sha256-eu9oqhMALL9hC57vW3Pqnh0YmTS+Ch7FzYRegg6EqKQ=",
         "ref": "main",
-        "rev": "8ad0bcdb872b8641c14f03ceb1c4db9147516af2",
+        "rev": "70e25bf28d7938ecafed6ce34c7cc0878d96cd5c",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@gitlab.com/sigboe/nix-secrets.git"

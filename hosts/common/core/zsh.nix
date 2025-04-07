@@ -31,6 +31,8 @@
             source ${pkgs.fzf}/share/fzf/key-bindings.zsh
             source ${pkgs.fzf}/share/fzf/completion.zsh
             source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      # fix sudo tabcomplete
+            zstyle -d ':completion:*:sudo:*' command-path
     '';
     promptInit = ""; # otherwise it'll override the grml prompt
     syntaxHighlighting = {

@@ -23,9 +23,11 @@
       ../common/optional/docker.nix
       ../common/optional/qemu-kvm.nix
 
-      #################### Users to Create ####################
       ../common/users
 
+      #################### Server ####################
+      ../common/optional/services/plex.nix
+      ../common/optional/services/hostapd.nix
     ];
 
   hostSpec = {
@@ -35,6 +37,7 @@
       description
       openssh
       ;
+    inherit (inputs.nix-secrets.hosts.wakwak.services) hostapd;
   };
 
   boot = {
@@ -47,6 +50,9 @@
       generic-extlinux-compatible.enable = true;
     };
     lanzaboote.enable = false;
+    extraModprobeConfig = ''
+      options cfg80211 ieee80211_regdom="NO"
+    '';
   };
 
   # Enable networking
@@ -56,8 +62,8 @@
       enable = true;
       # Prevent host becoming unreachable on wifi after some time.
       wifi.powersave = false;
+      unmanaged = [ "Interface-name:wlan0" ];
     };
-    #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
       allowedTCPPorts = [
         # 12315 # Grayjay Desktop
