@@ -1,8 +1,4 @@
-{ pkgs, inputs, ... }:
-let
-  isX86_64 = pkgs.stdenv.hostPlatform == "x86_64-linux";
-in
-{
+{ pkgs, inputs, ... }: {
   environment.systemPackages = with pkgs; [
     SDL2
     acpi
@@ -85,7 +81,7 @@ in
     zoxide
     unstable.nixd
   ] ++
-  (if isX86_64 then [
+  (if pkgs.hostPlatform.isx86 then [
     TwilightBoxart
     gamescope
     lutris
