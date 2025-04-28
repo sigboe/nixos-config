@@ -14,7 +14,7 @@ in
           inherit (hostSpec.hostapd.radios.wlan0.networks.wlan0) ssid;
           authentication = {
             inherit (hostSpec.hostapd.radios.wlan0.networks.wlan0.authentication) wpaPassword;
-            mode = "wpa2-sha256";
+            mode = "wpa3-sae";
           };
         };
       };

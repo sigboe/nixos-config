@@ -88,6 +88,7 @@
     protontricks
     wine-staging
     winetricks
+    unstable.grayjay
     inputs.zen-browser.packages."${system}".twilight
   ] else [ ]);
 
