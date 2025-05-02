@@ -153,7 +153,6 @@ in
         { command = "--no-startup-id nm-applet --indicator"; }
         { command = "--no-startup-id udiskie -ans &"; }
         { command = "--no-startup-id wl-paste -t text --watch clipman store --no-persist"; }
-        { command = "--no-startup-id kanshi &"; }
         {
           command = "--no-startup-id kanshictl reload";
           always = true;

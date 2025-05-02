@@ -29,7 +29,6 @@
     htop
     imagemagick
     jq
-    kanshi
     lazygit
     libgpg-error
     libreoffice

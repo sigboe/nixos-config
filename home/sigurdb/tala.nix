@@ -14,6 +14,7 @@
     ./common/optional/mpv.nix
     ./common/optional/services/waybar
     ./common/optional/sway
+    ./common/optional/sway/kanshi.nix
   ];
 
   home.stateVersion = "24.05";
