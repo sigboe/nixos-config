@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     SDL2
     acpi
@@ -78,7 +78,7 @@
     zathura
     zip
     zoxide
-    unstable.nixd
+    nixd
   ] ++
   (if pkgs.hostPlatform.isx86 then [
     TwilightBoxart
@@ -87,8 +87,7 @@
     protontricks
     wine-staging
     winetricks
-    unstable.grayjay
-    inputs.zen-browser.packages."${system}".twilight
+    grayjay
   ] else [ ]);
 
 }

@@ -91,19 +91,16 @@
     useGlobalPkgs = true;
   };
 
-  stylix = {
-    enable = true;
-    image = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/NixOS/nixos-artwork/refs/heads/master/wallpapers/nixos-wallpaper-catppuccin-mocha.png";
-      sha256 = "7e6285630da06006058cebf896bf089173ed65f135fbcf32290e2f8c471ac75b";
-    };
-    polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    autoEnable = true;
-    targets = {
-      plymouth.enable = false;
-    };
-  };
+  # Bug in how stylix works after 25.05, I cant preform nix check on x86 for stylix with arm
+  #stylix = {
+  #  enable = true;
+  #  polarity = "dark";
+  #  base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  #  autoEnable = true;
+  #  targets = {
+  #    plymouth.enable = false;
+  #  };
+  #};
 
   # Change permissions gpio devices
   services.udev.extraRules = ''

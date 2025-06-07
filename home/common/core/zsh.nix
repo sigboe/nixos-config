@@ -37,7 +37,7 @@
     dotDir = ".config/zsh/zshrc";
     initExtraBeforeCompInit = ''
     '';
-    initExtra = ''
+    initContent = ''
       setopt complete_aliases
 
       if [[ -d "''${HOME}/.local/share/work-password-store" ]]; then

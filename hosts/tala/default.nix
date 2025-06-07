@@ -30,6 +30,7 @@
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
+      (import ../common/optional/zen-browser.nix { isDefault = true; inherit config lib inputs pkgs; })
 
       # Desktop
       ../common/optional/services/regreet

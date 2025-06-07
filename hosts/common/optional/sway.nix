@@ -27,7 +27,7 @@
         wl-clipboard
         wtype
         xdg-desktop-portal-wlr
-        xwaylandvideobridge
+        kdePackages.xwaylandvideobridge
       ];
     };
     light.enable = true;

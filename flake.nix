@@ -4,15 +4,12 @@
   inputs = {
     #################### Official NixOS and HM Package Sources ####################
 
-    nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-24.11";
-      follows = "nixos-cosmic/nixpkgs-stable";
-    };
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # also see 'unstable-packages' overlay at 'overlays/default.nix"
+    nixpkgs.url =  "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,7 +39,7 @@
 
     # vim4LMFQR!
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.11";
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -54,15 +51,13 @@
 
     # style system and user packages atuomatically
     stylix = {
-      url = "github:danth/stylix/release-24.11";
-    };
-
-    # Cosmic Desktop
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
+      url = "github:danth/stylix";
     };
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+
 
   };
 
@@ -75,7 +70,7 @@
     , impermanence
     , sops-nix
     , lanzaboote
-    , nixos-cosmic
+    , nixos-wsl
     , ...
     } @ inputs:
     let
@@ -99,12 +94,9 @@
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
             lanzaboote.nixosModules.lanzaboote
-            nixos-cosmic.nixosModules.default
+            nixos-wsl.nixosModules.default
             {
-              nix.settings = {
-                substituters = [ "https://cosmic.cachix.org/" ];
-                trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-              };
+              home-manager.backupFileExtension = "backup";
               nixpkgs.overlays = [
                 outputs.overlays.unstable-packages
                 outputs.overlays.stable-packages

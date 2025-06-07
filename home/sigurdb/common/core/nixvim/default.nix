@@ -119,9 +119,8 @@
 
     plugins = {
       # Display colors for when # FFFFFF codes are detected in buffer text.
-      nvim-colorizer = {
+      colorizer = {
         enable = true;
-        fileTypes = [ "*" ];
       };
 
       lualine.enable = true;

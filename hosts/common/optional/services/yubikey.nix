@@ -2,7 +2,6 @@
   environment.systemPackages = with pkgs; [
     yubico-pam
     yubikey-manager
-    yubikey-manager-qt
     yubikey-touch-detector
     yubioath-flutter
   ];
