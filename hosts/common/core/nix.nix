@@ -28,7 +28,7 @@
         "flakes"
       ];
       warn-dirty = false;
-      download-attempts = 268435456; # 256MiB (4x default)
+      download-buffer-size = 536870912; # 512MiB (8x default)
     };
 
     # Garbage Collection
