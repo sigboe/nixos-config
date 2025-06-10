@@ -14,13 +14,10 @@
     eza
     fd
     ffmpeg
-    firefox
     freetype
-    furmark
     fzf
     gcc
     gdu
-    git
     github-cli
     gnutls
     go
@@ -39,7 +36,7 @@
     mpv
     ncdu
     networkmanagerapplet
-    openldap
+    nixd
     p7zip
     pass
     pavucontrol
@@ -78,11 +75,9 @@
     zathura
     zip
     zoxide
-    nixd
   ] ++
   (if pkgs.hostPlatform.isx86 then [
     TwilightBoxart
-    gamescope
     lutris
     protontricks
     wine-staging

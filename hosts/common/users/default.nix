@@ -31,6 +31,7 @@ in
           "networkmanager"
           "corectrl"
           "dialout"
+          "ollama"
         ];
 
       shell = pkgs.zsh; # default shell

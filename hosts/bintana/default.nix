@@ -21,6 +21,7 @@
       ../common/optional/services/pipewire.nix
       ../common/optional/docker.nix
       ../common/optional/qemu-kvm.nix
+      (import ../common/optional/ollama.nix { acceleration = "cuda"; })
 
       #################### Users to Create ####################
       ../common/users/minimal.nix
