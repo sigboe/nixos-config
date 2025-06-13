@@ -26,6 +26,7 @@
       #################### Host-specific Optional Configs ####################
 
       ../common/optional/impermanence.nix
+      ../common/optional/packages-graphical.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
       (import ../common/optional/sops.nix { secretsFilename = "maggie-secrets"; inherit config lib inputs; })

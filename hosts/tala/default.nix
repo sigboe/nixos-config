@@ -29,6 +29,7 @@
       ../common/optional/impermanence.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      ../common/optional/packages-graphical.nix
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
       (import ../common/optional/zen-browser.nix { isDefault = true; inherit config lib inputs pkgs; })
 

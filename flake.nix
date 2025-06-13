@@ -4,7 +4,7 @@
   inputs = {
     #################### Official NixOS and HM Package Sources ####################
 
-    nixpkgs.url =  "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     hardware.url = "github:nixos/nixos-hardware";
 
@@ -33,9 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Authenticate via ssh and use shallow clone
-    nix-secrets = {
-      url = "git+ssh://git@gitlab.com/sigboe/nix-secrets.git?ref=main&shallow=1";
-    };
+    nix-secrets.url = "git+ssh://git@gitlab.com/sigboe/nix-secrets.git?ref=main&shallow=1";
 
     # vim4LMFQR!
     nixvim = {
@@ -49,14 +47,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # style system and user packages atuomatically
-    stylix = {
-      url = "github:danth/stylix";
-    };
-
+    stylix.url = "github:danth/stylix";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
 
 
   };

@@ -1,7 +1,10 @@
 {
   services = {
-    desktopManager.cosmic.enable = true;
     displayManager.cosmic-greeter.enable = true;
+    desktopManager.cosmic = {
+      enable = true;
+      xwayland.enable = true;
+    };
   };
   nix.settings = {
     substituters = [ "https://cosmic.cachix.org/" ];

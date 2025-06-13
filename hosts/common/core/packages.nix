@@ -1,88 +1,60 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    SDL2
     acpi
     alejandra
     ansible-language-server
     ansible-lint
-    bluez
     btop
-    chromium
     comma
     cups
     exiftool
     eza
     fd
     ffmpeg
-    freetype
     fzf
     gcc
     gdu
     github-cli
     gnutls
     go
-    handbrake
     host-lookup
     htop
-    imagemagick
     jq
     lazygit
     libgpg-error
-    libreoffice
     libxml2
-    mangohud
     mediainfo
     mpd
-    mpv
     ncdu
-    networkmanagerapplet
     nixd
     p7zip
     pass
-    pavucontrol
     pciutils
-    playerctl
     progress
     psmisc
-    python311Packages.i3ipc
+    python3
     qrencode
-    qutebrowser
     ranger
     ripgrep
     screen
     shellcheck
     shfmt
-    signal-desktop
     sqlite
     sshfs
     tealdeer
-    tigervnc
     tmux
     trash-cli
-    udiskie
+    tree
     unzip
     usbutils
     vim
     vulkan-tools
-    wdisplays
     wget
     wireguard-tools
     xml2
-    yad
     yamllint
-    ydotool
     yt-dlp
-    zathura
     zip
     zoxide
-  ] ++
-  (if pkgs.hostPlatform.isx86 then [
-    TwilightBoxart
-    lutris
-    protontricks
-    wine-staging
-    winetricks
-    grayjay
-  ] else [ ]);
-
+  ];
 }

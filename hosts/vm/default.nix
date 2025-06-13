@@ -27,6 +27,7 @@
 
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      ../common/optional/packages-graphical.nix
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
 
       # Desktop

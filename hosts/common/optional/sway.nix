@@ -8,18 +8,21 @@
         bemenu
         bemoji
         bitwarden-rofi
-        bose-connect-app-linux
         blueberry
+        bose-connect-app-linux
         brightnessctl
         dmenu
         foot
         grim
         imv
         j4-dmenu-desktop
+        kdePackages.xwaylandvideobridge
         kitty
         libnotify
         maim
+        networkmanagerapplet
         pinentry-bemenu
+        python313Packages.i3ipc
         slurp
         sway-audio-idle-inhibit
         swayidle
@@ -27,7 +30,6 @@
         wl-clipboard
         wtype
         xdg-desktop-portal-wlr
-        kdePackages.xwaylandvideobridge
       ];
     };
     light.enable = true;
