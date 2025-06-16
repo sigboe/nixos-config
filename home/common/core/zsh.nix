@@ -130,6 +130,26 @@
       compdef kssh=ssh
       compdef vimscp=scp
       compdef _eza ls
+
+      if command -v uutils-cp >/dev/null 2>&1; then
+        cp() {
+          if [[ $- == *i* ]]; then
+            uutils-cp -g "$@"
+          else
+            command cp "$@"
+          fi
+        }
+      fi
+      if command -v uutils-mv >/dev/null 2>&1; then
+        cp() {
+          if [[ $- == *i* ]]; then
+            uutils-mv -g "$@"
+          else
+            command mv "$@"
+          fi
+        }
+      fi
+
     '';
   };
   programs = {
