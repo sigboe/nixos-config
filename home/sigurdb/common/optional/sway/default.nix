@@ -94,13 +94,13 @@ in
           "${modifier}+Shift+P" = "exec ${swayPrintscreen} selection";
           "${modifier}+Ctrl+P" = "exec ${swayPrintscreen} window";
           # Pulse Audio controls
-          "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-          "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "XF86AudioMicMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          "XF86AudioRaiseVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+          "XF86AudioLowerVolume" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+          "XF86AudioMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMicMute" = "exec ${pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           ## Brightness control
-          "XF86MonBrightnessUp" = "exec --no-startup-id brightnessctl set +5%";
-          "XF86MonBrightnessDown" = "exec --no-startup-id brightnessctl set 5%-";
+          "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
+          "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
 
           # Password managers
           "${modifier}+Comma" = "exec ${dmenuworkpass}/bin/dmenuworkpass.sh --type";
@@ -116,7 +116,7 @@ in
           "${modifier}+r" = "mode resize";
           "${modifier}+Delete" = "mode \"${powerMenu}\"";
         };
-      keycodebindings."172" = "exec --no-startup-id playerctl play-pause";
+      keycodebindings."172" = "exec playerctl play-pause";
       modes = {
         resize = {
           "h" = "resize shrink width 10 px";
@@ -132,12 +132,12 @@ in
           "Return" = "mode default";
         };
         "${powerMenu}" = {
-          "l" = "exec --no-startup-id swaylock ; mode default";
-          "e" = "exec --no-startup-id swaymsg exit";
-          "s" = "exec --no-startup-id swaylock ; mode default ; exec --no-startup-id systemctl suspend";
-          "h" = "exec --no-startup-id swaylock ; mode default ; exec --no-startup-id systemctl hibernate";
-          "r" = "exec --no-startup-id systemctl reboot";
-          "Shift+s" = "exec --no-startup-id systemctl poweroff -i";
+          "l" = "exec swaylock ; mode default";
+          "e" = "exec swaymsg exit";
+          "s" = "exec swaylock ; mode default ; exec systemctl suspend";
+          "h" = "exec swaylock ; mode default ; exec systemctl hibernate";
+          "r" = "exec systemctl reboot";
+          "Shift+s" = "exec systemctl poweroff -i";
 
           # back to normal: Enter or Escape
           "Return" = "mode default";
@@ -145,17 +145,17 @@ in
         };
       };
       startup = [
-        { command = "--no-startup-id systemctl --user start waybar"; }
+        { command = "systemctl --user start waybar"; }
         {
-          #command = "--no-startup-id ${autotiling}";
-          command = "--no-startup-id autotiling";
+          #command = "${autotiling}";
+          command = "autotiling";
           always = true;
         }
-        { command = "--no-startup-id nm-applet --indicator"; }
-        { command = "--no-startup-id udiskie -ans &"; }
-        { command = "--no-startup-id wl-paste -t text --watch clipman store --no-persist"; }
+        { command = "nm-applet --indicator"; }
+        { command = "udiskie -ans &"; }
+        { command = "wl-paste -t text --watch clipman store --no-persist"; }
         {
-          command = "--no-startup-id kanshictl reload";
+          command = "kanshictl reload";
           always = true;
         }
         # auto lockscreen
