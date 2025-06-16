@@ -47,6 +47,7 @@
     tree
     unzip
     usbutils
+    uutils-coreutils
     vim
     vulkan-tools
     wget
