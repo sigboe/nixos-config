@@ -141,7 +141,7 @@
         }
       fi
       if command -v uutils-mv >/dev/null 2>&1; then
-        cp() {
+        mv() {
           if [[ $- == *i* ]]; then
             uutils-mv -g "$@"
           else
