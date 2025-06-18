@@ -94,8 +94,6 @@
       powerKeyLongPress = "poweroff";
     };
 
-    gnome.gnome-keyring.enable = true;
-
     qemuGuest.enable = true;
     spice-vdagentd.enable = true;
   };

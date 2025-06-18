@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 let
   inherit (config) hostSpec;
 in
@@ -13,10 +13,11 @@ in
         networks.wlan0 = {
           inherit (hostSpec.hostapd.radios.wlan0.networks.wlan0) ssid;
           authentication = {
+            inherit (hostSpec.hostapd.radios.wlan0.networks.wlan0.authentication) wpaPassword;
             saePasswords = [
               { password = hostSpec.hostapd.radios.wlan0.networks.wlan0.authentication.wpaPassword; }
             ];
-            mode = "wpa3-sae";
+            mode = "wpa3-sae-transition";
           };
         };
       };

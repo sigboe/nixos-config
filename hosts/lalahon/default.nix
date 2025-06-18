@@ -95,8 +95,6 @@
       powerKey = "ignore";
       powerKeyLongPress = "poweroff";
     };
-
-    gnome.gnome-keyring.enable = true;
   };
 
   # Allow unfree packages
