@@ -27,7 +27,6 @@
 
       #################### Server ####################
       ../common/optional/services/plex.nix
-      ../common/optional/services/hostapd.nix
     ];
 
   hostSpec = {
@@ -62,7 +61,6 @@
       enable = true;
       # Prevent host becoming unreachable on wifi after some time.
       wifi.powersave = false;
-      unmanaged = [ "Interface-name:wlan0" ];
     };
     firewall = {
       allowedTCPPorts = [
