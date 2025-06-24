@@ -8,7 +8,7 @@ let
   dmenuworkpass = pkgs.writeScriptBin "dmenuworkpass.sh" (builtins.readFile ./dmenuworkpass.sh);
   yubikey-oath-dmenu = pkgs.writers.writePython3 "yubikey-oath-dmenu.py"
     {
-      libraries = [ pkgs.python311Packages.click pkgs.yubikey-manager ];
+      libraries = [ pkgs.python313Packages.click pkgs.yubikey-manager ];
       flakeIgnore = [ "E501" "E265" "E302" "E251" "W503" ];
     }
     (builtins.readFile ./yubikey-oath-dmenu.py);

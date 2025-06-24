@@ -71,6 +71,20 @@
       ];
       #enable = false;
     };
+    dhcpcd = {
+      enable = true;
+
+    };
+  };
+  services.dnsmasq = {
+    enable = true;
+    settings = {
+      interface = "wlan0";
+      bind-dynamic = true;
+      domain-needed = true;
+      bogus-priv = true;
+      dhcp-range = [ "192.168.42.100,192.168.42.200,255.255.255.0,12h" ];
+    };
   };
 
 

@@ -1,10 +1,11 @@
-{
+{config, lib, ...}: {
   services = {
     displayManager.cosmic-greeter.enable = true;
     desktopManager.cosmic = {
       enable = true;
       xwayland.enable = true;
     };
+    gnome.gnome-keyring.enable = lib.mkForce (if config.programs.ssh.startAgent then false else true);
   };
   nix.settings = {
     substituters = [ "https://cosmic.cachix.org/" ];
