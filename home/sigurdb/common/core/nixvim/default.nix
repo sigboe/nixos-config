@@ -20,6 +20,7 @@
 
   programs.nixvim = {
     enable = true;
+    nixpkgs.config.allowUnfree = true;
     defaultEditor = true;
     enableMan = true; # install man pages for nixvim options
 
