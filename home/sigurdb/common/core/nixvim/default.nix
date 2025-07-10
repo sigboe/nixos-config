@@ -161,6 +161,7 @@
         };
       };
       web-devicons.enable = false;
+      claude-code.enable = true;
       #lint = {
       #  enable = true;
       #  lintersByFt = {
