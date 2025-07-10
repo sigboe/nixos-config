@@ -159,7 +159,7 @@
           indentscope.symbol = "│";
         };
       };
-      web-devicons.enable = true;
+      web-devicons.enable = false;
       #lint = {
       #  enable = true;
       #  lintersByFt = {
