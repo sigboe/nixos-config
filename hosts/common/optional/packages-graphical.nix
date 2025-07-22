@@ -18,6 +18,7 @@
     yad
     ydotool
     zathura
+    zenity
   ] ++
   (if pkgs.hostPlatform.isx86 then [
     TwilightBoxart

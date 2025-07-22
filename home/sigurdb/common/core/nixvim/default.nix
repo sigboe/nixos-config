@@ -380,6 +380,15 @@
           silent = true;
         };
       }
+      # ========= claude-code =========
+      { key = "<leader>ac"; action = "<cmd>ClaudeCode<cr>"; }
+      { key = "<leader>af"; action = "<cmd>ClaudeCodeFocus<cr>"; }
+      { key = "<leader>ar"; action = "<cmd>ClaudeCode --resume<cr>"; }
+      { key = "<leader>aC"; action = "<cmd>ClaudeCode --continue<cr>"; }
+      { key = "<leader>ab"; action = "<cmd>ClaudeCodeAdd %<cr>"; }
+      { key = "<leader>as"; action = "<cmd>ClaudeCodeSend<cr>"; mode = [ "v" ]; }
+      { key = "<leader>aa"; action = "<cmd>ClaudeCodeDiffAccept<cr>"; }
+      { key = "<leader>ad"; action = "<cmd>ClaudeCodeDiffDeny<cr>"; }
       # ========= Move in Insert Mode =============
       {
         mode = [ "i" ];
