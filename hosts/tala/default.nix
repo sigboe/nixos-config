@@ -38,6 +38,7 @@
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
       ../common/optional/3dprint.nix
+      ../common/optional/vibe.nix
       # Laptop
       ../common/optional/laptop.nix
       # services
