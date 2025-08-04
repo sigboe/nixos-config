@@ -8,7 +8,7 @@
         init.defaultBranch = "main";
       };
       lfs.enable = true;
-      delta.enable = true;
+      #delta.enable = true;
     };
     gh = {
       enable = true;

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   programs.zsh = {
     enable = true;
     shellGlobalAliases = {
@@ -34,7 +34,7 @@
       grep = "rg --color=auto";
       cat = "bat";
     };
-    dotDir = ".config/zsh/zshrc";
+    dotDir = "${config.xdg.configHome}/zsh/zshrc";
     initExtraBeforeCompInit = ''
     '';
     initContent = ''
