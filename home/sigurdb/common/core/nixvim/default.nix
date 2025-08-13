@@ -3,7 +3,7 @@
 , ...
 }: {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./completion/cmp.nix
     ./completion/lspkind.nix
     ./completion/schemastore.nix

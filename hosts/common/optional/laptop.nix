@@ -4,14 +4,17 @@
     # Better scheduling for CPU cycles - thanks System76!!!
     system76-scheduler.settings.cfsProfiles.enable = true;
 
-    # Enable TLP (better than gnomes internal power manager)
-    tlp = {
+    auto-cpufreq = {
       enable = true;
       settings = {
-        CPU_BOOST_ON_AC = 1;
-        CPU_BOOST_ON_BAT = 0;
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+        charger = {
+          governor = "performance";
+          turbo = "auto";
+        };
       };
     };
 
