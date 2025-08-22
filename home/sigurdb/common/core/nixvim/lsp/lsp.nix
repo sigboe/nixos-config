@@ -92,72 +92,74 @@
       };
       lspsaga = {
         enable = true;
-        beacon = {
-          enable = true;
-        };
-        ui = {
-          border = "rounded"; # One of none, single, double, rounded, solid, shadow
-          codeAction = "💡"; # Can be any symbol you want 💡
-        };
-        hover = {
-          openCmd = "!floorp"; # Choose your browser
-          openLink = "gx";
-        };
-        diagnostic = {
-          borderFollow = true;
-          diagnosticOnlyCurrent = false;
-          showCodeAction = true;
-        };
-        symbolInWinbar = {
-          enable = true; # Breadcrumbs
-        };
-        codeAction = {
-          extendGitSigns = false;
-          showServerName = true;
-          onlyInCursor = true;
-          numShortcut = true;
-          keys = {
-            exec = "<CR>";
-            quit = [
-              "<Esc>"
-              "q"
-            ];
+        settings = {
+          beacon = {
+            enable = true;
           };
-        };
-        lightbulb = {
-          enable = false;
-          sign = false;
-          virtualText = true;
-        };
-        implement = {
-          enable = false;
-        };
-        rename = {
-          autoSave = false;
-          keys = {
-            exec = "<CR>";
-            quit = [
-              "<C-k>"
-              "<Esc>"
-            ];
-            select = "x";
+          outline = {
+            autoClose = true;
+            autoPreview = true;
+            closeAfterJump = true;
+            layout = "normal"; # normal or float
+            winPosition = "right"; # left or right
+            keys = {
+              jump = "e";
+              quit = "q";
+              toggleOrJump = "o";
+            };
           };
-        };
-        outline = {
-          autoClose = true;
-          autoPreview = true;
-          closeAfterJump = true;
-          layout = "normal"; # normal or float
-          winPosition = "right"; # left or right
-          keys = {
-            jump = "e";
-            quit = "q";
-            toggleOrJump = "o";
+          symbolInWinbar = {
+            enable = true; # Breadcrumbs
           };
-        };
-        scrollPreview = {
-          scrollDown = "<C-f>";
-          scrollUp = "<C-b>";
+          rename = {
+            autoSave = false;
+            keys = {
+              exec = "<CR>";
+              quit = [
+                "<C-k>"
+                "<Esc>"
+              ];
+              select = "x";
+            };
+          };
+          scrollPreview = {
+            scrollDown = "<C-f>";
+            scrollUp = "<C-b>";
+          };
+          lightbulb = {
+            enable = false;
+            sign = false;
+            virtualText = true;
+          };
+          codeAction = {
+            extendGitSigns = false;
+            showServerName = true;
+            onlyInCursor = true;
+            numShortcut = true;
+            keys = {
+              exec = "<CR>";
+              quit = [
+                "<Esc>"
+                "q"
+              ];
+            };
+          };
+          diagnostic = {
+            borderFollow = true;
+            diagnosticOnlyCurrent = false;
+            showCodeAction = true;
+          };
+          hover = {
+            openCmd = "!floorp"; # Choose your browser
+            openLink = "gx";
+          };
+          ui = {
+            border = "rounded"; # One of none, single, double, rounded, solid, shadow
+            codeAction = "💡"; # Can be any symbol you want 💡
+          };
+          implement = {
+            enable = false;
+          };
         };
       };
       none-ls = {
