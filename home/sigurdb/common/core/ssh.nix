@@ -1,11 +1,13 @@
 { lib, ... }: {
   programs.ssh = {
     enable = true;
-    controlMaster = "auto";
-    controlPath = "~/.ssh/controlmasters/%r@%h:%p";
-    controlPersist = "yes";
-    addKeysToAgent = "yes";
     matchBlocks = {
+      "*" = {
+        controlMaster = "auto";
+        controlPath = "~/.ssh/controlmasters/%r@%h:%p";
+        controlPersist = "yes";
+        addKeysToAgent = "yes";
+      };
       "mister" = {
         hostname = "10.10.1.21";
         user = "root";

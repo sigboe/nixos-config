@@ -99,6 +99,7 @@
                 outputs.overlays.unstable-packages
                 outputs.overlays.stable-packages
                 outputs.overlays.additions
+                outputs.overlays.workaround-437058
               ];
             }
           ];

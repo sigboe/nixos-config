@@ -29,4 +29,24 @@
       config.allowUnfree = true;
     };
   };
+
+  workaround-437058 = final: prev: {
+    # . . . you can have other overlays in here as well.
+    pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+      (python-final: python-prev: {
+        # Workaround for github issue #437058
+        # https://github.com/NixOS/nixpkgs/issues/437058
+        i3ipc = python-prev.i3ipc.overridePythonAttrs (oldAttrs: {
+          doCheck = false;
+          checkPhase = ''
+            echo "Skipping pytest in Nix build"
+          '';
+          installCheckPhase = ''
+            echo "Skipping install checks in Nix build"
+          '';
+        });
+      })
+    ];
+  };
+
 }

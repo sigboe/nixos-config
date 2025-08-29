@@ -91,9 +91,9 @@
 
   services = {
     # Ignore accidental powerkey press
-    logind = {
-      powerKey = "ignore";
-      powerKeyLongPress = "poweroff";
+    logind.settings.Login = {
+      HandlePowerKey = "ignore";
+      HandlePowerKeyLongPress = "poweroff";
     };
   };
 
