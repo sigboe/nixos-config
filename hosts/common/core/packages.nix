@@ -2,7 +2,6 @@
   environment.systemPackages = with pkgs; [
     acpi
     alejandra
-    ansible-language-server
     ansible-lint
     btop
     comma
