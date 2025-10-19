@@ -20,7 +20,7 @@
           {
             # serial contains non-breaking-space this is how kanshi accpets the serial
             # wl-randr and swaymsg -t get_outputs return this with one backspace
-            criteria = ''GIGA-BYTE TECHNOLOGY CO., LTD. M34WQ \\xa0FP0@:'';
+            criteria = ''GIGA-BYTE TECHNOLOGY CO., LTD. M34WQ \*'';
             status = "enable";
             mode = "3440x1440@59.973Hz";
             position = "0,0";
