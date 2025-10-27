@@ -87,6 +87,7 @@ Names are based on pre-colonial Filipino mythology 🇵🇭
 | Gaming PC    | Lalahon  |
 | HP EliteDesk | Kaptan   |
 | Home Server  | Bathala  |
+| Rapsberry Pi | wakwak   |
 |              |          |
 | HP EliteBook | Amihan   |
 | Gaming PC    | Haliya   |

@@ -16,7 +16,6 @@
         grim
         imv
         j4-dmenu-desktop
-        kdePackages.xwaylandvideobridge
         kitty
         libnotify
         maim
@@ -44,5 +43,13 @@
       StartLimitIntervalSec = 0; #disable rate limiting
       StartLimitBurst = 9;
     };
+  };
+
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+    ];
   };
 }

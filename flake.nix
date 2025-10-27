@@ -50,6 +50,11 @@
     stylix.url = "github:danth/stylix";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
 
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -65,6 +70,7 @@
     , impermanence
     , sops-nix
     , lanzaboote
+    , jovian
     , nixos-wsl
     , ...
     } @ inputs:
@@ -89,6 +95,7 @@
             impermanence.nixosModules.impermanence
             sops-nix.nixosModules.sops
             lanzaboote.nixosModules.lanzaboote
+            jovian.nixosModules.jovian
             nixos-wsl.nixosModules.default
             {
               home-manager.backupFileExtension = "backup";

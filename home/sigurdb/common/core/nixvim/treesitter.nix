@@ -21,7 +21,7 @@
       treesitter-context = {
         #enable = false;
       };
-      treesitter-textobjects = {
+      treesitter-textobjects.settings = {
         #enable = true;
         select = {
           enable = true;
