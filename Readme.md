@@ -47,15 +47,19 @@ Not all packages in the pkgs directory are usable. Some may be unfinished, exper
 
 Here are the packages that should be usable:
 
-- bitwarden-rofi
+- `bitwarden-rofi`
   - *github.com:mattydebie/bitwarden-rofi*
   - Use bitwarden through rofi or similar menu systems
-- bose-connect-app-linux
+- `bose-connect-app-linux`
   -  *github.com:airvzxf/bose-connect-app-linux*
   - Unofficial bose connect alternative for Linux
-- TwilightBoxart
+- `TwilightBoxart`
   -  *github.com:MateusRodCosta/TwilightBoxart*
   - A coverart downloader for TwilightMenu++ and some other frontends
+- `tidal-dl-ng`
+  - *github.com/exislow/tidal-dl-ng*
+  - Multithreaded TIDAL Media Downloader Next Generation! Up to HiRes Lossless / TIDAL MAX 24-bit, 192 kHz and Dolby Atmos.
+  - helper package `tidal-dl-ng-gui` dont install this, its just for running the gui directly from nix run
 
 Running the applications without installing should be as easy as 
 
