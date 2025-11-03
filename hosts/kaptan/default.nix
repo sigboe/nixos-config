@@ -50,11 +50,8 @@
       ../common/users
 
       # USB ISO
-      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
+      #"${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
     ];
-
-  # USB ISO
-  image.fileName = "kaptanLiveIso.iso";
 
   hostSpec = {
     hostName = "kaptan";
