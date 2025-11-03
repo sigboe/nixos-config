@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     acpi
+    age
     alejandra
     ansible-lint
     btop
@@ -35,10 +36,13 @@
     qrencode
     ranger
     ripgrep
+    sbctl
     screen
     shellcheck
     shfmt
+    sops
     sqlite
+    ssh-to-age
     sshfs
     tealdeer
     tmux

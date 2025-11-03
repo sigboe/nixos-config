@@ -77,8 +77,7 @@ To install the packages, you can either ingegrate them in tour nix config, or ad
 
 ## TODO
 
-- ~~Fix overlays~~
-- ~~Look into bootstrapping without sops workaround~~ (untested solution in place)
+Section empty
 
 ## Hosts
 
@@ -98,18 +97,9 @@ Names are based on pre-colonial Filipino mythology 🇵🇭
 
 ## Secrets Managment
 
-## Initial Install Notes
+## Installation
 
-Currently there is an issue with using sops during provisioning. A computer with nix or nixos is required currently. These are basic instructions for my self, if you copy this whole setup you need to do more changes. More detailed, but in progress instructions [here](docs/Install.md)
-
-- Pull down the repo, and change the user password temporarily
-- Pull down secrets repo to get luks key
-- have ssh keys available for the secrets repo
-- use nixos anywhere to provision locally changed flake (magic incantation will be in the full install notes)
-- after install, pull down flake repo, put in /etc/nixos 
-- transfer ssh priv keys, pull down secrets repo, add new age keys to secrets repo
-- update /etc/nixos to fetch the newest version of secrets repo
-- rebuild switch
+Instructions found [here](docs/Install.md)
 
 ## Acknowledgements
 
