@@ -94,7 +94,7 @@ Names are based on pre-colonial Filipino mythology 🇵🇭
 | Rapsberry Pi | wakwak   |
 |              |          |
 | HP EliteBook | Amihan   |
-| Gaming PC    | Haliya   |
+| Gaming PC    | Habagat  |
 
 ## Secrets Managment
 

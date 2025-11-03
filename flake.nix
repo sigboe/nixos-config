@@ -118,7 +118,7 @@
       overlays = import ./overlays { inherit inputs; };
 
       # Custom packages to be shared or upstreamed.
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${nixpkgs.stdenv.hostPlatform.system});
 
       #################### NixOS Configurations ####################
 

@@ -1,6 +1,6 @@
 #############################################################
 #
-#  HP EliteDesk
+#  Laptop
 #
 ###############################################################
 { config
@@ -17,8 +17,7 @@
       (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/nvme0n1"; })
 
       #################### Hardware Modules ####################
-      inputs.hardware.nixosModules.common-cpu-amd
-      inputs.hardware.nixosModules.common-gpu-amd
+      inputs.hardware.nixosModules.common-cpu-intel
       inputs.hardware.nixosModules.common-pc-ssd
 
       #################### Required Configs ####################
@@ -27,47 +26,38 @@
       #################### Host-specific Optional Configs ####################
 
       ../common/optional/impermanence.nix
-      ../common/optional/plymouth.nix
-      # ../common/optional/steam.nix
       ../common/optional/packages-graphical.nix
-      (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
-      (import ../common/optional/zen-browser.nix { isDefault = true; inherit config lib inputs pkgs; })
+      ../common/optional/plymouth.nix
+      ../common/optional/steam.nix
+      (import ../common/optional/sops.nix { secretsFilename = "maggie-secrets"; inherit config lib inputs; })
 
       # Desktop
-      ../common/optional/sway.nix
+      ../common/optional/cosmic.nix
+      ../common/optional/flatpak.nix
       ../common/optional/services/pipewire.nix
-      ../common/optional/3dprint.nix
-      ../common/optional/vibe.nix
+      # Laptop
+      ../common/optional/laptop.nix
       # services
-      ../common/optional/services/yubikey.nix
-      ../common/optional/services/udisks.nix
       ../common/optional/services/fwupd.nix
-      ../common/optional/services/keyd.nix
-      ../common/optional/docker.nix
-      ../common/optional/qemu-kvm.nix
 
       #################### Users to Create ####################
       ../common/users
-
-      # USB ISO
-      "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
     ];
 
-  # USB ISO
-  image.fileName = "kaptanLiveIso.iso";
-
   hostSpec = {
-    hostName = "kaptan";
-    inherit (inputs.nix-secrets.users.sigurdb)
+    hostName = "habagat";
+    inherit (inputs.nix-secrets.users.maggie)
       username
       description
       openssh
       ;
   };
 
+  # Enable bluetooth
   boot = {
-    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
+      kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
       systemd = {
         enable = true;
@@ -77,14 +67,9 @@
     bootspec.enable = true;
   };
 
-  specialisation = {
-    lts.configuration = {
-      boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
-    };
-  };
-
   # Enable hardware acceleration
   hardware.graphics.enable = true;
+
 
   # Enable networking
   networking = {
@@ -92,9 +77,7 @@
     networkmanager.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
-      allowedTCPPorts = [
-        12315 # Grayjay Desktop
-      ];
+      allowedTCPPorts = [ ];
       allowedUDPPorts = [
         5182 # Wireguard
       ];
@@ -138,23 +121,13 @@
     };
   };
 
-  jovian = {
-    steam = {
-      # Enable SteamDeck UI
-      enable = true;
-      # Auto Login to Big Picture
-      autoStart = true;
-      # Return to desktop
-      desktopSession = "sway";
-      user = config.hostSpec.username;
-    };
-    steamos.useSteamOSConfig = true;
-    decky-loader = {
-      enable = true;
-      user = config.hostSpec.username;
-    };
-    hardware.has.amd.gpu = true;
-  };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -162,5 +135,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.11"; # Did you read the comment?
 }

@@ -21,7 +21,7 @@
     zathura
     zenity
   ] ++
-  (if pkgs.hostPlatform.isx86 then [
+  (if pkgs.stdenv.hostPlatform.isx86 then [
     TwilightBoxart
     lutris
     protontricks

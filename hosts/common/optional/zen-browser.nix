@@ -1,6 +1,6 @@
 { isDefault ? false, config, lib, inputs, pkgs, ... }: {
   environment.systemPackages = with pkgs; [
-    inputs.zen-browser.packages."${system}".twilight
+    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
   ];
 } // lib.optionalAttrs isDefault {
   home-manager.users.${config.hostSpec.username}.xdg.mimeApps.defaultApplications = {
