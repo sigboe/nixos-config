@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   # Enable common container config files in /etc/containers
   virtualisation = {
@@ -28,4 +28,7 @@
     lazydocker # maybe make a wrapper that sets DOCKER_HOST="unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')"
     distrobox
   ];
+
+  users.users.${config.hostSpec.username}.extraGroups = [ "docker" ];
+
 }
