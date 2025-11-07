@@ -48,6 +48,7 @@
       ../common/optional/services/keyd.nix
       ../common/optional/docker.nix
       ../common/optional/qemu-kvm.nix
+      ../common/optional/services/winboat.nix
 
       #################### Users to Create ####################
       ../common/users

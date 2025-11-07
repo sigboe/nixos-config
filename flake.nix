@@ -119,6 +119,8 @@
 
       # Custom packages to be shared or upstreamed.
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${nixpkgs.stdenv.hostPlatform.system});
+      # doesnt work
+      #defaultPackage = (home-manager.lib.homeManagerConfiguration {pkgs = nixpkgs; modules = [ ./home/sigurdb/common/core/nixvim ]; }).programs.nixvim.package;
 
       #################### NixOS Configurations ####################
 

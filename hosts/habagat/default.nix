@@ -14,10 +14,10 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       # Disks
-      (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/nvme0n1"; })
+      (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/disk/by-id/ata-Samsung_SSD_860_QVO_1TB_S4CZNF0N434537H"; })
 
       #################### Hardware Modules ####################
-      inputs.hardware.nixosModules.common-cpu-intel
+      inputs.hardware.nixosModules.common-cpu-amd
       inputs.hardware.nixosModules.common-pc-ssd
 
       #################### Required Configs ####################
@@ -68,8 +68,11 @@
   };
 
   # Enable hardware acceleration
-  hardware.graphics.enable = true;
-
+  hardware = {
+    graphics.enable = true;
+    nvidia.open = false; # GTX 980 needs false
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Enable networking
   networking = {

@@ -6,7 +6,7 @@
       "*" = {
         controlMaster = "auto";
         controlPath = "~/.ssh/controlmasters/%r@%h:%p";
-        controlPersist = "yes";
+        controlPersist = "10m";
         addKeysToAgent = "yes";
       };
       "mister" = {

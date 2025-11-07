@@ -11,7 +11,9 @@ This section we primarily run on a non-live booted nix machine, either nixos or 
   2. folder name has to match host name
   3. boot live iso on the machine and `nixos-generate-config` copy this file to your main computer
   4. overwrite the generated hardware-configuration.nix in the new folder
-  5. inside home/username copy the file of the closest host's file and rename it to the new hostname
+  5. remove the filesystem.<mountpoint> entries
+  6. inside home/username copy the file of the closest host's file and rename it to the new hostname
+  7. make other wanted changes to hosts/hostname/default.nix, hardware-configuration.nix and home/username/hostname.nix
 1. Generate ssh host keys, add them to the sops repo as valid decryption keys
   1. `mkdir -p /tmp/sshKeys/persist/etc/ssh`
   2. `ssh-keygen -t rsa -b 4096 -f /tmp/sshKeys/persist/etc/ssh/ssh_host_rsa_key -N ''`

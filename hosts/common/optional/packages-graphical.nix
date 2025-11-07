@@ -23,7 +23,7 @@
   ] ++
   (if pkgs.stdenv.hostPlatform.isx86 then [
     TwilightBoxart
-    lutris
+   #lutris
     protontricks
     wine-staging
     winetricks
