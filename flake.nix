@@ -5,7 +5,7 @@
     #################### Official NixOS and HM Package Sources ####################
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
@@ -38,7 +38,7 @@
     # vim4LMFQR!
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      #inputs.nixpkgs.follows = "nixpkgs"; #this is unsupported
     };
 
     # optional dependency for Comma
