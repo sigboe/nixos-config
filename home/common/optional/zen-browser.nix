@@ -37,6 +37,7 @@
         dearrow
         duckduckgo-privacy-essentials
         istilldontcareaboutcookies
+        linkwarden
         privacy-badger
         sponsorblock
         ublock-origin
