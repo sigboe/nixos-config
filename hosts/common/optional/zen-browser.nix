@@ -1,6 +1,6 @@
 { isDefault ? false, config, lib, inputs, pkgs, ... }: {
   environment.systemPackages = [ inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight ];
-  home-manager.users.${config.hostSpec.username}.programs.zen-browser.preferences."media.webrtc.camera.allow-pipewire" = true;
+  home-manager.users.${config.hostSpec.username}.programs.zen-browser.policies.Preferences."media.webrtc.camera.allow-pipewire" = true;
 } // lib.optionalAttrs isDefault {
   home-manager.users.${config.hostSpec.username}.xdg.mimeApps =
     let
