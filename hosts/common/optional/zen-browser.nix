@@ -1,19 +1,39 @@
 { isDefault ? false, config, lib, inputs, pkgs, ... }: {
-  environment.systemPackages = with pkgs; [
-    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
-  ];
+  environment.systemPackages = [ inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight ];
+  home-manager.users.${config.hostSpec.username}.programs.zen-browser.preferences."media.webrtc.camera.allow-pipewire" = true;
 } // lib.optionalAttrs isDefault {
-  home-manager.users.${config.hostSpec.username}.xdg.mimeApps.defaultApplications = {
-    "application/x-extension-htm" = [ "zen-twilight.desktop" ];
-    "application/x-extension-html" = [ "zen-twilight.desktop" ];
-    "application/x-extension-shtml" = [ "zen-twilight.desktop" ];
-    "application/x-extension-xht" = [ "zen-twilight.desktop" ];
-    "application/x-extension-xhtml" = [ "zen-twilight.desktop" ];
-    "application/xhtml+xml" = [ "zen-twilight.desktop" ];
-    "text/html" = [ "zen-twilight.desktop" ];
-    "x-scheme-handler/chrome" = [ "zen-twilight.desktop" ];
-    "x-scheme-handler/ftp" = [ "zen-twilight.desktop" ];
-    "x-scheme-handler/http" = [ "zen-twilight.desktop" ];
-    "x-scheme-handler/https" = [ "zen-twilight.desktop" ];
-  };
+  home-manager.users.${config.hostSpec.username}.xdg.mimeApps =
+    let
+      value =
+        let
+          zen-browser = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight;
+        in
+        zen-browser.meta.desktopFileName;
+
+      associations = builtins.listToAttrs (map
+        (name: {
+          inherit name value;
+        }) [
+        "application/x-extension-shtml"
+        "application/x-extension-xhtml"
+        "application/x-extension-html"
+        "application/x-extension-xht"
+        "application/x-extension-htm"
+        "x-scheme-handler/unknown"
+        "x-scheme-handler/mailto"
+        "x-scheme-handler/chrome"
+        "x-scheme-handler/about"
+        "x-scheme-handler/https"
+        "x-scheme-handler/http"
+        "application/xhtml+xml"
+        "application/json"
+        "text/plain"
+        "text/html"
+      ]);
+    in
+    {
+      associations.added = associations;
+      defaultApplications = associations;
+    };
+
 }
