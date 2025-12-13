@@ -50,7 +50,10 @@
     stylix.url = "github:danth/stylix";
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
     };
 
     jovian = {
@@ -75,6 +78,7 @@
     , lanzaboote
     , jovian
     , nixos-wsl
+    , zen-browser
     , ...
     } @ inputs:
     let
@@ -102,6 +106,9 @@
             nixos-wsl.nixosModules.default
             {
               home-manager.backupFileExtension = "backup";
+              home-manager.sharedModules = [
+                zen-browser.homeModules.twilight
+              ];
               nixpkgs.overlays = [
                 outputs.overlays.unstable-packages
                 outputs.overlays.stable-packages
