@@ -35,11 +35,7 @@
     # Authenticate via ssh and use shallow clone
     nix-secrets.url = "git+ssh://git@gitlab.com/sigboe/nix-secrets.git?ref=main&shallow=1";
 
-    # vim4LMFQR!
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      #inputs.nixpkgs.follows = "nixpkgs"; #this is unsupported
-    };
+    nixvim-config.url = "github:sigboe/nixvim-config";
 
     # optional dependency for Comma
     nix-index-database = {
