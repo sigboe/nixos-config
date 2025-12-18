@@ -14,6 +14,7 @@
         DontCheckDefaultBrowser = true;
         NoDefaultBookmarks = true;
         OfferToSaveLogins = false;
+        PictureInPicture.Enabled = false;
         EnableTrackingProtection = {
           Value = true;
           Locked = true;
