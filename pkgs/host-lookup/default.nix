@@ -3,9 +3,9 @@
   stdenv,
   fetchFromGitHub,
   makeWrapper,
-  perl538Packages,
+  perl5Packages,
 }: let
-  perlDeps = with perl538Packages; [
+  perlDeps = with perl5Packages; [
     Clone
     DataDump
     ExporterTiny
@@ -44,7 +44,7 @@ in
     src = ./host-lookup;
 
     nativeBuildInputs = [makeWrapper];
-    buildInputs = [perl538Packages.perl];
+    buildInputs = [perl5Packages.perl];
 
     unpackPhase = ":";
 
@@ -55,7 +55,7 @@ in
 
       # Setup perl path
       wrapProgram $out/bin/host-lookup \
-        --set PERL5LIB ${perl538Packages.makePerlPath perlDeps}
+        --set PERL5LIB ${perl5Packages.makePerlPath perlDeps}
 
       # Symlinks with other functions
       ln -s $out/bin/host-lookup $out/bin/wcssh

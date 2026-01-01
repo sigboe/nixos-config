@@ -11,7 +11,7 @@
     pavucontrol
     playerctl
     qutebrowser
-    rustdesk
+    stable.rustdesk
     signal-desktop
     tigervnc
     udiskie
