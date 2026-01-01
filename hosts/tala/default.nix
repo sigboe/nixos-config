@@ -89,6 +89,14 @@
   #  enable = true;
   #  platform = "ipu6ep"; #Alder Lake
   #};
+  hardware.firmware = with pkgs; [
+  ipu6-camera-bins
+  ivsc-firmware
+];  
+services.udev.extraRules = ''
+  SUBSYSTEM=="intel-ipu6-psys", MODE="0660", GROUP="video"
+'';
+boot.extraModulePackages = with config.boot.kernelPackages; [ ipu6-drivers ];
 
   # Enable networking
   networking = {
