@@ -36,7 +36,7 @@
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
       ../common/optional/3dprint.nix
-      ../common/optional/vibe.nix
+      ../common/optional/card-forge.nix
       # services
       ../common/optional/services/yubikey.nix
       ../common/optional/services/udisks.nix
