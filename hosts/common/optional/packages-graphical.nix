@@ -3,7 +3,7 @@
     SDL2
     chromium
     freetype
-    handbrake
+    stable.handbrake
     imagemagick
     libreoffice
     mangohud
@@ -11,7 +11,7 @@
     pavucontrol
     playerctl
     qutebrowser
-    stable.rustdesk
+    rustdesk
     signal-desktop
     tigervnc
     udiskie
