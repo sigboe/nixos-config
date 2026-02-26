@@ -29,6 +29,7 @@
       ../common/optional/packages-graphical.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
+      ../common/optional/palemoon.nix
       (import ../common/optional/sops.nix { secretsFilename = "maggie-secrets"; inherit config lib inputs; })
 
       # Desktop

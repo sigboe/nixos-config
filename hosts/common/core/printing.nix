@@ -2,7 +2,7 @@
   services = {
     printing = {
       enable = true;
-      drivers = [ pkgs.hplipWithPlugin ];
+      #drivers = [ pkgs.hplipWithPlugin ];
     };
     avahi = {
       enable = lib.mkDefault true;
@@ -12,7 +12,7 @@
   };
   hardware.sane = {
     enable = true;
-    extraBackends = [ pkgs.hplipWithPlugin ];
+    #extraBackends = [ pkgs.hplipWithPlugin ];
   };
-  environment.systemPackages = [ pkgs.hplipWithPlugin ];
+  #environment.systemPackages = [ pkgs.hplipWithPlugin ];
 }

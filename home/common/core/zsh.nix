@@ -152,10 +152,11 @@
         auto_update = true;
       };
     };
-    # Yazi Zsh integration conflicts with zoxide. We just do it our self above.
     yazi = {
       enable = true;
-      #  enableZshIntegration = true;
+      # Yazi Zsh integration conflicts with zoxide. We just do it our self above.
+      enableZshIntegration = false;
+      shellWrapperName = "yy";
     };
   };
   services.gpg-agent.enableZshIntegration = true;
