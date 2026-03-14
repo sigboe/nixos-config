@@ -52,7 +52,6 @@
       ;
   };
 
-  # Enable bluetooth
   boot = {
     initrd = {
       kernelModules = [ "btintel" ];

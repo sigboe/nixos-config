@@ -60,11 +60,6 @@
       url = "github:Jovian-Experiments/Jovian-NixOS";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -77,7 +72,6 @@
     , sops-nix
     , lanzaboote
     , jovian
-    , nixos-wsl
     , zen-browser
     , ...
     } @ inputs:
@@ -103,7 +97,6 @@
             sops-nix.nixosModules.sops
             lanzaboote.nixosModules.lanzaboote
             jovian.nixosModules.jovian
-            nixos-wsl.nixosModules.default
             {
               home-manager.backupFileExtension = "backup";
               home-manager.sharedModules = [
@@ -128,7 +121,7 @@
       overlays = import ./overlays { inherit inputs; };
 
       # Custom packages to be shared or upstreamed.
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${nixpkgs.stdenv.hostPlatform.system});
+      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
       #################### NixOS Configurations ####################
 

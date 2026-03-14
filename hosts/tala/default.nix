@@ -75,20 +75,10 @@
     bootspec.enable = true;
   };
 
-  specialisation = {
-    lts.configuration = {
-      boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
-    };
-  };
-
   # Enable hardware acceleration
   hardware.graphics.enable = true;
 
   ## webcam
-  #hardware.ipu6 = {
-  #  enable = true;
-  #  platform = "ipu6ep"; #Alder Lake
-  #};
   hardware.firmware = with pkgs; [
     ipu6-camera-bins
     ivsc-firmware

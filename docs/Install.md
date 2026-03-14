@@ -20,7 +20,7 @@ This section we primarily run on a non-live booted nix machine, either nixos or 
   3. `ssh-keygen -t ed25519 -f /tmp/sshKeys/persist/etc/ssh/ssh_host_ed25519_key -N ''`
   4. `ssh-to-age -i /tmp/sshKeys/persist/etc/ssh/ssh_host_ed25519_key.pub`
   5. add age key to nix-secrets/.sops.nix
-  6. `sops updateKeys secrets.yaml` and push to git
+  6. `sops updatekeys secrets.yaml` and push to git
   7. `nix flake update nix-secrets` git add, commmit, push
 2. boot from target host with a live iso of the nixos installer
 3. connect to network in the live environment on the target machine

@@ -4,6 +4,7 @@
     age
     alejandra
     ansible-lint
+    bc
     btop
     comma
     cups

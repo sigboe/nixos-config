@@ -1,8 +1,8 @@
-{ isDefault ? false, lib, inputs, pkgs, ... }: {
+{ isDefault ? false, inputs, pkgs, ... }: {
   stylix.targets.zen-browser.profileNames = [ "default" ];
   programs.zen-browser = {
     enable = true;
-    suppressXdgMigrationWarning = true;
+    setAsDefaultBrowser = isDefault;
     policies =
       {
         AutofillAddressEnabled = true;
@@ -46,40 +46,4 @@
       ];
     };
   };
-} // lib.optionalAttrs isDefault {
-  xdg.mimeApps =
-    let
-      value =
-        let
-          zen-browser = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.twilight;
-        in
-        zen-browser.meta.desktopFileName;
-
-      associations = builtins.listToAttrs (map
-        (name: {
-          inherit name value;
-        }) [
-        "application/json"
-        "application/x-extension-htm"
-        "application/x-extension-html"
-        "application/x-extension-shtml"
-        "application/x-extension-xht"
-        "application/x-extension-xhtml"
-        "application/xhtml+xml"
-        "text/html"
-        "text/plain"
-        "x-scheme-handler/about"
-        "x-scheme-handler/chrome"
-        "x-scheme-handler/ftp"
-        "x-scheme-handler/http"
-        "x-scheme-handler/https"
-        "x-scheme-handler/mailto"
-        "x-scheme-handler/unknown"
-      ]);
-    in
-    {
-      associations.added = associations;
-      defaultApplications = associations;
-    };
-
 }

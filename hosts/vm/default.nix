@@ -25,6 +25,7 @@
 
       #################### Host-specific Optional Configs ####################
 
+      ../common/optional/impermanence.nix
       ../common/optional/plymouth.nix
       ../common/optional/steam.nix
       ../common/optional/packages-graphical.nix
@@ -34,8 +35,13 @@
       ../common/optional/services/regreet
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
+      # Laptop
+      ../common/optional/laptop.nix
       # services
       ../common/optional/services/yubikey.nix
+      ../common/optional/services/udisks.nix
+      ../common/optional/services/fwupd.nix
+      ../common/optional/services/keyd.nix
 
       #################### Users to Create ####################
       ../common/users
@@ -50,8 +56,8 @@
       ;
   };
 
-  # Enable bluetooth
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];

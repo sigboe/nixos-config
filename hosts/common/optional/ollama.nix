@@ -1,7 +1,7 @@
-{ acceleration ? null, ... }:
+{ pkgs, ... }:
 {
   services.ollama = {
     enable = true;
-    inherit acceleration;
+    package = pkgs.ollama-vulkan;
   };
 }

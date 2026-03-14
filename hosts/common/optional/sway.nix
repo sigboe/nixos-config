@@ -8,7 +8,7 @@
         bemenu
         bemoji
         bitwarden-rofi
-        blueberry
+        overskride # bluetooth
         bose-connect-app-linux
         brightnessctl
         dmenu
@@ -31,7 +31,6 @@
         xdg-desktop-portal-wlr
       ];
     };
-    light.enable = true;
     waybar.enable = true;
   };
 
