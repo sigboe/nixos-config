@@ -14,10 +14,12 @@
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
+      vhostUserPackages = [ pkgs.virtiofsd ];
     };
   };
 
   environment.systemPackages = with pkgs; [
+    dnsmasq
     spice
     spice-gtk
     spice-protocol

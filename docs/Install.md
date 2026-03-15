@@ -43,8 +43,8 @@ This section is primarily done on the new machine. First we fetch down the flake
 3. generate an access key (ssh key) for nix-secrets as the root user `sudo ssh-keygen -t ed25519 -C "hostname"`
 4. add the key to the nixos-secrets repo, settings, repository, deploy keys
 5. time to set BIOS password, and boot into the mode that lets you provision secure boot keys your self.
-6. `sudo sbctl create-keys`
+6. `sudo sbctl create-keys` (Remove this step?)
 7. `sudo nixos-rebuild switch` (this will switch us from the -bootstrap ghost config to the config that has lanzaboote)
-8. `sudo sbctl enroll-keys --microsoft` This includes microsoft keys aswell, to avoid headaces
+8. `sudo sbctl enroll-keys --microsoft` This includes microsoft keys aswell, to avoid headaces (Remove this step?)
 9. `sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+2+7+12 --wipe-slot=tpm2 /dev/nvme0n1p2`
 10. reboot now

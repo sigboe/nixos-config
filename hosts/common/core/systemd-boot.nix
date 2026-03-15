@@ -11,6 +11,12 @@
     lanzaboote = {
       enable = lib.mkDefault true;
       pkiBundle = "/etc/secureboot";
+      autoGenerateKeys.enable = true;
+      autoEnrollKeys = {
+        enable = true;
+        autoReboot = true;
+      };
+      allowUnsigned = true;
     };
   };
 }
