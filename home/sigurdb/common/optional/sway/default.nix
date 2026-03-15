@@ -21,6 +21,11 @@ in
   ];
   wayland.windowManager.sway = {
     enable = true;
+    wrapperFeatures = {
+      base = true;
+      gtk = true;
+    };
+    systemd.enable = true;
     config = {
       modifier = "Mod4";
       left = "h";

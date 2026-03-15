@@ -6,11 +6,12 @@ in
 {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     settings = {
       mainBar = {
         height = 30;
         spacing = 4;
-        modules-left = [ "sway/workspaces" "sway/mode" ];
+        modules-left = [ "sway/workspaces" "sway/mode" "sway/scratchpad" ];
         modules-center = [ "sway/window" ];
         modules-right = [
           "custom/audio_idle_inhibitor"
@@ -41,6 +42,13 @@ in
             focused = "";
             default = "";
           };
+        };
+        "sway/scratchpad" = {
+          "format" = "{icon} {count}";
+          "show-empty" = false;
+          "format-icons" = [ "" "" ];
+          "tooltip" = true;
+          "tooltip-format" = "{app}: {title}";
         };
         "custom/notification" = {
           tooltip = false;

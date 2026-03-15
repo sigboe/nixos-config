@@ -2,7 +2,6 @@
   programs = {
     sway = {
       enable = true;
-      wrapperFeatures.gtk = true;
       extraPackages = with pkgs; [
         autotiling
         bemenu
@@ -30,17 +29,6 @@
         wtype
         xdg-desktop-portal-wlr
       ];
-    };
-    waybar.enable = true;
-  };
-
-  systemd.user.services.waybar = {
-    path = [ "/run/current-system/sw" ]; # /bin is added to this path automatically
-    serviceConfig = {
-      Restart = "on-failure";
-      #RestartSec = 5; #seconds
-      StartLimitIntervalSec = 0; #disable rate limiting
-      StartLimitBurst = 9;
     };
   };
 
