@@ -62,7 +62,7 @@
   };
 
   boot = {
-    #kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       availableKernelModules = [ "tpm_tis" ];
       systemd = {
@@ -71,12 +71,6 @@
       };
     };
     bootspec.enable = true;
-  };
-
-  specialisation = {
-    lts.configuration = {
-      boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
-    };
   };
 
   # Enable hardware acceleration

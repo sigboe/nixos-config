@@ -237,6 +237,8 @@ in
       set $laptop_sceen eDP-1
       bindswitch --locked --reload lid:on output $laptop_sceen disable
       bindswitch --locked --reload lid:off output $laptop_sceen enable
+
+      include /etc/sway/config.d/*
     '';
   };
   programs.swaylock = {

@@ -20,6 +20,7 @@
         "application/x-shellscript" = [ "nvim.desktop" ];
         "video/mp4" = [ "mpv.desktop" ];
         "video/mkv" = [ "mpv.desktop" ];
+        "video/x-matroska" = [ "mpv.desktop" ];
         "video/webm" = [ "mpv.desktop" ];
         "video/ogg" = [ "mpv.desktop" ];
         "video/x-msvideo" = [ "mpv.desktop" ];
