@@ -28,6 +28,7 @@
     mpd
     ncdu
     nixd
+    nixpkgs-reviewFull
     p7zip
     pass
     pciutils
