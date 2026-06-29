@@ -5,7 +5,7 @@
     #################### Official NixOS and HM Package Sources ####################
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
     hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {

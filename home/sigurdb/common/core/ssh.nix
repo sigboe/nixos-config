@@ -2,22 +2,22 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
+    settings = {
       "*" = {
-        controlMaster = "auto";
-        controlPath = "~/.ssh/controlmasters/%r@%h:%p";
-        controlPersist = "10m";
-        addKeysToAgent = "yes";
+        ControlMaster = "auto";
+        ControlPath = "~/.ssh/controlmasters/%r@%h:%p";
+        ControlPersist = "10m";
+        AddKeysToAgent = "yes";
       };
       "mister" = {
-        hostname = "10.10.1.21";
-        user = "root";
+        HostName = "10.10.1.21";
+        User = "root";
       };
       "ziggurat" = {
-        hostname = "ziggurat.tv";
-        user = "sigurdb";
-        forwardAgent = true;
-        localForwards = [
+        HostName = "ziggurat.tv";
+        User = "sigurdb";
+        ForwardAgent = true;
+        LocalForward = [
           {
             bind.port = 8080;
             host.address = "zig-ut-01.local";
@@ -31,16 +31,16 @@
         ];
       };
       "zig-ut-01" = {
-        hostname = "10.10.1.54";
-        user = "root";
+        HostName = "10.10.1.54";
+        User = "root";
       };
       "login i.bitbit.net" = {
-        host = "*login-*.i.bitbit.net";
-        port = 39029;
-        forwardAgent = true;
+        Host = "*login-*.i.bitbit.net";
+        Port = 39029;
+        ForwardAgent = true;
       };
       "import-osl2.api.c.bitbit.net" = {
-        forwardAgent = true;
+        ForwardAgent = true;
       };
     };
   };

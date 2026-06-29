@@ -66,7 +66,6 @@
         tpm2.enable = true;
       };
     };
-    bootspec.enable = true;
   };
 
   # Enable hardware acceleration

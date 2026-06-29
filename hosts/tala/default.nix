@@ -33,7 +33,7 @@
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
 
       # Desktop
-      ../common/optional/services/regreet
+      #../common/optional/services/regreet
       ../common/optional/sway.nix
       ../common/optional/services/pipewire.nix
       ../common/optional/3dprint.nix
@@ -72,7 +72,6 @@
         tpm2.enable = true;
       };
     };
-    bootspec.enable = true;
   };
 
   # Enable hardware acceleration

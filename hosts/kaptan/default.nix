@@ -70,7 +70,6 @@
         tpm2.enable = true;
       };
     };
-    bootspec.enable = true;
   };
 
   # Enable hardware acceleration
@@ -145,7 +144,7 @@
     };
     hardware.has.amd.gpu = true;
   };
-  programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ]; 
+  programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
