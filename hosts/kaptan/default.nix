@@ -146,6 +146,13 @@
   };
   programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
 
+  # Workaround for decky-loader depending on pnpm with open CVE
+  # This is only used at install time
+  # This can be removed when decky-loader updates its dependencies upstream
+  nixpkgs.config.permittedInsecurePackages = [
+    "pnpm-9.15.9"
+  ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
