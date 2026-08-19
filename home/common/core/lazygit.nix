@@ -5,7 +5,7 @@
       git.diffRenderers = [
         {
           colorArg = "always";
-          pager = "${pkgs.delta}/bin/delta --dark --paging=never";
+          command = "${pkgs.delta}/bin/delta --dark --paging=never";
         }
       ];
     };
