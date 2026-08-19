@@ -2,7 +2,7 @@
   programs.lazygit = {
     enable = true;
     settings = {
-      git.pagers = [
+      git.diffRenderers = [
         {
           colorArg = "always";
           pager = "${pkgs.delta}/bin/delta --dark --paging=never";
