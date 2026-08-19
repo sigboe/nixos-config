@@ -31,6 +31,7 @@
       # services
       ../common/optional/services/fwupd.nix
       ../common/optional/services/keyd.nix
+      ../common/optional/services/remotebuilder-server.nix
 
       #################### Users to Create ####################
       ../common/users

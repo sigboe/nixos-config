@@ -31,6 +31,7 @@
       ../common/optional/steam.nix
       ../common/optional/packages-graphical.nix
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
+      ../common/optional/services/remotebuilder-client.nix
 
       # Desktop
       #../common/optional/services/regreet
