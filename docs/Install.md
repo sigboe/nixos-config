@@ -40,7 +40,7 @@ This section is primarily done on the new machine. First we fetch down the flake
 
 1. Make sure /etc/nixos is empty, then `sudo chown username:users /etc/nixos`
 2. `git clone "https://github.com/sigboe/nixos-config.git" /etc/nixos` https is better for secondary machine, ssh is better for main machine. (git clone "git@github.com:sigboe/nixos-config.git")
-3. generate an access key (ssh key) for nix-secrets as the root user `sudo ssh-keygen -t ed25519 -C "hostname"`
+3. generate an access key (ssh key) for nix-secrets as the root user `ssh-keygen -t ed25519 -C "hostname"`
 4. add the key to the nixos-secrets repo, settings, repository, deploy keys
 5. time to set BIOS password, and boot into the mode that lets you provision secure boot keys your self.
 6. `sudo sbctl create-keys` (Remove this step?)
