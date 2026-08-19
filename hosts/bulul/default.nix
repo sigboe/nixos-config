@@ -15,7 +15,9 @@
       ./hardware-configuration.nix
       # Disks
       (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/vda"; })
+      { disko.devices.disk.main.content.partitions.luks.content.content.subvolumes."/nix" = lib.mkForce { }; }
       (import ../common/disks/xfs-store.nix { device = "/dev/vdb"; })
+      { disko.devices.disk.data.content.partitions.data.content.mountpoint = lib.mkForce "/nix"; }
 
       #################### Required Configs ####################
       ../common/core
