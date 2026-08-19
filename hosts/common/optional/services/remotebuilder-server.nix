@@ -4,7 +4,7 @@
       isSystemUser = true;
       group = "remotebuild";
       useDefaultShell = true;
-      openssh.authorizedKeys.keyFiles = [ config.sops.secrets.sshPubKey.path ];
+      openssh.authorizedKeys.keys = config.hostSpec.openssh.authorizedKeys.keys;
     };
     groups.remotebuild = { };
   };
@@ -12,10 +12,6 @@
     nrBuildUsers = 64;
     settings = {
       trusted-users = [ "remotebuild" ];
-
-      min-free = 10 * 1024 * 1024;
-      max-free = 200 * 1024 * 1024;
-
       max-jobs = "auto";
       cores = 0;
     };

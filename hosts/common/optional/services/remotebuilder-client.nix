@@ -7,7 +7,7 @@
     buildMachines = [
       {
         inherit (pkgs.stdenv.hostPlatform) system;
-        hostName = "remotebuilder";
+        hostName = "bulul.local";
         sshUser = "remotebuild";
         sshKey = "/root/.ssh/remotebuild";
         supportedFeatures = [ "nixos-test" "big-parallel" "kvm" ];
