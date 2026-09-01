@@ -21,6 +21,7 @@
     host-lookup
     htop
     jq
+    kitty
     lazygit
     libgpg-error
     libxml2
