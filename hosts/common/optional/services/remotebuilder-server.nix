@@ -1,10 +1,10 @@
-{ config, ... }: {
+{ hostSpec, ... }: {
   users = {
     users.remotebuild = {
       isSystemUser = true;
       group = "remotebuild";
       useDefaultShell = true;
-      openssh.authorizedKeys.keys = config.hostSpec.openssh.authorizedKeys.keys;
+      openssh.authorizedKeys.keys = hostSpec.remotebuild.sshKey;
     };
     groups.remotebuild = { };
   };

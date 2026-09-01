@@ -44,6 +44,9 @@
       description
       openssh
       ;
+    remoteBuild = {
+      inherit (inputs.nix-secrets.remoteBuild) sshKey;
+    };
   };
 
   boot = {
