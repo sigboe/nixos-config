@@ -4,7 +4,7 @@
       isSystemUser = true;
       group = "remotebuild";
       useDefaultShell = true;
-      openssh.authorizedKeys.keys = config.hostSpec.remotebuild.sshKey;
+      openssh.authorizedKeys.keys = config.hostSpec.remoteBuild.sshKey;
     };
     groups.remotebuild = { };
   };
