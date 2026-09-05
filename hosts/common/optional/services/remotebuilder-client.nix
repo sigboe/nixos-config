@@ -8,6 +8,10 @@
     buildMachines = [
       {
         inherit (pkgs.stdenv.hostPlatform) system;
+        systems = [
+          "x86_64-linux"
+          "i686-linux"
+        ];
         hostName = "bulul.local";
         sshUser = "remotebuild";
         sshKey = config.sops.secrets.remoteBuild-ssk-key.path;
