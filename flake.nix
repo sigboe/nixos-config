@@ -62,6 +62,7 @@
     };
 
     claude-code.url = "github:sadjow/claude-code-nix";
+    caveman-ai.url = "github:RogerNavelsaker/nixpkg-caveman";
   };
 
   outputs =
@@ -76,6 +77,7 @@
     , jovian
     , zen-browser
     , claude-code
+    , caveman-ai
     , ...
     } @ inputs:
     let
