@@ -60,6 +60,8 @@
       url = "github:Jovian-Experiments/Jovian-NixOS";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
   outputs =
@@ -73,6 +75,7 @@
     , lanzaboote
     , jovian
     , zen-browser
+    , claude-code
     , ...
     } @ inputs:
     let
@@ -107,6 +110,7 @@
                 outputs.overlays.stable-packages
                 outputs.overlays.additions
                 outputs.overlays.workaround-437058
+                claude-code.overlays.default
               ];
             }
           ];

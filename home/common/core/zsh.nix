@@ -35,8 +35,6 @@
       cat = "bat";
     };
     dotDir = "${config.xdg.configHome}/zsh/zshrc";
-    initExtraBeforeCompInit = ''
-    '';
     initContent = ''
       setopt complete_aliases
 
