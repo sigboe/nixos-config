@@ -2,6 +2,7 @@
   environment.systemPackages = with pkgs; [
     opencode
     claude-code
+    opencode-claude-auth
     inputs.caveman-ai.packages.x86_64-linux.caveman-cli
     rtk
     nodejs_26
