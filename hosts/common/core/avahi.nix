@@ -4,7 +4,7 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
-    publish = {
+    settings.publish = {
       enable = true;
       userServices = true;
     };
