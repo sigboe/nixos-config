@@ -27,6 +27,8 @@
       ../common/optional/impermanence.nix
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
 
+      ../common/optional/vibe.nix
+
       # Desktop
       # services
       ../common/optional/services/fwupd.nix
@@ -54,10 +56,7 @@
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
-      systemd = {
-        enable = true;
-        tpm2.enable = true;
-      };
+      systemd.tpm2.enable = true;
     };
   };
 

@@ -49,6 +49,7 @@
       ../common/optional/services/keyd.nix
       ../common/optional/docker.nix
       ../common/optional/qemu-kvm.nix
+      ../common/optional/flatpak.nix
       #../common/optional/services/winboat.nix
 
       #################### Users to Create ####################
@@ -69,10 +70,7 @@
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
-      systemd = {
-        enable = true;
-        tpm2.enable = true;
-      };
+      systemd.tpm2.enable = true;
     };
   };
 

@@ -61,10 +61,7 @@
     initrd = {
       kernelModules = [ "btintel" ];
       availableKernelModules = [ "tpm_tis" ];
-      systemd = {
-        enable = true;
-        tpm2.enable = true;
-      };
+      systemd.tpm2.enable = true;
     };
   };
 
