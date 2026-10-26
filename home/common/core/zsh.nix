@@ -33,10 +33,27 @@
       egrep = "rg --color=auto";
       grep = "rg --color=auto";
       cat = "bat";
+      ct = "t claude";
+      ot = "t opencode";
     };
     dotDir = "${config.xdg.configHome}/zsh/zshrc";
     initContent = ''
       setopt complete_aliases
+
+      # Auto-attach on interactive SSH logins
+      if [[ -o interactive && -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
+        exec ${pkgs.tmux}/bin/tmux new-session -A -s main
+      fi
+      t() {
+        [[ -n "$1" ]] || return 2
+        if [[ -n "$TMUX" ]]; then
+          ${pkgs.tmux}/bin/tmux switch-client -t "$1" 2>/dev/null ||
+            ${pkgs.tmux}/bin/tmux new-session -d -s "$1" &&
+            ${pkgs.tmux}/bin/tmux switch-client -t "$1"
+        else
+          ${pkgs.tmux}/bin/tmux new-session -A -s "$1"
+        fi
+      }
 
       if [[ -d "''${HOME}/.local/share/work-password-store" ]]; then
         compdef _pass workpass
