@@ -35,6 +35,7 @@
       cat = "bat";
       ct = "t claude";
       ot = "t opencode";
+      nd = "nix develop --command zsh";
     };
     dotDir = "${config.xdg.configHome}/zsh/zshrc";
     initContent = ''
