@@ -164,9 +164,7 @@
     };
     tealdeer = {
       enable = true;
-      settings = {
-        auto_update = true;
-      };
+      enableAutoUpdates = true;
     };
     yazi = {
       enable = true;
