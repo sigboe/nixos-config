@@ -28,6 +28,7 @@
       (import ../common/optional/sops.nix { secretsFilename = "secrets"; inherit config lib inputs; })
 
       ../common/optional/vibe.nix
+      { systemd.user.services.t3code.enable = true; }
 
       # Desktop
       # services
