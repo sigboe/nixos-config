@@ -32,6 +32,14 @@
     };
   };
 
+  services.gnome = {
+    gnome-keyring.enable = true;
+    # Conflicts with programs.ssh.startAgent
+    gcr-ssh-agent.enable = false;
+  };
+  # Unlock the keyring with the password typed at the tty login
+  security.pam.services.login.enableGnomeKeyring = true;
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
