@@ -135,6 +135,10 @@
       user = config.hostSpec.username;
     };
     steamos.useSteamOSConfig = true;
+    # The SteamOS cmdline is tuned for the Deck's RDNA2 APU (sched_hw_submission=4,
+    # amd_iommu=off, dcdebugmask, lockup_timeout). On this Polaris RX 560 boots into
+    # gamescope frequently hit "ring sdma0/sdma1 timeout" followed by a failed GPU reset.
+    steamos.enableDefaultCmdlineConfig = false;
     decky-loader = {
       enable = true;
       user = config.hostSpec.username;
@@ -142,6 +146,14 @@
     hardware.has.amd.gpu = true;
   };
   programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
+
+  # Keep the harmless parts of the SteamOS cmdline
+  boot.kernelParams = [ "log_buf_len=4M" "audit=0" ];
+
+  # Save amdgpu devcoredumps (GPU hang dumps) to persistent storage for bug reports
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="devcoredump", RUN+="${pkgs.bash}/bin/sh -c '${pkgs.coreutils}/bin/mkdir -p /var/log/amdgpu-devcoredump && ${pkgs.coreutils}/bin/cat /sys%p/data > /var/log/amdgpu-devcoredump/$$(${pkgs.coreutils}/bin/date +%%Y%%m%%d-%%H%%M%%S)-%k.txt'"
+  '';
 
   # Workaround for decky-loader depending on pnpm with open CVE
   # This is only used at install time
