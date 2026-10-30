@@ -15,6 +15,8 @@
       ./hardware-configuration.nix
       # Disks
       (import ../common/disks/luks-sops-btrfs-impermanence.nix { device = "/dev/nvme0n1"; })
+      # driver bug workaround
+      ./gpu-mclk-pin.nix
 
       #################### Hardware Modules ####################
       inputs.hardware.nixosModules.common-cpu-amd
