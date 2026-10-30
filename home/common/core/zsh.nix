@@ -35,15 +35,34 @@
       cat = "bat";
       ct = "t claude";
       ot = "t opencode";
-      nd = "nix develop --command zsh";
     };
     dotDir = "${config.xdg.configHome}/zsh/zshrc";
     initContent = ''
       setopt complete_aliases
 
-      # Auto-attach on interactive SSH logins
+      # Auto-attach on interactive SSH logins.
+      # Each login gets its own session view and new window.
+      # All sessions belong to the same window group.
       if [[ -o interactive && -n "$SSH_CONNECTION" && -z "$TMUX" ]]; then
-        exec ${pkgs.tmux}/bin/tmux new-session -A -s main
+        tmux=${pkgs.tmux}/bin/tmux
+      
+        # First login creates the base session.
+        if ! "$tmux" has-session -t main 2>/dev/null; then
+          exec "$tmux" new-session -A -s main
+        fi
+      
+        # Generate a unique session for this SSH connection.
+        session="ssh-$$-$RANDOM"
+      
+        # Join the existing window group.
+        "$tmux" new-session -d -t main -s "$session" ||
+          exec "$tmux" new-session -A -s main
+      
+        # Create a new window for this connection.
+        "$tmux" new-window -t "$session:" -n ssh
+      
+        # Attach this terminal to its own session view.
+        exec "$tmux" attach-session -t "$session"
       fi
       t() {
         [[ -n "$1" ]] || return 2
