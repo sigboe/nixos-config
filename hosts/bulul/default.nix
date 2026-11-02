@@ -68,6 +68,7 @@
   networking = {
     inherit (config.hostSpec) hostName;
     networkmanager.enable = true;
+    interfaces.enp1s0.mtu = 1400; #workaround for misbehaving unraid host?
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
     firewall = {
       allowedTCPPorts = [
