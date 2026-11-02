@@ -7,6 +7,8 @@
     rtk
     nodejs_26
     t3code
+    mcp-nixos
+    codex
   ];
   networking.firewall = {
     allowedTCPPorts = [
