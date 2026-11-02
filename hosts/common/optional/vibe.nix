@@ -9,6 +9,7 @@
     t3code
     mcp-nixos
     codex
+    bubblewrap #for codex
   ];
   networking.firewall = {
     allowedTCPPorts = [
