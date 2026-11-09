@@ -149,6 +149,8 @@
   };
   programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
 
+  programs.nix-ld.enable = true;
+
   # Keep the harmless parts of the SteamOS cmdline
   boot.kernelParams = [ "log_buf_len=4M" "audit=0" ];
 

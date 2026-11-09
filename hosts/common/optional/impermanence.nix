@@ -16,6 +16,7 @@
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       "/var/lib/libvirt/images"
       { directory = "/var/lib/swtpm-localca"; user = "tss"; group = "tss"; mode = "u=rwx,g=rx,o=rx"; }
+      "/var/lib/decky-loader"
     ];
     files = [
       "/var/lib/regreet/state.toml"
