@@ -59,6 +59,7 @@
 
     claude-code.url = "github:sadjow/claude-code-nix";
     caveman-ai.url = "github:RogerNavelsaker/nixpkg-caveman";
+    t3code-flake.url = "github:omarcresp/t3code-flake";
   };
 
   outputs =
@@ -74,6 +75,7 @@
     , zen-browser
     , claude-code
     , caveman-ai
+    , t3code-flake
     , ...
     } @ inputs:
     let

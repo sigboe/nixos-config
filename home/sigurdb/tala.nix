@@ -2,8 +2,8 @@
   imports = [
     # All users
     ../common/core
-    (import ../common/optional/firefox.nix { isDefault = false; inherit config lib inputs pkgs; })
-    (import ../common/optional/zen-browser.nix { isDefault = true; inherit lib inputs pkgs; })
+    (import ../common/optional/firefox.nix { isDefault = true; inherit config lib inputs pkgs; })
+    (import ../common/optional/zen-browser.nix { isDefault = false; inherit lib inputs pkgs; })
     ../common/optional/kitty.nix
     ../common/optional/ghostty.nix
     ../common/optional/nix-index-database.nix

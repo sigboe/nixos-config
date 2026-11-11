@@ -6,10 +6,10 @@
     inputs.caveman-ai.packages.x86_64-linux.caveman-cli
     rtk
     nodejs_26
-    t3code
     mcp-nixos
     codex
     bubblewrap #for codex
+    inputs.t3code-flake.packages.${system}.t3-code
   ];
   networking.firewall = {
     allowedTCPPorts = [
@@ -29,7 +29,7 @@
     # Providers (claude, opencode, ...) are spawned from PATH
     path = with pkgs; [ claude-code opencode git openssh nodejs_26 ];
     serviceConfig = {
-      ExecStart = "${pkgs.t3code}/bin/t3 serve --host 0.0.0.0 --port 3773 %h";
+      ExecStart = "${pkgs.t3-code}/bin/t3 serve --host 0.0.0.0 --port 3773 %h";
       Restart = "on-failure";
       RestartSec = 5;
     };
