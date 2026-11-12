@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 {
+  programs.ssh.knownHosts.bulul = {
+    hostNames = [ "bulul" "bulul.local" ];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK/gdfXHjYhhzJP1nBhGQoFbvll0DztHHf8jH3QGG+Oo";
+  };
+
   sops.secrets.remoteBuild-ssk-key.neededForUsers = true;
   nix = {
     distributedBuilds = true;

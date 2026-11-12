@@ -10,7 +10,6 @@
     mpv
     pavucontrol
     playerctl
-    qutebrowser
     rustdesk
     signal-desktop
     tigervnc

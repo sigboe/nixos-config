@@ -58,8 +58,12 @@
     };
 
     claude-code.url = "github:sadjow/claude-code-nix";
-    caveman-ai.url = "github:RogerNavelsaker/nixpkg-caveman";
-    t3code-flake.url = "github:omarcresp/t3code-flake";
+    codex-nix.url = "github:SecBear/codex-nix";
+    t3code-flake = {
+      url = "github:omarcresp/t3code-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -74,7 +78,7 @@
     , jovian
     , zen-browser
     , claude-code
-    , caveman-ai
+    , codex-nix
     , t3code-flake
     , ...
     } @ inputs:
