@@ -29,6 +29,7 @@
 
       ../common/optional/vibe.nix
       { systemd.user.services.t3code.enable = true; }
+      { users.user.${config.hostSpec.username}.linger = true; }
 
       # Desktop
       # services
